@@ -7,334 +7,313 @@
 <title>whyaimhere</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 
 :root {
   --bg: #050509;
   --panel: #0d0914;
   --purple: #d6a3ff;
   --border: #56346d;
+  --muted: #917da0;
+  --text: #eee4f5;
+  --glow: 0 0 15px #a34bff55;
 }
 
 body {
   margin: 0;
   background: var(--bg);
-  color: white;
+  color: var(--text);
   font-family: Arial, sans-serif;
   min-height: 100vh;
+  transition: background .3s, color .3s;
 }
 
-body.no-glow * {
-  text-shadow: none !important;
-  box-shadow: none !important;
+body.no-glow {
+  --glow: none;
+}
+
+body[data-theme="purple"] {
+  --bg: #050509;
+  --panel: #0d0914;
+  --purple: #d6a3ff;
+  --border: #56346d;
+}
+
+body[data-theme="blue"] {
+  --bg: #030810;
+  --panel: #071321;
+  --purple: #82caff;
+  --border: #24547c;
+}
+
+body[data-theme="red"] {
+  --bg: #100505;
+  --panel: #190909;
+  --purple: #ff9292;
+  --border: #713333;
 }
 
 header {
-  min-height: 75px;
-  padding: 0 5%;
-  border-bottom: 1px solid #28202f;
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  position: sticky;
-  top: 0;
-  background: #050509ee;
-  z-index: 10;
-  backdrop-filter: blur(10px);
+  gap: 10px;
+  padding: 15px 5%;
+  background: #08060deF;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
 }
 
 .logo {
-  font-size: 24px;
+  color: var(--purple);
   font-weight: bold;
   letter-spacing: 3px;
-  color: var(--purple);
-  text-shadow: 0 0 15px #a64dff;
-  cursor: pointer;
+  font-size: 17px;
+  text-shadow: var(--glow);
 }
 
 nav {
   display: flex;
-  align-items: center;
-  gap: 5px;
   flex-wrap: wrap;
+  gap: 5px;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  touch-action: manipulation;
 }
 
 nav button {
   background: transparent;
   border: 1px solid transparent;
-  color: #aaa;
-  padding: 10px 9px;
-  cursor: pointer;
-  letter-spacing: 1px;
+  color: var(--muted);
+  padding: 9px 11px;
+  font-size: 11px;
+  letter-spacing: 2px;
 }
 
 nav button:hover,
 nav button.active {
   color: var(--purple);
   border-color: var(--border);
-  background: #21152d;
+  background: var(--panel);
 }
 
 main {
-  width: 90%;
-  max-width: 1400px;
-  margin: 45px auto;
-  min-height: 70vh;
+  max-width: 1100px;
+  margin: auto;
+  padding: 25px 18px 70px;
 }
 
-.page { display: none; }
-.page.active { display: block; }
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
 
 .hero {
-  min-height: 330px;
-  padding: 65px 35px;
-  background:
-    radial-gradient(ellipse at 75% 40%, #50236b55, transparent 55%),
-    linear-gradient(135deg, #100b19, #050509);
-  border: 1px solid var(--border);
   position: relative;
+  min-height: 310px;
+  padding: 65px 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 75% 20%, #6b318344, transparent 50%),
+    linear-gradient(135deg, #110a19, #050509 70%);
+  border: 1px solid var(--border);
+  box-shadow: var(--glow);
   overflow: hidden;
 }
 
-.hero::after {
-  content: "◉  1999  ◉";
-  position: absolute;
-  right: 25px;
-  bottom: 20px;
-  color: #704b88;
-  font-size: 13px;
-  letter-spacing: 8px;
-  opacity: .6;
-  pointer-events: none;
-}
-
-/* SECRET EASTER EGG HOTSPOT */
-.secret-hotspot {
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
-  width: 220px;
-  height: 55px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  opacity: 0;
-  cursor: pointer;
-  z-index: 5;
-}
-
-.secret-hotspot:focus-visible {
-  opacity: .5;
-  outline: 2px solid var(--purple);
+.hero small {
+  color: var(--muted);
+  letter-spacing: 5px;
 }
 
 .hero h1 {
-  font-size: clamp(35px, 7vw, 70px);
+  font-size: clamp(40px, 9vw, 76px);
+  color: var(--purple);
   letter-spacing: 5px;
-  color: #e4c5ff;
-  text-shadow: 0 0 25px #a64dff;
-  margin: 0 0 15px;
+  margin: 15px 0;
+  text-shadow: var(--glow);
 }
 
 .hero p {
-  color: #999;
+  max-width: 500px;
+  color: #b8a9c4;
+  line-height: 1.7;
+}
+
+.secret-trigger {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  padding: 12px;
+  color: var(--purple);
+  background: #0d0914;
+  border: 1px solid var(--border);
   letter-spacing: 3px;
-  font-size: 12px;
+  font-size: 11px;
+  opacity: .85;
+}
+
+.secret-trigger:active {
+  transform: scale(.96);
 }
 
 .section-title {
-  color: #e4c5ff;
-  letter-spacing: 3px;
-  margin-top: 45px;
-}
-
-.muted {
-  color: #888;
-  font-size: 12px;
-  letter-spacing: 2px;
+  margin: 35px 0 17px;
+  color: var(--purple);
+  letter-spacing: 4px;
+  font-size: 16px;
 }
 
 .game-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 18px;
-  margin-top: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
 }
 
 .game-card {
   background: var(--panel);
-  border: 1px solid #392747;
-  padding: 22px;
-  min-height: 170px;
+  border: 1px solid var(--border);
+  padding: 19px;
+  min-height: 155px;
   transition: .2s;
 }
 
 .game-card:hover {
-  border-color: #b77be7;
   transform: translateY(-3px);
-  box-shadow: 0 0 20px #8d37bb33;
+  box-shadow: var(--glow);
+}
+
+.game-card small {
+  color: var(--muted);
+  letter-spacing: 2px;
 }
 
 .game-card h3 {
-  color: #e4c5ff;
-  letter-spacing: 2px;
+  color: var(--purple);
+  margin: 13px 0 8px;
 }
 
 .game-card p {
-  color: #888;
+  color: #a89ab4;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 11px 17px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--purple);
+  letter-spacing: 2px;
+  font-size: 11px;
+  margin-top: 10px;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover {
+  box-shadow: var(--glow);
+  background: #21132c;
+}
+
+.status {
+  margin-top: 25px;
+  padding: 15px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--muted);
   font-size: 12px;
-  line-height: 1.6;
-}
-
-button {
-  background: #21152d;
-  color: #e8caff;
-  border: 1px solid #8852a8;
-  padding: 12px 18px;
-  cursor: pointer;
-  letter-spacing: 1px;
-}
-
-button:hover { background: #48245e; }
-
-.game-card button { margin-top: 12px; }
-
-.category {
-  display: inline-block;
-  color: #c99aff;
-  border: 1px solid #56346d;
-  padding: 7px 11px;
-  font-size: 10px;
   letter-spacing: 2px;
 }
 
-.game-container {
-  width: 100%;
-  height: 650px;
-  background: black;
-  border: 2px solid var(--border);
-  box-shadow: 0 0 30px #641b8a55;
-  margin-top: 20px;
-}
-
-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: black;
-}
-
-.player-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 15px;
-}
-
-.player-controls p {
-  color: #888;
-  font-size: 12px;
-}
-
-.setting {
-  background: var(--panel);
-  border: 1px solid #392747;
-  padding: 22px;
-  margin-top: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-}
-
-.setting p {
-  color: #888;
-  font-size: 12px;
-}
-
-input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  accent-color: #a64dff;
-}
-
-select {
-  background: #21152d;
-  color: white;
-  border: 1px solid #8852a8;
-  padding: 10px;
-}
-
-.link-panel {
+.game-player {
   background: var(--panel);
   border: 1px solid var(--border);
-  padding: 25px;
-  margin-top: 25px;
+  padding: 15px;
 }
 
-.link-display {
-  background: #050509;
-  border: 1px solid #56346d;
-  padding: 16px;
-  margin: 20px 0;
-  overflow-wrap: anywhere;
-  color: #d6a3ff;
-  font-size: 13px;
-  line-height: 1.7;
-  min-height: 50px;
+.game-player h2 {
+  color: var(--purple);
 }
 
-.link-actions {
+.game-frame {
+  width: 100%;
+  height: min(65vh, 650px);
+  min-height: 350px;
+  border: 1px solid var(--border);
+  background: #000;
+}
+
+.player-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
 }
 
-.link-status {
-  color: #a77ac5;
-  font-size: 12px;
-  margin-top: 15px;
-  letter-spacing: 1px;
+.setting-row {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 18px;
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
-.game-credit {
-  margin-top: 20px;
+.setting-row span {
+  color: var(--purple);
+}
+
+select,
+input {
+  background: #090610;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 11px;
+  max-width: 100%;
+}
+
+.share-box {
   background: var(--panel);
   border: 1px solid var(--border);
   padding: 20px;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
 }
 
-.game-credit a { color: var(--purple); }
-
-footer {
-  text-align: center;
-  padding: 40px;
-  color: #444;
-  font-size: 11px;
-  letter-spacing: 3px;
+#shareOutput {
+  color: var(--purple);
+  margin-top: 15px;
+  font-size: 13px;
 }
 
-.back-button { margin-bottom: 25px; }
-
-/* SECRET PAGE */
 .secret-page {
-  width: 100%;
-  min-height: 100vh;
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  margin: 0;
-  padding: 0;
-  background:
-    linear-gradient(#0003, #0003),
-    url("https://media1.tenor.com/m/GYnvtKcQK18AAAAd/blue-eyed-haircut-kid.gif")
-    center center / cover no-repeat;
+  min-height: 75vh;
+  position: relative;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  flex-direction: column;
+  text-align: center;
+  background:
+    linear-gradient(#0005, #0008),
+    url("https://media1.tenor.com/m/GYnvtKcQK18AAAAd/blue-eyed-haircut-kid.gif")
+    center / cover no-repeat;
 }
 
 .secret-page.active {
@@ -343,47 +322,54 @@ footer {
 
 .secret-page h1 {
   color: white;
-  font-size: clamp(40px, 9vw, 90px);
-  letter-spacing: 3px;
-  text-shadow: 0 0 15px #000, 0 0 30px #000;
-  margin: 0;
-  text-align: center;
+  font-size: clamp(40px, 10vw, 80px);
+  text-shadow: 0 0 15px black;
 }
 
 .secret-back {
   position: absolute;
-  top: 18px;
-  left: 18px;
-  padding: 9px 14px;
-  background: #0008;
-  border: 1px solid #ffffff55;
+  top: 15px;
+  left: 15px;
+  background: #100b18dd;
+  border: 1px solid var(--border);
   color: white;
-  font-size: 20px;
+  padding: 12px 18px;
 }
 
-@media(max-width: 700px) {
-  header { padding: 12px 3%; gap: 10px; }
-  .logo { font-size: 17px; }
-  nav { gap: 2px; }
-  nav button { padding: 9px 6px; font-size: 9px; }
-  .hero { padding: 45px 20px; }
-  .game-container { height: 400px; }
+footer {
+  border-top: 1px solid var(--border);
+  padding: 22px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+@media(max-width: 600px) {
+  header {
+    flex-direction: column;
+  }
+
+  nav {
+    justify-content: center;
+  }
+
+  .hero {
+    padding: 50px 20px;
+  }
 }
 </style>
 </head>
 
-<body>
+<body data-theme="purple">
 
 <header>
-  <div class="logo" onclick="showPage('lobby')">
-    whyaimhere
-  </div>
-
+  <div class="logo">WHYAMIHERE</div>
   <nav>
-    <button id="navLobby" class="active" onclick="showPage('lobby')">LOBBY</button>
-    <button id="navGames" onclick="showPage('games')">GAMES</button>
-    <button id="navLinks" onclick="showPage('links')">LINKS</button>
-    <button id="navSettings" onclick="showPage('settings')">SETTINGS</button>
+    <button class="active" onclick="showPage('lobby')">LOBBY</button>
+    <button onclick="showPage('games')">GAMES</button>
+    <button onclick="showPage('links')">LINKS</button>
+    <button onclick="showPage('settings')">SETTINGS</button>
   </nav>
 </header>
 
@@ -392,557 +378,381 @@ footer {
 <section id="lobby" class="page active">
 
   <div class="hero">
+    <small>UNKNOWN LOCATION // SYSTEM 1999</small>
     <h1>WHERE ARE YOU?</h1>
-    <p>WELCOME TO SOMEWHERE IN 1999.</p>
-    <p>YOU WERE NEVER SUPPOSED TO FIND THIS PLACE.</p>
+    <p>
+      You weren't supposed to find this place.
+      The games are waiting. The system is still running.
+    </p>
 
-    <button onclick="showPage('games')">
-      ENTER THE GAME ROOM →
+    <button class="primary-btn" onclick="showPage('games')">
+      ENTER THE GAMES →
     </button>
 
-    <button
-      class="secret-hotspot"
-      onclick="showPage('secret')"
-      aria-label="Secret page">
+    <button class="secret-trigger" onclick="showPage('secret')">
+      ◉ 1999 ◉
     </button>
   </div>
 
   <h2 class="section-title">FEATURED GAMES</h2>
-  <p class="muted">SOME PLACES NEVER DISAPPEAR.</p>
+  <div id="featuredGames" class="game-grid"></div>
 
-  <div class="game-grid">
-
-    <div class="game-card">
-      <span class="category">ARCADE</span>
-      <h3>BURRITO BISON</h3>
-      <p>GAME 001 // LAUNCHA LIBRE</p>
-      <button onclick="openGame('burrito')">PLAY →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">ADVENTURE</span>
-      <h3>UNDERTALE / DELTARUNE</h3>
-      <p>GAME 002 // CHOOSE YOUR WORLD</p>
-      <button onclick="openGame('toby')">ENTER →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">PLATFORMER</span>
-      <h3>WEB DASHERS</h3>
-      <p>GAME 003 // THE RHYTHM NEVER ENDS</p>
-      <button onclick="openGame('dashers')">PLAY →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">HORROR</span>
-      <h3>SLENDYTUBBIES 1</h3>
-      <p>GAME 004 // THE CLASSIC WEB PORT</p>
-      <button onclick="openGame('slendy')">ENTER →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">MUSIC</span>
-      <h3>SPRUNKI</h3>
-      <p>GAME 005 // MAKE YOUR OWN BEATS</p>
-      <button onclick="openGame('sprunki')">PLAY →</button>
-    </div>
-
+  <div class="status">
+    ● SYSTEM ONLINE // VERSION 1.4 // CONNECTION UNKNOWN
   </div>
 
-  <h2 class="section-title">SYSTEM STATUS</h2>
-  <p class="muted">ONLINE // SOMEWHERE IN 1999</p>
-
 </section>
-
 
 <section id="games" class="page">
-
-  <h1>GAME DIRECTORY</h1>
-  <p class="muted">CHOOSE YOUR DESTINATION.</p>
-
-  <div class="category">BROWSER GAMES</div>
-
-  <div class="game-grid">
-
-    <div class="game-card">
-      <span class="category">GAME 001</span>
-      <h3>BURRITO BISON</h3>
-      <p>LAUNCHA LIBRE</p>
-      <button onclick="openGame('burrito')">PLAY GAME →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">GAME 002</span>
-      <h3>UNDERTALE / DELTARUNE</h3>
-      <p>CHOOSE YOUR WORLD.</p>
-      <button onclick="openGame('toby')">ENTER WORLD →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">GAME 003</span>
-      <h3>WEB DASHERS</h3>
-      <p>JUMP. DODGE. SURVIVE.</p>
-      <button onclick="openGame('dashers')">PLAY GAME →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">GAME 004</span>
-      <h3>SLENDYTUBBIES 1</h3>
-      <p>THE CLASSIC WEB PORT</p>
-      <button onclick="openGame('slendy')">ENTER GAME →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">GAME 005</span>
-      <h3>SPRUNKI</h3>
-      <p>MIX SOUNDS AND MAKE MUSIC.</p>
-      <button onclick="openGame('sprunki')">PLAY GAME →</button>
-    </div>
-
-  </div>
-
+  <h2 class="section-title">GAME DIRECTORY</h2>
+  <p style="color:var(--muted)">Select a game to enter its player.</p>
+  <div id="allGames" class="game-grid"></div>
 </section>
-
 
 <section id="links" class="page">
+  <h2 class="section-title">LINK GENERATOR</h2>
 
-  <h1>LINK GENERATOR</h1>
-  <p class="muted">A DIFFERENT RANDOM SHARE LINK EACH TIME.</p>
-
-  <div class="link-panel">
-    <span class="category">RANDOM SHARE SYSTEM</span>
-    <h2 class="section-title">SOMEWHERE ELSE.</h2>
-    <p class="muted">GENERATE A RANDOM SHARE ADDRESS FOR THIS WEBSITE.</p>
-
-    <div class="link-display" id="generatedLink">
-      NO LINK GENERATED YET.
-    </div>
-
-    <div class="link-actions">
-      <button onclick="generateLink()">GENERATE RANDOM LINK →</button>
-      <button onclick="copyLink()">COPY LINK</button>
-      <button onclick="openGeneratedLink()">OPEN LINK ↗</button>
-    </div>
-
-    <p class="link-status" id="linkStatus">
-      SYSTEM READY // WAITING FOR INPUT
+  <div class="share-box">
+    <h3 style="color:var(--purple)">RANDOM SHARE LINK</h3>
+    <p style="color:var(--muted)">
+      Generate a random share URL for this website.
     </p>
+
+    <button class="primary-btn" onclick="generateShareLink()">
+      GENERATE LINK
+    </button>
+
+    <button class="secondary-btn" onclick="copyShareLink()">
+      COPY LINK
+    </button>
+
+    <div id="shareOutput">No link generated yet.</div>
   </div>
-
-  <div class="link-panel">
-    <h3>HOW IT WORKS</h3>
-    <p class="muted">
-      EACH GENERATED LINK HAS A NEW RANDOM CODE.
-      OPENING IT RETURNS TO THIS WEBSITE.
-    </p>
-    <p class="muted">
-      THESE ARE SHARE LINKS ON THE SAME WEBSITE,
-      NOT SEPARATE DOMAINS.
-    </p>
-  </div>
-
 </section>
 
-
 <section id="settings" class="page">
+  <h2 class="section-title">SYSTEM SETTINGS</h2>
 
-  <h1>SETTINGS</h1>
-  <p class="muted">CHANGE YOUR LITTLE CORNER OF THE INTERNET.</p>
-
-  <div class="setting">
-    <div>
-      <strong>Glow effects</strong>
-      <p>Enable or disable the purple glowing effects.</p>
-    </div>
-    <input type="checkbox" id="glowToggle"
-      checked onchange="toggleGlow()">
+  <div class="setting-row">
+    <span>GLOW EFFECTS</span>
+    <input type="checkbox" id="glowToggle" onchange="toggleGlow()">
   </div>
 
-  <div class="setting">
-    <div>
-      <strong>Website theme</strong>
-      <p>Choose your background appearance.</p>
-    </div>
-    <select id="themeSelect" onchange="changeTheme()">
-      <option value="dark">Dark void</option>
-      <option value="purple">Purple dream</option>
+  <div class="setting-row">
+    <span>COLOR THEME</span>
+    <select id="themeSelect" onchange="setTheme(this.value)">
+      <option value="purple">Purple</option>
+      <option value="blue">Blue</option>
+      <option value="red">Red</option>
     </select>
   </div>
 
-  <div class="setting">
-    <div>
-      <strong>About whyaimhere</strong>
-      <p>YOU WERE NEVER HERE.</p>
-    </div>
-    <span class="category">VERSION 1.5</span>
+  <div class="setting-row">
+    <span>ABOUT</span>
+    <p style="color:var(--muted)">
+      WHYAMIHERE // VERSION 1.4
+    </p>
   </div>
-
 </section>
 
-
 <section id="player" class="page">
+  <div class="game-player">
+    <button class="secondary-btn" onclick="showPage('games')">
+      ← BACK TO GAMES
+    </button>
 
-  <button class="back-button" onclick="showPage('games')">
-    ← BACK TO GAME DIRECTORY
+    <h2 id="playerTitle">GAME PLAYER</h2>
+    <p id="playerDescription" style="color:var(--muted)"></p>
+
+    <div id="frameContainer"></div>
+
+    <div class="player-actions">
+      <button class="primary-btn" onclick="launchGame()">
+        OPEN GAME
+      </button>
+
+      <button class="secondary-btn" onclick="toggleFullscreen()">
+        FULLSCREEN
+      </button>
+    </div>
+
+    <p id="playerCredits" style="color:var(--muted);font-size:12px"></p>
+  </div>
+</section>
+
+<section id="secret" class="page secret-page">
+  <button class="secret-back" onclick="showPage('lobby')">
+    ← BACK
   </button>
-
-  <h1 id="playerTitle">GAME</h1>
-  <p class="muted" id="playerInfo">GAME PLAYER</p>
-
-  <div id="playerArea"></div>
-
+  <h1>ight bru</h1>
 </section>
 
 </main>
 
-
-<section id="secret" class="page secret-page">
-
-  <button
-    class="secret-back"
-    onclick="showPage('lobby')"
-    aria-label="Back to lobby">
-    ←
-  </button>
-
-  <h1>ight bru</h1>
-
-</section>
-
-
 <footer>
-  whyaimhere // YOU WERE NEVER HERE
+  WHYAMIHERE // YOU ARE STILL HERE
 </footer>
 
-
 <script>
+"use strict";
 
-// PAGE NAVIGATION
-
-function showPage(page) {
-  const selectedPage = document.getElementById(page);
-  if (!selectedPage) return;
-
-  document.querySelectorAll('.page').forEach(section => {
-    section.classList.remove('active');
-  });
-
-  selectedPage.classList.add('active');
-
-  document.querySelectorAll('nav button').forEach(button => {
-    button.classList.remove('active');
-  });
-
-  const navIds = {
-    lobby: 'navLobby',
-    games: 'navGames',
-    links: 'navLinks',
-    settings: 'navSettings'
-  };
-
-  const nav = document.getElementById(navIds[page] || '');
-  if (nav) nav.classList.add('active');
-
-  window.scrollTo(0, 0);
-}
-
-
-// GAME INFORMATION
-
-const games = {
-
-  burrito: {
-    title: "BURRITO BISON",
-    info: "GAME 001 // LAUNCHA LIBRE",
+const games = [
+  {
+    id: "001",
+    title: "Burrito Bison",
+    description: "Launch yourself through a ridiculous adventure.",
     url: "https://www.madkidgames.com/full/burrito-bison-launcha-libre",
-    external: false
+    embed: true,
+    credits: "Game hosted by MadKidGames."
   },
-
-  toby: {
-    title: "UNDERTALE / DELTARUNE",
-    info: "GAME 002 // CHOOSE YOUR WORLD",
+  {
+    id: "002",
+    title: "Undertale / Deltarune",
+    description: "A strange underground adventure.",
     url: "https://toby.booksforschool.online/",
-    external: true
+    embed: false,
+    credits: "External game page."
   },
-
-  dashers: {
-    title: "WEB DASHERS",
-    info: "GAME 003 // THE RHYTHM NEVER ENDS",
+  {
+    id: "003",
+    title: "Web Dashers",
+    description: "A fast-paced browser game.",
     url: "https://web-dashers.github.io/",
-    external: false
+    embed: true,
+    credits: "Web Dashers."
   },
-
-  slendy: {
-    title: "SLENDYTUBBIES 1",
-    info: "GAME 004 // THE CLASSIC WEB PORT",
+  {
+    id: "004",
+    title: "Slendytubbies 1",
+    description: "Explore a strange and spooky world.",
     url: "https://nobrowebport.itch.io/slendytubbies-web-port",
-    external: false,
-    credits: true
+    embed: true,
+    credits: "Credits: nobrowebport."
   },
-
-  sprunki: {
-    title: "SPRUNKI",
-    info: "GAME 005 // MAKE YOUR OWN BEATS",
+  {
+    id: "005",
+    title: "Sprunki",
+    description: "Make music with strange characters.",
     url: "https://sprunki.org/online/",
-    external: false,
-    sprunkiCredits: true
+    embed: true,
+    credits: "Game hosted by Sprunki.org."
+  }
+];
+
+let currentGame = null;
+let generatedShareLink = "";
+
+function showPage(pageId) {
+  const target = document.getElementById(pageId);
+
+  if (!target) {
+    console.error("Page not found:", pageId);
+    return;
   }
 
-};
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
 
+  target.classList.add("active");
 
-// OPEN GAME
+  document.querySelectorAll("nav button").forEach(button => {
+    button.classList.remove("active");
+  });
+
+  const navButton = [...document.querySelectorAll("nav button")]
+    .find(button =>
+      button.getAttribute("onclick") === `showPage('${pageId}')`
+    );
+
+  if (navButton) navButton.classList.add("active");
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function createGameCard(game) {
+  return `
+    <div class="game-card">
+      <small>GAME ${game.id}</small>
+      <h3>${game.title}</h3>
+      <p>${game.description}</p>
+      <button class="primary-btn" onclick="openGame('${game.id}')">
+        PLAY →
+      </button>
+    </div>
+  `;
+}
+
+function renderGames() {
+  const featured = document.getElementById("featuredGames");
+  const directory = document.getElementById("allGames");
+
+  featured.innerHTML = games.slice(0, 3)
+    .map(createGameCard).join("");
+
+  directory.innerHTML = games
+    .map(createGameCard).join("");
+}
 
 function openGame(id) {
+  const game = games.find(item => item.id === id);
 
-  const game = games[id];
   if (!game) return;
 
+  currentGame = game;
+
   document.getElementById("playerTitle").textContent = game.title;
-  document.getElementById("playerInfo").textContent = game.info;
+  document.getElementById("playerDescription").textContent =
+    game.description;
+  document.getElementById("playerCredits").textContent =
+    game.credits;
 
-  const area = document.getElementById("playerArea");
+  const container = document.getElementById("frameContainer");
+  container.innerHTML = "";
 
-  if (game.external) {
+  if (game.embed) {
+    const iframe = document.createElement("iframe");
 
-    area.innerHTML = `
-      <div class="game-card">
-        <h3>CHOOSE YOUR WORLD</h3>
-        <p>This game is hosted on another website.</p>
-        <button id="enterWorldButton">ENTER WORLD →</button>
+    iframe.src = game.url;
+    iframe.className = "game-frame";
+    iframe.title = game.title;
+    iframe.setAttribute("allowfullscreen", "");
+    iframe.setAttribute("loading", "lazy");
+    iframe.setAttribute("referrerpolicy", "no-referrer");
+
+    container.appendChild(iframe);
+  } else {
+    container.innerHTML = `
+      <div class="share-box">
+        <p>This game opens in a separate tab.</p>
+        <button class="primary-btn" onclick="launchGame()">
+          OPEN GAME →
+        </button>
       </div>
     `;
-
-    document.getElementById("enterWorldButton")
-      .addEventListener("click", () => {
-        window.open(game.url, "_blank", "noopener,noreferrer");
-      });
-
-  } else {
-
-    let credits = "";
-
-    if (game.credits) {
-      credits = `
-        <div class="game-credit">
-          <h3>GAME INFORMATION</h3>
-          <p>WEB PORT: nobrowebport</p>
-          <p>ORIGINAL GAME: Slendytubbies by ZeoWorks</p>
-          <p>PORT CREDIT: 98Corbins</p>
-          <p class="muted">
-            This is a browser-hosted port. The original game
-            and its assets belong to their respective owners.
-          </p>
-          <p>
-            <a href="https://nobrowebport.itch.io/slendytubbies-web-port"
-              target="_blank" rel="noopener noreferrer">
-              VIEW GAME PAGE →
-            </a>
-          </p>
-          <p class="muted">
-            KEYBOARD CONTROLS: WASD / ARROWS, C, F, M.
-            MOBILE CONTROLS MAY NOT BE AVAILABLE.
-          </p>
-        </div>
-      `;
-    }
-
-    if (game.sprunkiCredits) {
-      credits = `
-        <div class="game-credit">
-          <h3>GAME INFORMATION</h3>
-          <p>GAME TYPE: MUSIC / CREATIVE</p>
-          <p>Mix characters and sounds to create music.</p>
-          <p class="muted">
-            Sprunki is a fan-made mod inspired by Incredibox.
-            Its game content belongs to its respective creators.
-          </p>
-          <p>
-            <a href="${game.url}" target="_blank" rel="noopener noreferrer">
-              OPEN SPRUNKI DIRECTLY →
-            </a>
-          </p>
-          <p class="muted">
-            If the embedded player does not load, use the
-            direct link above.
-          </p>
-        </div>
-      `;
-    }
-
-    area.innerHTML = `
-      <div class="game-container" id="activeGameContainer">
-        <iframe
-          src="${game.url}"
-          title="${game.title}"
-          allow="fullscreen; autoplay"
-          allowfullscreen
-          loading="lazy">
-        </iframe>
-      </div>
-
-      <div class="player-controls">
-        <p>GAME PLAYER // EMBED TEST</p>
-        <button onclick="fullscreenGame()">⛶ FULLSCREEN</button>
-      </div>
-
-      ${credits}
-    `;
   }
 
-  showPage('player');
+  showPage("player");
 }
 
+function launchGame() {
+  if (!currentGame) return;
 
-// FULLSCREEN
-
-function fullscreenGame() {
-  const game = document.getElementById("activeGameContainer");
-
-  if (game && game.requestFullscreen) {
-    game.requestFullscreen();
-  } else if (game && game.webkitRequestFullscreen) {
-    game.webkitRequestFullscreen();
-  }
+  window.open(currentGame.url, "_blank", "noopener,noreferrer");
 }
 
+function toggleFullscreen() {
+  const frame = document.querySelector(".game-frame");
 
-// RANDOM SHARE LINK GENERATOR
-
-const SITE_URL = "https://sishdtydjs-dot.github.io/whyamihere/";
-
-let currentGeneratedLink = "";
-let previousCode = "";
-
-function randomCode() {
-  const characters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-  const randomValues = new Uint32Array(12);
-
-  if (window.crypto && window.crypto.getRandomValues) {
-    window.crypto.getRandomValues(randomValues);
-  } else {
-    for (let i = 0; i < randomValues.length; i++) {
-      randomValues[i] = Math.floor(Math.random() * 4294967296);
-    }
+  if (!frame) {
+    alert("This game does not have an embedded player.");
+    return;
   }
 
-  let code = "";
-
-  for (let i = 0; i < randomValues.length; i++) {
-    code += characters[randomValues[i] % characters.length];
-  }
-
-  return code;
-}
-
-function generateLink() {
-  let code;
-
-  do {
-    code = randomCode();
-  } while (code === previousCode);
-
-  previousCode = code;
-  currentGeneratedLink = SITE_URL + "?share=" + code;
-
-  document.getElementById("generatedLink").textContent =
-    currentGeneratedLink;
-
-  document.getElementById("linkStatus").textContent =
-    "NEW SHARE LINK GENERATED // " + code;
-}
-
-function copyLink() {
-  if (!currentGeneratedLink) generateLink();
-
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(currentGeneratedLink)
-      .then(() => {
-        document.getElementById("linkStatus").textContent =
-          "LINK COPIED SUCCESSFULLY.";
-      })
-      .catch(() => fallbackCopy());
-  } else {
-    fallbackCopy();
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  } else if (frame.requestFullscreen) {
+    frame.requestFullscreen();
   }
 }
-
-function fallbackCopy() {
-  const field = document.createElement("textarea");
-  field.value = currentGeneratedLink;
-
-  document.body.appendChild(field);
-  field.select();
-
-  try {
-    document.execCommand("copy");
-    document.getElementById("linkStatus").textContent =
-      "LINK COPIED SUCCESSFULLY.";
-  } catch (error) {
-    document.getElementById("linkStatus").textContent =
-      "COPY FAILED // SELECT THE LINK MANUALLY.";
-  }
-
-  field.remove();
-}
-
-function openGeneratedLink() {
-  if (!currentGeneratedLink) generateLink();
-
-  window.open(currentGeneratedLink, "_blank", "noopener,noreferrer");
-}
-
-
-// HANDLE SHARED LINKS
-
-function handleIncomingShare() {
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get("share");
-
-  if (code) {
-    document.getElementById("linkStatus").textContent =
-      "SHARED LINK OPENED // " + code;
-
-    showPage("lobby");
-  }
-}
-
-
-// SETTINGS
 
 function toggleGlow() {
   const enabled = document.getElementById("glowToggle").checked;
 
   document.body.classList.toggle("no-glow", !enabled);
-  localStorage.setItem("whyaimhereGlow", enabled);
+
+  localStorage.setItem("glowEnabled", String(enabled));
 }
 
-function changeTheme() {
-  const theme = document.getElementById("themeSelect").value;
+function setTheme(theme) {
+  const allowedThemes = ["purple", "blue", "red"];
 
-  if (theme === "purple") {
-    document.documentElement.style.setProperty("--bg", "#100817");
-    document.documentElement.style.setProperty("--panel", "#1a1025");
+  if (!allowedThemes.includes(theme)) return;
+
+  document.body.dataset.theme = theme;
+  localStorage.setItem("savedTheme", theme);
+}
+
+function generateShareLink() {
+  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let code = "";
+
+  if (window.crypto && window.crypto.getRandomValues) {
+    const values = new Uint8Array(12);
+    window.crypto.getRandomValues(values);
+
+    values.forEach(value => {
+      code += characters[value % characters.length];
+    });
   } else {
-    document.documentElement.style.setProperty("--bg", "#050509");
-    document.documentElement.style.setProperty("--panel", "#0d0914");
+    for (let i = 0; i < 12; i++) {
+      code += characters[Math.floor(Math.random() * characters.length)];
+    }
   }
 
-  localStorage.setItem("whyaimhereTheme", theme);
+  generatedShareLink =
+    window.location.origin +
+    window.location.pathname +
+    "?share=" + code;
+
+  document.getElementById("shareOutput").textContent =
+    generatedShareLink;
 }
 
+async function copyShareLink() {
+  if (!generatedShareLink) {
+    generateShareLink();
+  }
 
-// LOAD SAVED SETTINGS
+  try {
+    await navigator.clipboard.writeText(generatedShareLink);
+
+    document.getElementById("shareOutput").textContent =
+      "COPIED: " + generatedShareLink;
+  } catch (error) {
+    document.getElementById("shareOutput").textContent =
+      "Copy unavailable. Select and copy the link above.";
+  }
+}
 
 function loadSettings() {
-  const savedGlow = localStorage.getItem("whyaimhereGlow");
-  const savedTheme = localStorage.getItem("whyaimhereTheme");
+  const savedTheme = localStorage.getItem("savedTheme");
 
-  if (savedGlow === "false") {
-    document.getElementById("glowToggle").checked = false;
-    document.body.classList.add("no-glow");
+  if (
+    savedTheme === "purple" ||
+    savedTheme === "blue" ||
+    savedTheme === "red"
+  ) {
+    document.body.dataset.theme = savedTheme;
+    document.getElementById("themeSelect").value = savedTheme;
   }
 
-  if (savedTheme === "purple" || savedTheme === "d
+  const savedGlow = localStorage.getItem("glowEnabled");
+
+  const glowEnabled = savedGlow === null
+    ? true
+    : savedGlow === "true";
+
+  document.getElementById("glowToggle").checked = glowEnabled;
+
+  document.body.classList.toggle("no-glow", !glowEnabled);
+}
+
+function handleIncomingShare() {
+  const params = new URLSearchParams(window.location.search);
+  const shareCode = params.get("share");
+
+  if (shareCode) {
+    console.log("Share code:", shareCode);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderGames();
+  loadSettings();
+  handleIncomingShare();
+});
+</script>
+
+</body>
+</html>
