@@ -1,0 +1,1006 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>whyaimhere</title>
+
+<style>
+* { box-sizing: border-box; }
+
+:root {
+  --bg: #050509;
+  --panel: #0d0914;
+  --purple: #d6a3ff;
+  --border: #56346d;
+  --muted: #888;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: white;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+
+body.no-glow * {
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+header {
+  min-height: 75px;
+  padding: 0 5%;
+  border-bottom: 1px solid #28202f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background: #050509ee;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  gap: 10px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: var(--purple);
+  text-shadow: 0 0 15px #a64dff;
+  cursor: pointer;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+nav button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #aaa;
+  padding: 10px 11px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  font-size: 11px;
+}
+
+nav button:hover,
+nav button.active {
+  color: var(--purple);
+  border-color: var(--border);
+  background: #21152d;
+}
+
+main {
+  width: 90%;
+  max-width: 1400px;
+  margin: 45px auto;
+  min-height: 70vh;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+.hero {
+  min-height: 330px;
+  padding: 65px 35px;
+  background:
+    radial-gradient(ellipse at 75% 40%, #50236b55, transparent 55%),
+    linear-gradient(135deg, #100b19, #050509);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "◉  1999  ◉";
+  position: absolute;
+  right: 25px;
+  bottom: 20px;
+  color: #704b88;
+  font-size: 13px;
+  letter-spacing: 8px;
+  opacity: .6;
+}
+
+.hero h1 {
+  font-size: clamp(35px, 7vw, 70px);
+  letter-spacing: 5px;
+  color: #e4c5ff;
+  text-shadow: 0 0 25px #a64dff;
+  margin: 0 0 15px;
+}
+
+.hero p {
+  color: #999;
+  letter-spacing: 3px;
+  font-size: 12px;
+}
+
+.section-title {
+  color: #e4c5ff;
+  letter-spacing: 3px;
+  margin-top: 45px;
+}
+
+.muted {
+  color: #888;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+  margin-top: 25px;
+}
+
+.game-card {
+  background: var(--panel);
+  border: 1px solid #392747;
+  padding: 22px;
+  min-height: 170px;
+  transition: .2s;
+}
+
+.game-card:hover {
+  border-color: #b77be7;
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px #8d37bb33;
+}
+
+.game-card h3 {
+  color: #e4c5ff;
+  letter-spacing: 2px;
+}
+
+.game-card p {
+  color: #888;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+button {
+  background: #21152d;
+  color: #e8caff;
+  border: 1px solid #8852a8;
+  padding: 12px 18px;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+button:hover { background: #48245e; }
+
+.game-card button { margin-top: 12px; }
+
+.category {
+  display: inline-block;
+  color: #c99aff;
+  border: 1px solid #56346d;
+  padding: 7px 11px;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.game-container {
+  width: 100%;
+  height: 650px;
+  background: black;
+  border: 2px solid var(--border);
+  box-shadow: 0 0 30px #641b8a55;
+  margin-top: 20px;
+  position: relative;
+}
+
+.game-container iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: black;
+}
+
+.game-container:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  border: none;
+  background: black;
+}
+
+.game-container:fullscreen iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.game-container:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  border: none;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.player-controls p {
+  color: #888;
+  font-size: 12px;
+}
+
+.setting {
+  background: var(--panel);
+  border: 1px solid #392747;
+  padding: 22px;
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.setting p {
+  color: #888;
+  font-size: 12px;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #a64dff;
+}
+
+select,
+.link-input {
+  background: #21152d;
+  color: white;
+  border: 1px solid #8852a8;
+  padding: 12px;
+  max-width: 100%;
+}
+
+.link-panel {
+  background: var(--panel);
+  border: 1px solid #56346d;
+  padding: 25px;
+  margin-top: 25px;
+}
+
+.link-panel label {
+  display: block;
+  color: #c99aff;
+  margin: 18px 0 9px;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.link-panel select,
+.link-panel input {
+  width: 100%;
+}
+
+.link-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+#linkStatus {
+  color: #c99aff;
+  font-size: 12px;
+  margin-top: 15px;
+  line-height: 1.6;
+}
+
+#fullscreenStatus {
+  color: #c99aff;
+  font-size: 12px;
+}
+
+footer {
+  text-align: center;
+  padding: 40px;
+  color: #444;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+.back-button { margin-bottom: 25px; }
+
+@media(max-width: 700px) {
+  header {
+    padding: 12px 3%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo { font-size: 17px; }
+
+  nav {
+    width: 100%;
+    gap: 2px;
+  }
+
+  nav button {
+    padding: 9px 7px;
+    font-size: 10px;
+  }
+
+  .hero { padding: 45px 20px; }
+
+  .game-container { height: 400px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo" onclick="showPage('lobby')">
+    whyaimhere
+  </div>
+
+  <nav>
+    <button id="navLobby" class="active"
+      onclick="showPage('lobby')">LOBBY</button>
+
+    <button id="navGames"
+      onclick="showPage('games')">GAMES</button>
+
+    <button id="navSettings"
+      onclick="showPage('settings')">SETTINGS</button>
+
+    <button id="navLinks"
+      onclick="showPage('links')">LINKS</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- LOBBY -->
+
+<section id="lobby" class="page active">
+
+  <div class="hero">
+    <h1>WHERE ARE YOU?</h1>
+    <p>WELCOME TO SOMEWHERE IN 1999.</p>
+    <p>YOU WERE NEVER SUPPOSED TO FIND THIS PLACE.</p>
+
+    <button onclick="showPage('games')">
+      ENTER THE GAME ROOM →
+    </button>
+  </div>
+
+  <h2 class="section-title">FEATURED GAMES</h2>
+  <p class="muted">SOME PLACES NEVER DISAPPEAR.</p>
+
+  <div class="game-grid">
+
+    <div class="game-card">
+      <span class="category">ARCADE</span>
+      <h3>BURRITO BISON</h3>
+      <p>GAME 001 // LAUNCHA LIBRE</p>
+      <button onclick="openGame('burrito')">PLAY →</button>
+    </div>
+
+    <div class="game-card">
+      <span class="category">ADVENTURE</span>
+      <h3>UNDERTALE / DELTARUNE</h3>
+      <p>GAME 002 // CHOOSE YOUR WORLD</p>
+      <button onclick="openGame('toby')">ENTER →</button>
+    </div>
+
+    <div class="game-card">
+      <span class="category">PLATFORMER</span>
+      <h3>WEB DASHERS</h3>
+      <p>GAME 003 // THE RHYTHM NEVER ENDS</p>
+      <button onclick="openGame('dashers')">PLAY →</button>
+    </div>
+
+    <div class="game-card">
+      <span class="category">HORROR</span>
+      <h3>SLENDYTUBBIES 1</h3>
+      <p>GAME 004 // THE CLASSIC WEB PORT</p>
+      <button onclick="openGame('slendy')">ENTER →</button>
+    </div>
+
+  </div>
+
+  <h2 class="section-title">SYSTEM STATUS</h2>
+  <p class="muted">ONLINE // SOMEWHERE IN 1999</p>
+
+</section>
+
+
+<!-- GAMES PAGE -->
+
+<section id="games" class="page">
+
+  <h1>GAME DIRECTORY</h1>
+  <p class="muted">CHOOSE YOUR DESTINATION.</p>
+
+  <div class="category">BROWSER GAMES</div>
+
+  <div class="game-grid">
+
+    <div class="game-card">
+      <span class="category">GAME 001</span>
+      <h3>BURRITO BISON</h3>
+      <p>LAUNCHA LIBRE</p>
+      <button onclick="openGame('burrito')">PLAY GAME →</button>
+    </div>
+
+    <div class="game-card">
+      <span class="category">GAME 002</span>
+      <h3>UNDERTALE / DELTARUNE</h3>
+      <p>CHOOSE YOUR WORLD.</p>
+      <button onclick="openGame('toby')">ENTER WORLD →</button>
+    </div>
+
+    <div class="game-card">
+      <span class="category">GAME 003</span>
+      <h3>WEB DASHERS</h3>
+      <p>JUMP. DODGE. SURVIVE.</p>
+      <button onclick="openGame('dashers')">PLAY GAME →</button>
+    </div>
+
+    <div class="game-card">
+      <span class="category">GAME 004</span>
+      <h3>SLENDYTUBBIES 1</h3>
+      <p>THE CLASSIC WEB PORT</p>
+      <button onclick="openGame('slendy')">ENTER GAME →</button>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SETTINGS PAGE -->
+
+<section id="settings" class="page">
+
+  <h1>SETTINGS</h1>
+  <p class="muted">CHANGE YOUR LITTLE CORNER OF THE INTERNET.</p>
+
+  <div class="setting">
+    <div>
+      <strong>Glow effects</strong>
+      <p>Enable or disable the purple glowing effects.</p>
+    </div>
+    <input type="checkbox" id="glowToggle"
+      checked onchange="toggleGlow()">
+  </div>
+
+  <div class="setting">
+    <div>
+      <strong>Website theme</strong>
+      <p>Choose your background appearance.</p>
+    </div>
+    <select id="themeSelect" onchange="changeTheme()">
+      <option value="dark">Dark void</option>
+      <option value="purple">Purple dream</option>
+    </select>
+  </div>
+
+  <div class="setting">
+    <div>
+      <strong>About whyaimhere</strong>
+      <p>YOU WERE NEVER HERE.</p>
+    </div>
+    <span class="category">VERSION 1.0</span>
+  </div>
+
+</section>
+
+
+<!-- LINK GENERATOR -->
+
+<section id="links" class="page">
+
+  <h1>LINK GENERATOR</h1>
+  <p class="muted">CREATE A LINK TO ANY PART OF WHYAMHERE.</p>
+
+  <div class="link-panel">
+
+    <h2 class="section-title" style="margin-top:0">
+      CREATE A SHARE LINK
+    </h2>
+
+    <p class="muted">
+      Choose a page or game. Your website will generate
+      a link that opens directly at that destination.
+    </p>
+
+    <label for="linkChoice">CHOOSE DESTINATION</label>
+
+    <select id="linkChoice">
+      <option value="page:lobby">LOBBY</option>
+      <option value="page:games">GAME DIRECTORY</option>
+      <option value="page:settings">SETTINGS</option>
+      <option value="game:burrito">BURRITO BISON</option>
+      <option value="game:toby">UNDERTALE / DELTARUNE</option>
+      <option value="game:dashers">WEB DASHERS</option>
+      <option value="game:slendy">SLENDYTUBBIES 1</option>
+    </select>
+
+    <div class="link-buttons">
+      <button onclick="generateLink()">GENERATE LINK →</button>
+    </div>
+
+    <label for="generatedLink">YOUR GENERATED LINK</label>
+
+    <input
+      class="link-input"
+      id="generatedLink"
+      type="text"
+      readonly
+      placeholder="Your link will appear here..."
+    >
+
+    <div class="link-buttons">
+      <button onclick="copyGeneratedLink()">COPY LINK</button>
+      <button onclick="openGeneratedLink()">OPEN LINK ↗</button>
+    </div>
+
+    <p id="linkStatus">
+      Waiting for a destination...
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- INDIVIDUAL GAME PLAYER -->
+
+<section id="player" class="page">
+
+  <button class="back-button" onclick="showPage('games')">
+    ← BACK TO GAME DIRECTORY
+  </button>
+
+  <h1 id="playerTitle">GAME</h1>
+  <p class="muted" id="playerInfo">GAME PLAYER</p>
+
+  <div id="playerArea"></div>
+
+</section>
+
+</main>
+
+<footer>
+whyaimhere // YOU WERE NEVER HERE
+</footer>
+
+
+<script>
+
+// PAGE NAVIGATION
+
+function showPage(page) {
+
+  const section = document.getElementById(page);
+
+  if (!section) return;
+
+  document.querySelectorAll('.page').forEach(item => {
+    item.classList.remove('active');
+  });
+
+  section.classList.add('active');
+
+  document.querySelectorAll('nav button').forEach(button => {
+    button.classList.remove('active');
+  });
+
+  const nav = document.getElementById(
+    page === 'lobby' ? 'navLobby' :
+    page === 'games' ? 'navGames' :
+    page === 'settings' ? 'navSettings' :
+    page === 'links' ? 'navLinks' : ''
+  );
+
+  if (nav) nav.classList.add('active');
+
+  window.scrollTo(0, 0);
+}
+
+
+// GAME INFORMATION
+
+const games = {
+
+  burrito: {
+    title: "BURRITO BISON",
+    info: "GAME 001 // LAUNCHA LIBRE",
+    url: "https://www.madkidgames.com/full/burrito-bison-launcha-libre",
+    external: false
+  },
+
+  toby: {
+    title: "UNDERTALE / DELTARUNE",
+    info: "GAME 002 // CHOOSE YOUR WORLD",
+    url: "https://toby.booksforschool.online/",
+    external: true
+  },
+
+  dashers: {
+    title: "WEB DASHERS",
+    info: "GAME 003 // THE RHYTHM NEVER ENDS",
+    url: "https://web-dashers.github.io/",
+    external: false
+  },
+
+  slendy: {
+    title: "SLENDYTUBBIES 1",
+    info: "GAME 004 // THE CLASSIC WEB PORT",
+    url: "https://nobrowebport.itch.io/slendytubbies-web-port",
+    external: false,
+    credits: true
+  }
+
+};
+
+
+// OPEN GAME
+
+function openGame(id) {
+
+  const game = games[id];
+
+  if (!game) return;
+
+  document.getElementById("playerTitle").textContent =
+    game.title;
+
+  document.getElementById("playerInfo").textContent =
+    game.info;
+
+  const area = document.getElementById("playerArea");
+
+  if (game.external) {
+
+    area.innerHTML = `
+      <div class="game-card">
+        <h3>CHOOSE YOUR WORLD</h3>
+        <p>This game is hosted on another website.</p>
+        <button id="enterWorldButton">
+          ENTER WORLD →
+        </button>
+      </div>
+    `;
+
+    document.getElementById("enterWorldButton")
+      .addEventListener("click", () => {
+        window.open(
+          game.url,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      });
+
+  } else {
+
+    let credits = "";
+
+    if (game.credits) {
+      credits = `
+        <div class="game-card" style="margin-top:20px">
+          <h3>GAME INFORMATION</h3>
+          <p>WEB PORT: nobrowebport</p>
+          <p>ORIGINAL GAME: Slendytubbies by ZeoWorks</p>
+          <p>PORT CREDIT: 98Corbins</p>
+          <p class="muted">
+            This is a browser-hosted port. The original game
+            and its assets belong to their respective owners.
+          </p>
+          <p>
+            <a href="https://nobrowebport.itch.io/slendytubbies-web-port"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="color:#d6a3ff">
+              VIEW GAME PAGE →
+            </a>
+          </p>
+          <p class="muted">
+            KEYBOARD CONTROLS: WASD / ARROWS, C, F, M.
+            MOBILE CONTROLS MAY NOT BE AVAILABLE.
+          </p>
+        </div>
+      `;
+    }
+
+    area.innerHTML = `
+      <div class="game-container" id="activeGameContainer">
+
+        <iframe
+          id="activeGameFrame"
+          src="${game.url}"
+          title="${game.title}"
+          allow="fullscreen; autoplay"
+          allowfullscreen>
+        </iframe>
+
+      </div>
+
+      <div class="player-controls">
+        <p>${game.info}</p>
+
+        <button onclick="fullscreenGame()">
+          ⛶ FULLSCREEN
+        </button>
+      </div>
+
+      <p id="fullscreenStatus"></p>
+
+      ${credits}
+    `;
+  }
+
+  showPage('player');
+}
+
+
+// FULLSCREEN
+
+async function fullscreenGame() {
+
+  const frame = document.getElementById("activeGameFrame");
+  const container = document.getElementById("activeGameContainer");
+  const status = document.getElementById("fullscreenStatus");
+
+  if (!frame || !container) {
+    if (status) {
+      status.textContent = "No embedded game is available.";
+    }
+    return;
+  }
+
+  try {
+
+    // Try fullscreen on the actual iframe first.
+
+    if (frame.requestFullscreen) {
+      await frame.requestFullscreen();
+    }
+
+    // Try the container if iframe fullscreen is unavailable.
+
+    else if (container.requestFullscreen) {
+      await container.requestFullscreen();
+    }
+
+    // Older browser fallback.
+
+    else if (container.webkitRequestFullscreen) {
+      container.webkitRequestFullscreen();
+    }
+
+    else {
+      if (status) {
+        status.textContent =
+          "Fullscreen is not supported by this browser.";
+      }
+    }
+
+  } catch (error) {
+
+    if (status) {
+      status.textContent =
+        "Fullscreen was blocked. The game host or browser may not allow it.";
+    }
+
+  }
+}
+
+
+// LINK GENERATOR
+
+function generateLink() {
+
+  const choice = document.getElementById("linkChoice").value;
+
+  const parts = choice.split(":");
+  const type = parts[0];
+  const destination = parts[1];
+
+  const link = new URL(window.location.href);
+
+  // Remove old destination parameters.
+
+  link.searchParams.delete("go");
+
+  // Add the new destination.
+
+  if (type === "page") {
+    link.searchParams.set("go", destination);
+  }
+
+  else if (type === "game" && games[destination]) {
+    link.searchParams.set("go", "game-" + destination);
+  }
+
+  document.getElementById("generatedLink").value =
+    link.toString();
+
+  document.getElementById("linkStatus").textContent =
+    "LINK GENERATED. COPY IT AND SHARE IT.";
+}
+
+
+async function copyGeneratedLink() {
+
+  const field = document.getElementById("generatedLink");
+  const status = document.getElementById("linkStatus");
+
+  if (!field.value) {
+    status.textContent = "GENERATE A LINK FIRST.";
+    return;
+  }
+
+  try {
+
+    await navigator.clipboard.writeText(field.value);
+
+    status.textContent = "LINK COPIED.";
+
+  } catch (error) {
+
+    field.focus();
+    field.select();
+
+    try {
+      document.execCommand("copy");
+      status.textContent = "LINK COPIED.";
+    } catch (copyError) {
+      status.textContent =
+        "COPY FAILED. SELECT THE LINK AND COPY IT MANUALLY.";
+    }
+
+  }
+}
+
+
+function openGeneratedLink() {
+
+  const link = document.getElementById("generatedLink").value;
+
+  if (!link) {
+    document.getElementById("linkStatus").textContent =
+      "GENERATE A LINK FIRST.";
+    return;
+  }
+
+  window.open(link, "_blank", "noopener,noreferrer");
+}
+
+
+// LOAD DESTINATION FROM GENERATED LINK
+
+function loadSharedDestination() {
+
+  const params = new URLSearchParams(window.location.search);
+  const destination = params.get("go");
+
+  if (!destination) return;
+
+  if (destination.startsWith("game-")) {
+
+    const gameId = destination.substring(5);
+
+    if (games[gameId]) {
+      openGame(gameId);
+      return;
+    }
+
+  }
+
+  if (
+    destination === "lobby" ||
+    destination === "games" ||
+    destination === "settings" ||
+    destination === "links"
+  ) {
+    showPage(destination);
+  }
+
+}
+
+
+// SETTINGS
+
+function toggleGlow() {
+
+  const enabled = document.getElementById(
+    "glowToggle"
+  ).checked;
+
+  document.body.classList.toggle(
+    "no-glow",
+    !enabled
+  );
+
+  localStorage.setItem("whyaimhereGlow", enabled);
+}
+
+
+function changeTheme() {
+
+  const theme = document.getElementById(
+    "themeSelect"
+  ).value;
+
+  if (theme === "purple") {
+
+    document.documentElement.style.setProperty(
+      "--bg", "#100817"
+    );
+
+    document.documentElement.style.setProperty(
+      "--panel", "#1a1025"
+    );
+
+  } else {
+
+    document.documentElement.style.setProperty(
+      "--bg", "#050509"
+    );
+
+    document.documentElement.style.setProperty(
+      "--panel", "#0d0914"
+    );
+
+  }
+
+  localStorage.setItem("whyaimhereTheme", theme);
+}
+
+
+// LOAD SAVED SETTINGS
+
+const savedGlow = localStorage.getItem("whyaimhereGlow");
+
+if (savedGlow === "false") {
+
+  document.getElementById("glowToggle").checked = false;
+
+  document.body.classList.add("no-glow");
+
+}
+
+
+const savedTheme = localStorage.getItem("whyaimhereTheme");
+
+if (savedTheme) {
+
+  document.getElementById("themeSelect").value = savedTheme;
+
+  changeTheme();
+
+}
+
+
+// LOAD A SHARED LINK IF ONE WAS OPENED
+
+loadSharedDestination();
+
+</script>
+
+</body>
+</html>
