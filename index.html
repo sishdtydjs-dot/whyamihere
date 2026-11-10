@@ -109,22 +109,23 @@ main {
   pointer-events: none;
 }
 
+/* SECRET EASTER EGG HOTSPOT */
 .secret-hotspot {
   position: absolute;
-  right: 10px;
+  right: 5px;
   bottom: 5px;
-  width: 175px;
+  width: 220px;
   height: 55px;
   padding: 0;
   border: none;
   background: transparent;
-  opacity: .02;
+  opacity: 0;
   cursor: pointer;
   z-index: 5;
 }
 
 .secret-hotspot:focus-visible {
-  opacity: 1;
+  opacity: .5;
   outline: 2px solid var(--purple);
 }
 
@@ -320,7 +321,7 @@ footer {
 
 /* SECRET PAGE */
 .secret-page {
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   position: fixed;
   inset: 0;
@@ -389,6 +390,7 @@ footer {
 <main>
 
 <section id="lobby" class="page active">
+
   <div class="hero">
     <h1>WHERE ARE YOU?</h1>
     <p>WELCOME TO SOMEWHERE IN 1999.</p>
@@ -398,7 +400,8 @@ footer {
       ENTER THE GAME ROOM →
     </button>
 
-    <button class="secret-hotspot"
+    <button
+      class="secret-hotspot"
       onclick="showPage('secret')"
       aria-label="Secret page">
     </button>
@@ -448,12 +451,15 @@ footer {
 
   <h2 class="section-title">SYSTEM STATUS</h2>
   <p class="muted">ONLINE // SOMEWHERE IN 1999</p>
+
 </section>
 
 
 <section id="games" class="page">
+
   <h1>GAME DIRECTORY</h1>
   <p class="muted">CHOOSE YOUR DESTINATION.</p>
+
   <div class="category">BROWSER GAMES</div>
 
   <div class="game-grid">
@@ -494,10 +500,12 @@ footer {
     </div>
 
   </div>
+
 </section>
 
 
 <section id="links" class="page">
+
   <h1>LINK GENERATOR</h1>
   <p class="muted">A DIFFERENT RANDOM SHARE LINK EACH TIME.</p>
 
@@ -532,10 +540,12 @@ footer {
       NOT SEPARATE DOMAINS.
     </p>
   </div>
+
 </section>
 
 
 <section id="settings" class="page">
+
   <h1>SETTINGS</h1>
   <p class="muted">CHANGE YOUR LITTLE CORNER OF THE INTERNET.</p>
 
@@ -564,29 +574,41 @@ footer {
       <strong>About whyaimhere</strong>
       <p>YOU WERE NEVER HERE.</p>
     </div>
-    <span class="category">VERSION 1.4</span>
+    <span class="category">VERSION 1.5</span>
   </div>
+
 </section>
 
 
 <section id="player" class="page">
+
   <button class="back-button" onclick="showPage('games')">
     ← BACK TO GAME DIRECTORY
   </button>
 
   <h1 id="playerTitle">GAME</h1>
   <p class="muted" id="playerInfo">GAME PLAYER</p>
+
   <div id="playerArea"></div>
+
 </section>
 
 </main>
 
+
 <section id="secret" class="page secret-page">
-  <button class="secret-back"
+
+  <button
+    class="secret-back"
     onclick="showPage('lobby')"
-    aria-label="Back to lobby">←</button>
+    aria-label="Back to lobby">
+    ←
+  </button>
+
   <h1>ight bru</h1>
+
 </section>
+
 
 <footer>
   whyaimhere // YOU WERE NEVER HERE
@@ -594,6 +616,7 @@ footer {
 
 
 <script>
+
 // PAGE NAVIGATION
 
 function showPage(page) {
@@ -627,6 +650,7 @@ function showPage(page) {
 // GAME INFORMATION
 
 const games = {
+
   burrito: {
     title: "BURRITO BISON",
     info: "GAME 001 // LAUNCHA LIBRE",
@@ -663,12 +687,14 @@ const games = {
     external: false,
     sprunkiCredits: true
   }
+
 };
 
 
 // OPEN GAME
 
 function openGame(id) {
+
   const game = games[id];
   if (!game) return;
 
@@ -678,6 +704,7 @@ function openGame(id) {
   const area = document.getElementById("playerArea");
 
   if (game.external) {
+
     area.innerHTML = `
       <div class="game-card">
         <h3>CHOOSE YOUR WORLD</h3>
@@ -692,6 +719,7 @@ function openGame(id) {
       });
 
   } else {
+
     let credits = "";
 
     if (game.credits) {
@@ -790,19 +818,20 @@ function randomCode() {
   const characters =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-  let code = "";
+  const randomValues = new Uint32Array(12);
 
   if (window.crypto && window.crypto.getRandomValues) {
-    const randomValues = new Uint32Array(12);
     window.crypto.getRandomValues(randomValues);
-
-    for (let i = 0; i < randomValues.length; i++) {
-      code += characters[randomValues[i] % characters.length];
-    }
   } else {
-    for (let i = 0; i < 12; i++) {
-      code += characters[Math.floor(Math.random() * characters.length)];
+    for (let i = 0; i < randomValues.length; i++) {
+      randomValues[i] = Math.floor(Math.random() * 4294967296);
     }
+  }
+
+  let code = "";
+
+  for (let i = 0; i < randomValues.length; i++) {
+    code += characters[randomValues[i] % characters.length];
   }
 
   return code;
@@ -916,6 +945,4 @@ function loadSettings() {
     document.body.classList.add("no-glow");
   }
 
-  if (savedTheme === "purple" || savedTheme === "dark") {
-    document.getElementById("themeSelect").value = savedTheme;
-  
+  if (savedTheme === "purple" || savedTheme === "d
