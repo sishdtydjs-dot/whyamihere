@@ -37,12 +37,12 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   position: sticky;
   top: 0;
   background: #050509ee;
   z-index: 10;
   backdrop-filter: blur(10px);
-  gap: 10px;
 }
 
 .logo {
@@ -65,10 +65,9 @@ nav button {
   background: transparent;
   border: 1px solid transparent;
   color: #aaa;
-  padding: 10px 11px;
+  padding: 10px 9px;
   cursor: pointer;
   letter-spacing: 1px;
-  font-size: 11px;
 }
 
 nav button:hover,
@@ -197,35 +196,13 @@ button:hover { background: #48245e; }
   border: 2px solid var(--border);
   box-shadow: 0 0 30px #641b8a55;
   margin-top: 20px;
-  position: relative;
 }
 
-.game-container iframe {
-  display: block;
+iframe {
   width: 100%;
   height: 100%;
   border: none;
   background: black;
-}
-
-.game-container:fullscreen {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  border: none;
-  background: black;
-}
-
-.game-container:fullscreen iframe {
-  width: 100%;
-  height: 100%;
-}
-
-.game-container:-webkit-full-screen {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  border: none;
 }
 
 .player-controls {
@@ -264,52 +241,43 @@ input[type="checkbox"] {
   accent-color: #a64dff;
 }
 
-select,
-.link-input {
+select {
   background: #21152d;
   color: white;
   border: 1px solid #8852a8;
-  padding: 12px;
-  max-width: 100%;
+  padding: 10px;
 }
 
 .link-panel {
   background: var(--panel);
-  border: 1px solid #56346d;
+  border: 1px solid var(--border);
   padding: 25px;
   margin-top: 25px;
 }
 
-.link-panel label {
-  display: block;
-  color: #c99aff;
-  margin: 18px 0 9px;
-  font-size: 12px;
-  letter-spacing: 2px;
+.link-display {
+  background: #050509;
+  border: 1px solid #56346d;
+  padding: 16px;
+  margin: 20px 0;
+  overflow-wrap: anywhere;
+  color: #d6a3ff;
+  font-size: 13px;
+  line-height: 1.7;
+  min-height: 50px;
 }
 
-.link-panel select,
-.link-panel input {
-  width: 100%;
-}
-
-.link-buttons {
+.link-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 15px;
+  gap: 12px;
 }
 
-#linkStatus {
-  color: #c99aff;
+.link-status {
+  color: #a77ac5;
   font-size: 12px;
   margin-top: 15px;
-  line-height: 1.6;
-}
-
-#fullscreenStatus {
-  color: #c99aff;
-  font-size: 12px;
+  letter-spacing: 1px;
 }
 
 footer {
@@ -323,26 +291,11 @@ footer {
 .back-button { margin-bottom: 25px; }
 
 @media(max-width: 700px) {
-  header {
-    padding: 12px 3%;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
+  header { padding: 12px 3%; gap: 10px; }
   .logo { font-size: 17px; }
-
-  nav {
-    width: 100%;
-    gap: 2px;
-  }
-
-  nav button {
-    padding: 9px 7px;
-    font-size: 10px;
-  }
-
+  nav { gap: 2px; }
+  nav button { padding: 9px 6px; font-size: 9px; }
   .hero { padding: 45px 20px; }
-
   .game-container { height: 400px; }
 }
 </style>
@@ -362,17 +315,15 @@ footer {
     <button id="navGames"
       onclick="showPage('games')">GAMES</button>
 
-    <button id="navSettings"
-      onclick="showPage('settings')">SETTINGS</button>
-
     <button id="navLinks"
       onclick="showPage('links')">LINKS</button>
+
+    <button id="navSettings"
+      onclick="showPage('settings')">SETTINGS</button>
   </nav>
 </header>
 
 <main>
-
-<!-- LOBBY -->
 
 <section id="lobby" class="page active">
 
@@ -427,8 +378,6 @@ footer {
 </section>
 
 
-<!-- GAMES PAGE -->
-
 <section id="games" class="page">
 
   <h1>GAME DIRECTORY</h1>
@@ -471,7 +420,59 @@ footer {
 </section>
 
 
-<!-- SETTINGS PAGE -->
+<!-- RANDOM SHARE LINKS -->
+
+<section id="links" class="page">
+
+  <h1>LINK GENERATOR</h1>
+  <p class="muted">A DIFFERENT RANDOM SHARE LINK EACH TIME.</p>
+
+  <div class="link-panel">
+    <span class="category">RANDOM SHARE SYSTEM</span>
+
+    <h2 class="section-title">SOMEWHERE ELSE.</h2>
+
+    <p class="muted">
+      GENERATE A RANDOM SHARE ADDRESS FOR THIS WEBSITE.
+    </p>
+
+    <div class="link-display" id="generatedLink">
+      NO LINK GENERATED YET.
+    </div>
+
+    <div class="link-actions">
+      <button onclick="generateLink()">
+        GENERATE RANDOM LINK →
+      </button>
+
+      <button onclick="copyLink()">
+        COPY LINK
+      </button>
+
+      <button onclick="openGeneratedLink()">
+        OPEN LINK ↗
+      </button>
+    </div>
+
+    <p class="link-status" id="linkStatus">
+      SYSTEM READY // WAITING FOR INPUT
+    </p>
+  </div>
+
+  <div class="link-panel">
+    <h3>HOW IT WORKS</h3>
+    <p class="muted">
+      EACH GENERATED LINK HAS A NEW RANDOM CODE.
+      OPENING IT RETURNS TO THIS WEBSITE.
+    </p>
+    <p class="muted">
+      THESE ARE SHARE LINKS ON THE SAME WEBSITE,
+      NOT SEPARATE DOMAINS.
+    </p>
+  </div>
+
+</section>
+
 
 <section id="settings" class="page">
 
@@ -503,71 +504,11 @@ footer {
       <strong>About whyaimhere</strong>
       <p>YOU WERE NEVER HERE.</p>
     </div>
-    <span class="category">VERSION 1.0</span>
+    <span class="category">VERSION 1.1</span>
   </div>
 
 </section>
 
-
-<!-- LINK GENERATOR -->
-
-<section id="links" class="page">
-
-  <h1>LINK GENERATOR</h1>
-  <p class="muted">CREATE A LINK TO ANY PART OF WHYAMHERE.</p>
-
-  <div class="link-panel">
-
-    <h2 class="section-title" style="margin-top:0">
-      CREATE A SHARE LINK
-    </h2>
-
-    <p class="muted">
-      Choose a page or game. Your website will generate
-      a link that opens directly at that destination.
-    </p>
-
-    <label for="linkChoice">CHOOSE DESTINATION</label>
-
-    <select id="linkChoice">
-      <option value="page:lobby">LOBBY</option>
-      <option value="page:games">GAME DIRECTORY</option>
-      <option value="page:settings">SETTINGS</option>
-      <option value="game:burrito">BURRITO BISON</option>
-      <option value="game:toby">UNDERTALE / DELTARUNE</option>
-      <option value="game:dashers">WEB DASHERS</option>
-      <option value="game:slendy">SLENDYTUBBIES 1</option>
-    </select>
-
-    <div class="link-buttons">
-      <button onclick="generateLink()">GENERATE LINK →</button>
-    </div>
-
-    <label for="generatedLink">YOUR GENERATED LINK</label>
-
-    <input
-      class="link-input"
-      id="generatedLink"
-      type="text"
-      readonly
-      placeholder="Your link will appear here..."
-    >
-
-    <div class="link-buttons">
-      <button onclick="copyGeneratedLink()">COPY LINK</button>
-      <button onclick="openGeneratedLink()">OPEN LINK ↗</button>
-    </div>
-
-    <p id="linkStatus">
-      Waiting for a destination...
-    </p>
-
-  </div>
-
-</section>
-
-
-<!-- INDIVIDUAL GAME PLAYER -->
 
 <section id="player" class="page">
 
@@ -595,15 +536,11 @@ whyaimhere // YOU WERE NEVER HERE
 
 function showPage(page) {
 
-  const section = document.getElementById(page);
-
-  if (!section) return;
-
-  document.querySelectorAll('.page').forEach(item => {
-    item.classList.remove('active');
+  document.querySelectorAll('.page').forEach(section => {
+    section.classList.remove('active');
   });
 
-  section.classList.add('active');
+  document.getElementById(page).classList.add('active');
 
   document.querySelectorAll('nav button').forEach(button => {
     button.classList.remove('active');
@@ -612,8 +549,8 @@ function showPage(page) {
   const nav = document.getElementById(
     page === 'lobby' ? 'navLobby' :
     page === 'games' ? 'navGames' :
-    page === 'settings' ? 'navSettings' :
-    page === 'links' ? 'navLinks' : ''
+    page === 'links' ? 'navLinks' :
+    page === 'settings' ? 'navSettings' : ''
   );
 
   if (nav) nav.classList.add('active');
@@ -688,11 +625,7 @@ function openGame(id) {
 
     document.getElementById("enterWorldButton")
       .addEventListener("click", () => {
-        window.open(
-          game.url,
-          "_blank",
-          "noopener,noreferrer"
-        );
+        window.open(game.url, "_blank", "noopener,noreferrer");
       });
 
   } else {
@@ -712,8 +645,7 @@ function openGame(id) {
           </p>
           <p>
             <a href="https://nobrowebport.itch.io/slendytubbies-web-port"
-              target="_blank"
-              rel="noopener noreferrer"
+              target="_blank" rel="noopener noreferrer"
               style="color:#d6a3ff">
               VIEW GAME PAGE →
             </a>
@@ -728,26 +660,20 @@ function openGame(id) {
 
     area.innerHTML = `
       <div class="game-container" id="activeGameContainer">
-
         <iframe
-          id="activeGameFrame"
           src="${game.url}"
           title="${game.title}"
           allow="fullscreen; autoplay"
           allowfullscreen>
         </iframe>
-
       </div>
 
       <div class="player-controls">
-        <p>${game.info}</p>
-
+        <p>GAME PLAYER // EMBED TEST</p>
         <button onclick="fullscreenGame()">
           ⛶ FULLSCREEN
         </button>
       </div>
-
-      <p id="fullscreenStatus"></p>
 
       ${credits}
     `;
@@ -759,165 +685,142 @@ function openGame(id) {
 
 // FULLSCREEN
 
-async function fullscreenGame() {
+function fullscreenGame() {
 
-  const frame = document.getElementById("activeGameFrame");
-  const container = document.getElementById("activeGameContainer");
-  const status = document.getElementById("fullscreenStatus");
+  const game = document.getElementById(
+    "activeGameContainer"
+  );
 
-  if (!frame || !container) {
-    if (status) {
-      status.textContent = "No embedded game is available.";
-    }
-    return;
+  if (game && game.requestFullscreen) {
+    game.requestFullscreen();
+  } else if (game && game.webkitRequestFullscreen) {
+    game.webkitRequestFullscreen();
   }
 
-  try {
-
-    // Try fullscreen on the actual iframe first.
-
-    if (frame.requestFullscreen) {
-      await frame.requestFullscreen();
-    }
-
-    // Try the container if iframe fullscreen is unavailable.
-
-    else if (container.requestFullscreen) {
-      await container.requestFullscreen();
-    }
-
-    // Older browser fallback.
-
-    else if (container.webkitRequestFullscreen) {
-      container.webkitRequestFullscreen();
-    }
-
-    else {
-      if (status) {
-        status.textContent =
-          "Fullscreen is not supported by this browser.";
-      }
-    }
-
-  } catch (error) {
-
-    if (status) {
-      status.textContent =
-        "Fullscreen was blocked. The game host or browser may not allow it.";
-    }
-
-  }
 }
 
 
-// LINK GENERATOR
+// RANDOM SHARE LINK GENERATOR
+
+const SITE_URL = "https://sishdtydjs-dot.github.io/whyamihere/";
+
+let currentGeneratedLink = "";
+let previousCode = "";
+
+// Create a random code without a predictable sequence.
+
+function randomCode() {
+
+  const characters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+  const randomValues = new Uint32Array(12);
+  crypto.getRandomValues(randomValues);
+
+  let code = "";
+
+  for (let i = 0; i < randomValues.length; i++) {
+    code += characters[randomValues[i] % characters.length];
+  }
+
+  return code;
+}
 
 function generateLink() {
 
-  const choice = document.getElementById("linkChoice").value;
+  let code;
 
-  const parts = choice.split(":");
-  const type = parts[0];
-  const destination = parts[1];
+  do {
+    code = randomCode();
+  } while (code === previousCode);
 
-  const link = new URL(window.location.href);
+  previousCode = code;
 
-  // Remove old destination parameters.
+  currentGeneratedLink =
+    SITE_URL + "?share=" + code;
 
-  link.searchParams.delete("go");
-
-  // Add the new destination.
-
-  if (type === "page") {
-    link.searchParams.set("go", destination);
-  }
-
-  else if (type === "game" && games[destination]) {
-    link.searchParams.set("go", "game-" + destination);
-  }
-
-  document.getElementById("generatedLink").value =
-    link.toString();
+  document.getElementById("generatedLink").textContent =
+    currentGeneratedLink;
 
   document.getElementById("linkStatus").textContent =
-    "LINK GENERATED. COPY IT AND SHARE IT.";
+    "NEW SHARE LINK GENERATED // " + code;
+
 }
 
+function copyLink() {
 
-async function copyGeneratedLink() {
-
-  const field = document.getElementById("generatedLink");
-  const status = document.getElementById("linkStatus");
-
-  if (!field.value) {
-    status.textContent = "GENERATE A LINK FIRST.";
-    return;
+  if (!currentGeneratedLink) {
+    generateLink();
   }
+
+  if (navigator.clipboard && window.isSecureContext) {
+
+    navigator.clipboard.writeText(currentGeneratedLink)
+      .then(() => {
+        document.getElementById("linkStatus").textContent =
+          "LINK COPIED SUCCESSFULLY.";
+      })
+      .catch(() => {
+        fallbackCopy();
+      });
+
+  } else {
+    fallbackCopy();
+  }
+
+}
+
+function fallbackCopy() {
+
+  const field = document.createElement("textarea");
+  field.value = currentGeneratedLink;
+
+  document.body.appendChild(field);
+  field.select();
 
   try {
+    document.execCommand("copy");
 
-    await navigator.clipboard.writeText(field.value);
-
-    status.textContent = "LINK COPIED.";
-
+    document.getElementById("linkStatus").textContent =
+      "LINK COPIED SUCCESSFULLY.";
   } catch (error) {
-
-    field.focus();
-    field.select();
-
-    try {
-      document.execCommand("copy");
-      status.textContent = "LINK COPIED.";
-    } catch (copyError) {
-      status.textContent =
-        "COPY FAILED. SELECT THE LINK AND COPY IT MANUALLY.";
-    }
-
+    document.getElementById("linkStatus").textContent =
+      "COPY FAILED // SELECT THE LINK MANUALLY.";
   }
-}
 
+  field.remove();
+
+}
 
 function openGeneratedLink() {
 
-  const link = document.getElementById("generatedLink").value;
-
-  if (!link) {
-    document.getElementById("linkStatus").textContent =
-      "GENERATE A LINK FIRST.";
-    return;
+  if (!currentGeneratedLink) {
+    generateLink();
   }
 
-  window.open(link, "_blank", "noopener,noreferrer");
+  window.open(
+    currentGeneratedLink,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
 }
 
 
-// LOAD DESTINATION FROM GENERATED LINK
+// HANDLE SHARED LINKS
 
-function loadSharedDestination() {
+function handleIncomingShare() {
 
   const params = new URLSearchParams(window.location.search);
-  const destination = params.get("go");
+  const code = params.get("share");
 
-  if (!destination) return;
+  if (code) {
 
-  if (destination.startsWith("game-")) {
+    document.getElementById("linkStatus").textContent =
+      "SHARED LINK OPENED // " + code;
 
-    const gameId = destination.substring(5);
+    showPage("lobby");
 
-    if (games[gameId]) {
-      openGame(gameId);
-      return;
-    }
-
-  }
-
-  if (
-    destination === "lobby" ||
-    destination === "games" ||
-    destination === "settings" ||
-    destination === "links"
-  ) {
-    showPage(destination);
   }
 
 }
@@ -947,7 +850,6 @@ function changeTheme() {
   ).value;
 
   if (theme === "purple") {
-
     document.documentElement.style.setProperty(
       "--bg", "#100817"
     );
@@ -977,28 +879,18 @@ function changeTheme() {
 const savedGlow = localStorage.getItem("whyaimhereGlow");
 
 if (savedGlow === "false") {
-
   document.getElementById("glowToggle").checked = false;
-
   document.body.classList.add("no-glow");
-
 }
-
 
 const savedTheme = localStorage.getItem("whyaimhereTheme");
 
 if (savedTheme) {
-
   document.getElementById("themeSelect").value = savedTheme;
-
   changeTheme();
-
 }
 
-
-// LOAD A SHARED LINK IF ONE WAS OPENED
-
-loadSharedDestination();
+handleIncomingShare();
 
 </script>
 
