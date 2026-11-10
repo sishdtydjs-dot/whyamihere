@@ -280,6 +280,17 @@ select {
   letter-spacing: 1px;
 }
 
+.game-credit {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.game-credit a {
+  color: #d6a3ff;
+}
+
 footer {
   text-align: center;
   padding: 40px;
@@ -364,10 +375,10 @@ footer {
     </div>
 
     <div class="game-card">
-      <span class="category">HORROR</span>
-      <h3>SLENDYTUBBIES 1</h3>
-      <p>GAME 004 // THE CLASSIC WEB PORT</p>
-      <button onclick="openGame('slendy')">ENTER →</button>
+      <span class="category">ARCADE</span>
+      <h3>SUBWAY SURFERS</h3>
+      <p>GAME 004 // RUN THROUGH THE CITY</p>
+      <button onclick="openGame('subway')">PLAY →</button>
     </div>
 
   </div>
@@ -410,9 +421,9 @@ footer {
 
     <div class="game-card">
       <span class="category">GAME 004</span>
-      <h3>SLENDYTUBBIES 1</h3>
-      <p>THE CLASSIC WEB PORT</p>
-      <button onclick="openGame('slendy')">ENTER GAME →</button>
+      <h3>SUBWAY SURFERS</h3>
+      <p>RUN THROUGH THE CITY.</p>
+      <button onclick="openGame('subway')">PLAY GAME →</button>
     </div>
 
   </div>
@@ -504,7 +515,7 @@ footer {
       <strong>About whyaimhere</strong>
       <p>YOU WERE NEVER HERE.</p>
     </div>
-    <span class="category">VERSION 1.1</span>
+    <span class="category">VERSION 1.2</span>
   </div>
 
 </section>
@@ -584,10 +595,11 @@ const games = {
     external: false
   },
 
-  slendy: {
-    title: "SLENDYTUBBIES 1",
-    info: "GAME 004 // THE CLASSIC WEB PORT",
-    url: "https://nobrowebport.itch.io/slendytubbies-web-port",
+  subway: {
+    title: "SUBWAY SURFERS",
+    info: "GAME 004 // RUN THROUGH THE CITY",
+    url: "https://www.madkidgames.com/full/subway-surfers",
+    creditUrl: "https://www.madkidgames.com/game/subway-surfers",
     external: false,
     credits: true
   }
@@ -636,23 +648,17 @@ function openGame(id) {
       credits = `
         <div class="game-card" style="margin-top:20px">
           <h3>GAME INFORMATION</h3>
-          <p>WEB PORT: nobrowebport</p>
-          <p>ORIGINAL GAME: Slendytubbies by ZeoWorks</p>
-          <p>PORT CREDIT: 98Corbins</p>
+          <p>GAME: Subway Surfers</p>
+          <p>HOST: MadKidGames</p>
           <p class="muted">
-            This is a browser-hosted port. The original game
-            and its assets belong to their respective owners.
+            Game and related assets belong to their
+            respective owners.
           </p>
-          <p>
-            <a href="https://nobrowebport.itch.io/slendytubbies-web-port"
-              target="_blank" rel="noopener noreferrer"
-              style="color:#d6a3ff">
-              VIEW GAME PAGE →
+          <p class="game-credit">
+            <a href="${game.creditUrl}"
+              target="_blank" rel="noopener noreferrer">
+              PLAY SUBWAY SURFERS ON MADKIDGAMES →
             </a>
-          </p>
-          <p class="muted">
-            KEYBOARD CONTROLS: WASD / ARROWS, C, F, M.
-            MOBILE CONTROLS MAY NOT BE AVAILABLE.
           </p>
         </div>
       `;
@@ -664,7 +670,10 @@ function openGame(id) {
           src="${game.url}"
           title="${game.title}"
           allow="fullscreen; autoplay"
-          allowfullscreen>
+          allowfullscreen
+          scrolling="no"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
         </iframe>
       </div>
 
@@ -706,8 +715,6 @@ const SITE_URL = "https://sishdtydjs-dot.github.io/whyamihere/";
 
 let currentGeneratedLink = "";
 let previousCode = "";
-
-// Create a random code without a predictable sequence.
 
 function randomCode() {
 
