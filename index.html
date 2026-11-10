@@ -388,6 +388,13 @@ footer {
       <button onclick="openGame('banana')">PLAY →</button>
     </div>
 
+    <div class="game-card">
+      <span class="category">MUSIC</span>
+      <h3>SPRUNKI</h3>
+      <p>GAME 006 // MAKE YOUR OWN BEATS</p>
+      <button onclick="openGame('sprunki')">PLAY →</button>
+    </div>
+
   </div>
 
   <h2 class="section-title">SYSTEM STATUS</h2>
@@ -440,12 +447,17 @@ footer {
       <button onclick="openGame('banana')">PLAY GAME →</button>
     </div>
 
+    <div class="game-card">
+      <span class="category">GAME 006</span>
+      <h3>SPRUNKI</h3>
+      <p>MIX SOUNDS AND MAKE MUSIC.</p>
+      <button onclick="openGame('sprunki')">PLAY GAME →</button>
+    </div>
+
   </div>
 
 </section>
 
-
-<!-- RANDOM SHARE LINKS -->
 
 <section id="links" class="page">
 
@@ -529,7 +541,7 @@ footer {
       <strong>About whyaimhere</strong>
       <p>YOU WERE NEVER HERE.</p>
     </div>
-    <span class="category">VERSION 1.3</span>
+    <span class="category">VERSION 1.4</span>
   </div>
 
 </section>
@@ -625,6 +637,14 @@ const games = {
     creditUrl: "https://www.madkidgames.com/game/banana-kong",
     external: false,
     credits: true
+  },
+
+  sprunki: {
+    title: "SPRUNKI",
+    info: "GAME 006 // MAKE YOUR OWN BEATS",
+    url: "https://sprunki.org/online/",
+    external: false,
+    sprunkiCredits: true
   }
 
 };
@@ -682,6 +702,30 @@ function openGame(id) {
               target="_blank" rel="noopener noreferrer">
               PLAY ${game.title} ON MADKIDGAMES →
             </a>
+          </p>
+        </div>
+      `;
+    }
+
+    if (game.sprunkiCredits) {
+      credits = `
+        <div class="game-card" style="margin-top:20px">
+          <h3>GAME INFORMATION</h3>
+          <p>GAME TYPE: MUSIC / CREATIVE</p>
+          <p>Mix characters and sounds to create music.</p>
+          <p class="muted">
+            Sprunki is a fan-made music game inspired by
+            Incredibox. Content belongs to its respective owners.
+          </p>
+          <p class="game-credit">
+            <a href="${game.url}"
+              target="_blank" rel="noopener noreferrer">
+              OPEN SPRUNKI DIRECTLY →
+            </a>
+          </p>
+          <p class="muted">
+            If the embedded player does not load, use the
+            direct link above.
           </p>
         </div>
       `;
