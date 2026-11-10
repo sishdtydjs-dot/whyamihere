@@ -14,7 +14,6 @@
   --panel: #0d0914;
   --purple: #d6a3ff;
   --border: #56346d;
-  --muted: #888;
 }
 
 body {
@@ -107,6 +106,26 @@ main {
   font-size: 13px;
   letter-spacing: 8px;
   opacity: .6;
+  pointer-events: none;
+}
+
+.secret-hotspot {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  width: 175px;
+  height: 55px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  opacity: .02;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.secret-hotspot:focus-visible {
+  opacity: 1;
+  outline: 2px solid var(--purple);
 }
 
 .hero h1 {
@@ -281,15 +300,13 @@ select {
 }
 
 .game-credit {
-  margin: 8px 0 0;
-  font-size: 13px;
-  line-height: 1.4;
-  text-align: center;
+  margin-top: 20px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 20px;
 }
 
-.game-credit a {
-  color: #d6a3ff;
-}
+.game-credit a { color: var(--purple); }
 
 footer {
   text-align: center;
@@ -300,6 +317,48 @@ footer {
 }
 
 .back-button { margin-bottom: 25px; }
+
+/* SECRET PAGE */
+.secret-page {
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  margin: 0;
+  padding: 0;
+  background:
+    linear-gradient(#0003, #0003),
+    url("https://media1.tenor.com/m/GYnvtKcQK18AAAAd/blue-eyed-haircut-kid.gif")
+    center center / cover no-repeat;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.secret-page.active {
+  display: flex;
+}
+
+.secret-page h1 {
+  color: white;
+  font-size: clamp(40px, 9vw, 90px);
+  letter-spacing: 3px;
+  text-shadow: 0 0 15px #000, 0 0 30px #000;
+  margin: 0;
+  text-align: center;
+}
+
+.secret-back {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  padding: 9px 14px;
+  background: #0008;
+  border: 1px solid #ffffff55;
+  color: white;
+  font-size: 20px;
+}
 
 @media(max-width: 700px) {
   header { padding: 12px 3%; gap: 10px; }
@@ -320,24 +379,16 @@ footer {
   </div>
 
   <nav>
-    <button id="navLobby" class="active"
-      onclick="showPage('lobby')">LOBBY</button>
-
-    <button id="navGames"
-      onclick="showPage('games')">GAMES</button>
-
-    <button id="navLinks"
-      onclick="showPage('links')">LINKS</button>
-
-    <button id="navSettings"
-      onclick="showPage('settings')">SETTINGS</button>
+    <button id="navLobby" class="active" onclick="showPage('lobby')">LOBBY</button>
+    <button id="navGames" onclick="showPage('games')">GAMES</button>
+    <button id="navLinks" onclick="showPage('links')">LINKS</button>
+    <button id="navSettings" onclick="showPage('settings')">SETTINGS</button>
   </nav>
 </header>
 
 <main>
 
 <section id="lobby" class="page active">
-
   <div class="hero">
     <h1>WHERE ARE YOU?</h1>
     <p>WELCOME TO SOMEWHERE IN 1999.</p>
@@ -345,6 +396,11 @@ footer {
 
     <button onclick="showPage('games')">
       ENTER THE GAME ROOM →
+    </button>
+
+    <button class="secret-hotspot"
+      onclick="showPage('secret')"
+      aria-label="Secret page">
     </button>
   </div>
 
@@ -375,23 +431,16 @@ footer {
     </div>
 
     <div class="game-card">
-      <span class="category">ARCADE</span>
-      <h3>SUBWAY SURFERS</h3>
-      <p>GAME 004 // RUN THROUGH THE CITY</p>
-      <button onclick="openGame('subway')">PLAY →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">ARCADE</span>
-      <h3>BANANA KONG</h3>
-      <p>GAME 005 // THE JUNGLE RUN</p>
-      <button onclick="openGame('banana')">PLAY →</button>
+      <span class="category">HORROR</span>
+      <h3>SLENDYTUBBIES 1</h3>
+      <p>GAME 004 // THE CLASSIC WEB PORT</p>
+      <button onclick="openGame('slendy')">ENTER →</button>
     </div>
 
     <div class="game-card">
       <span class="category">MUSIC</span>
       <h3>SPRUNKI</h3>
-      <p>GAME 006 // MAKE YOUR OWN BEATS</p>
+      <p>GAME 005 // MAKE YOUR OWN BEATS</p>
       <button onclick="openGame('sprunki')">PLAY →</button>
     </div>
 
@@ -399,15 +448,12 @@ footer {
 
   <h2 class="section-title">SYSTEM STATUS</h2>
   <p class="muted">ONLINE // SOMEWHERE IN 1999</p>
-
 </section>
 
 
 <section id="games" class="page">
-
   <h1>GAME DIRECTORY</h1>
   <p class="muted">CHOOSE YOUR DESTINATION.</p>
-
   <div class="category">BROWSER GAMES</div>
 
   <div class="game-grid">
@@ -435,60 +481,39 @@ footer {
 
     <div class="game-card">
       <span class="category">GAME 004</span>
-      <h3>SUBWAY SURFERS</h3>
-      <p>RUN THROUGH THE CITY.</p>
-      <button onclick="openGame('subway')">PLAY GAME →</button>
+      <h3>SLENDYTUBBIES 1</h3>
+      <p>THE CLASSIC WEB PORT</p>
+      <button onclick="openGame('slendy')">ENTER GAME →</button>
     </div>
 
     <div class="game-card">
       <span class="category">GAME 005</span>
-      <h3>BANANA KONG</h3>
-      <p>THE JUNGLE RUN.</p>
-      <button onclick="openGame('banana')">PLAY GAME →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">GAME 006</span>
       <h3>SPRUNKI</h3>
       <p>MIX SOUNDS AND MAKE MUSIC.</p>
       <button onclick="openGame('sprunki')">PLAY GAME →</button>
     </div>
 
   </div>
-
 </section>
 
 
 <section id="links" class="page">
-
   <h1>LINK GENERATOR</h1>
   <p class="muted">A DIFFERENT RANDOM SHARE LINK EACH TIME.</p>
 
   <div class="link-panel">
     <span class="category">RANDOM SHARE SYSTEM</span>
-
     <h2 class="section-title">SOMEWHERE ELSE.</h2>
-
-    <p class="muted">
-      GENERATE A RANDOM SHARE ADDRESS FOR THIS WEBSITE.
-    </p>
+    <p class="muted">GENERATE A RANDOM SHARE ADDRESS FOR THIS WEBSITE.</p>
 
     <div class="link-display" id="generatedLink">
       NO LINK GENERATED YET.
     </div>
 
     <div class="link-actions">
-      <button onclick="generateLink()">
-        GENERATE RANDOM LINK →
-      </button>
-
-      <button onclick="copyLink()">
-        COPY LINK
-      </button>
-
-      <button onclick="openGeneratedLink()">
-        OPEN LINK ↗
-      </button>
+      <button onclick="generateLink()">GENERATE RANDOM LINK →</button>
+      <button onclick="copyLink()">COPY LINK</button>
+      <button onclick="openGeneratedLink()">OPEN LINK ↗</button>
     </div>
 
     <p class="link-status" id="linkStatus">
@@ -507,12 +532,10 @@ footer {
       NOT SEPARATE DOMAINS.
     </p>
   </div>
-
 </section>
 
 
 <section id="settings" class="page">
-
   <h1>SETTINGS</h1>
   <p class="muted">CHANGE YOUR LITTLE CORNER OF THE INTERNET.</p>
 
@@ -543,53 +566,58 @@ footer {
     </div>
     <span class="category">VERSION 1.4</span>
   </div>
-
 </section>
 
 
 <section id="player" class="page">
-
   <button class="back-button" onclick="showPage('games')">
     ← BACK TO GAME DIRECTORY
   </button>
 
   <h1 id="playerTitle">GAME</h1>
   <p class="muted" id="playerInfo">GAME PLAYER</p>
-
   <div id="playerArea"></div>
-
 </section>
 
 </main>
 
+<section id="secret" class="page secret-page">
+  <button class="secret-back"
+    onclick="showPage('lobby')"
+    aria-label="Back to lobby">←</button>
+  <h1>ight bru</h1>
+</section>
+
 <footer>
-whyaimhere // YOU WERE NEVER HERE
+  whyaimhere // YOU WERE NEVER HERE
 </footer>
 
 
 <script>
-
 // PAGE NAVIGATION
 
 function showPage(page) {
+  const selectedPage = document.getElementById(page);
+  if (!selectedPage) return;
 
   document.querySelectorAll('.page').forEach(section => {
     section.classList.remove('active');
   });
 
-  document.getElementById(page).classList.add('active');
+  selectedPage.classList.add('active');
 
   document.querySelectorAll('nav button').forEach(button => {
     button.classList.remove('active');
   });
 
-  const nav = document.getElementById(
-    page === 'lobby' ? 'navLobby' :
-    page === 'games' ? 'navGames' :
-    page === 'links' ? 'navLinks' :
-    page === 'settings' ? 'navSettings' : ''
-  );
+  const navIds = {
+    lobby: 'navLobby',
+    games: 'navGames',
+    links: 'navLinks',
+    settings: 'navSettings'
+  };
 
+  const nav = document.getElementById(navIds[page] || '');
   if (nav) nav.classList.add('active');
 
   window.scrollTo(0, 0);
@@ -599,7 +627,6 @@ function showPage(page) {
 // GAME INFORMATION
 
 const games = {
-
   burrito: {
     title: "BURRITO BISON",
     info: "GAME 001 // LAUNCHA LIBRE",
@@ -621,60 +648,41 @@ const games = {
     external: false
   },
 
-  subway: {
-    title: "SUBWAY SURFERS",
-    info: "GAME 004 // RUN THROUGH THE CITY",
-    url: "https://www.madkidgames.com/full/subway-surfers",
-    creditUrl: "https://www.madkidgames.com/game/subway-surfers",
-    external: false,
-    credits: true
-  },
-
-  banana: {
-    title: "BANANA KONG",
-    info: "GAME 005 // THE JUNGLE RUN",
-    url: "https://www.madkidgames.com/full/banana-kong",
-    creditUrl: "https://www.madkidgames.com/game/banana-kong",
+  slendy: {
+    title: "SLENDYTUBBIES 1",
+    info: "GAME 004 // THE CLASSIC WEB PORT",
+    url: "https://nobrowebport.itch.io/slendytubbies-web-port",
     external: false,
     credits: true
   },
 
   sprunki: {
     title: "SPRUNKI",
-    info: "GAME 006 // MAKE YOUR OWN BEATS",
+    info: "GAME 005 // MAKE YOUR OWN BEATS",
     url: "https://sprunki.org/online/",
     external: false,
     sprunkiCredits: true
   }
-
 };
 
 
 // OPEN GAME
 
 function openGame(id) {
-
   const game = games[id];
-
   if (!game) return;
 
-  document.getElementById("playerTitle").textContent =
-    game.title;
-
-  document.getElementById("playerInfo").textContent =
-    game.info;
+  document.getElementById("playerTitle").textContent = game.title;
+  document.getElementById("playerInfo").textContent = game.info;
 
   const area = document.getElementById("playerArea");
 
   if (game.external) {
-
     area.innerHTML = `
       <div class="game-card">
         <h3>CHOOSE YOUR WORLD</h3>
         <p>This game is hosted on another website.</p>
-        <button id="enterWorldButton">
-          ENTER WORLD →
-        </button>
+        <button id="enterWorldButton">ENTER WORLD →</button>
       </div>
     `;
 
@@ -684,24 +692,28 @@ function openGame(id) {
       });
 
   } else {
-
     let credits = "";
 
     if (game.credits) {
       credits = `
-        <div class="game-card" style="margin-top:20px">
+        <div class="game-credit">
           <h3>GAME INFORMATION</h3>
-          <p>GAME: ${game.title}</p>
-          <p>HOST: MadKidGames</p>
+          <p>WEB PORT: nobrowebport</p>
+          <p>ORIGINAL GAME: Slendytubbies by ZeoWorks</p>
+          <p>PORT CREDIT: 98Corbins</p>
           <p class="muted">
-            Game and related assets belong to their
-            respective owners.
+            This is a browser-hosted port. The original game
+            and its assets belong to their respective owners.
           </p>
-          <p class="game-credit">
-            <a href="${game.creditUrl}"
+          <p>
+            <a href="https://nobrowebport.itch.io/slendytubbies-web-port"
               target="_blank" rel="noopener noreferrer">
-              PLAY ${game.title} ON MADKIDGAMES →
+              VIEW GAME PAGE →
             </a>
+          </p>
+          <p class="muted">
+            KEYBOARD CONTROLS: WASD / ARROWS, C, F, M.
+            MOBILE CONTROLS MAY NOT BE AVAILABLE.
           </p>
         </div>
       `;
@@ -709,17 +721,16 @@ function openGame(id) {
 
     if (game.sprunkiCredits) {
       credits = `
-        <div class="game-card" style="margin-top:20px">
+        <div class="game-credit">
           <h3>GAME INFORMATION</h3>
           <p>GAME TYPE: MUSIC / CREATIVE</p>
           <p>Mix characters and sounds to create music.</p>
           <p class="muted">
-            Sprunki is a fan-made music game inspired by
-            Incredibox. Content belongs to its respective owners.
+            Sprunki is a fan-made mod inspired by Incredibox.
+            Its game content belongs to its respective creators.
           </p>
-          <p class="game-credit">
-            <a href="${game.url}"
-              target="_blank" rel="noopener noreferrer">
+          <p>
+            <a href="${game.url}" target="_blank" rel="noopener noreferrer">
               OPEN SPRUNKI DIRECTLY →
             </a>
           </p>
@@ -738,17 +749,13 @@ function openGame(id) {
           title="${game.title}"
           allow="fullscreen; autoplay"
           allowfullscreen
-          scrolling="no"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
+          loading="lazy">
         </iframe>
       </div>
 
       <div class="player-controls">
         <p>GAME PLAYER // EMBED TEST</p>
-        <button onclick="fullscreenGame()">
-          ⛶ FULLSCREEN
-        </button>
+        <button onclick="fullscreenGame()">⛶ FULLSCREEN</button>
       </div>
 
       ${credits}
@@ -762,17 +769,13 @@ function openGame(id) {
 // FULLSCREEN
 
 function fullscreenGame() {
-
-  const game = document.getElementById(
-    "activeGameContainer"
-  );
+  const game = document.getElementById("activeGameContainer");
 
   if (game && game.requestFullscreen) {
     game.requestFullscreen();
   } else if (game && game.webkitRequestFullscreen) {
     game.webkitRequestFullscreen();
   }
-
 }
 
 
@@ -784,24 +787,28 @@ let currentGeneratedLink = "";
 let previousCode = "";
 
 function randomCode() {
-
   const characters =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-  const randomValues = new Uint32Array(12);
-  crypto.getRandomValues(randomValues);
-
   let code = "";
 
-  for (let i = 0; i < randomValues.length; i++) {
-    code += characters[randomValues[i] % characters.length];
+  if (window.crypto && window.crypto.getRandomValues) {
+    const randomValues = new Uint32Array(12);
+    window.crypto.getRandomValues(randomValues);
+
+    for (let i = 0; i < randomValues.length; i++) {
+      code += characters[randomValues[i] % characters.length];
+    }
+  } else {
+    for (let i = 0; i < 12; i++) {
+      code += characters[Math.floor(Math.random() * characters.length)];
+    }
   }
 
   return code;
 }
 
 function generateLink() {
-
   let code;
 
   do {
@@ -809,43 +816,31 @@ function generateLink() {
   } while (code === previousCode);
 
   previousCode = code;
-
-  currentGeneratedLink =
-    SITE_URL + "?share=" + code;
+  currentGeneratedLink = SITE_URL + "?share=" + code;
 
   document.getElementById("generatedLink").textContent =
     currentGeneratedLink;
 
   document.getElementById("linkStatus").textContent =
     "NEW SHARE LINK GENERATED // " + code;
-
 }
 
 function copyLink() {
-
-  if (!currentGeneratedLink) {
-    generateLink();
-  }
+  if (!currentGeneratedLink) generateLink();
 
   if (navigator.clipboard && window.isSecureContext) {
-
     navigator.clipboard.writeText(currentGeneratedLink)
       .then(() => {
         document.getElementById("linkStatus").textContent =
           "LINK COPIED SUCCESSFULLY.";
       })
-      .catch(() => {
-        fallbackCopy();
-      });
-
+      .catch(() => fallbackCopy());
   } else {
     fallbackCopy();
   }
-
 }
 
 function fallbackCopy() {
-
   const field = document.createElement("textarea");
   field.value = currentGeneratedLink;
 
@@ -854,7 +849,6 @@ function fallbackCopy() {
 
   try {
     document.execCommand("copy");
-
     document.getElementById("linkStatus").textContent =
       "LINK COPIED SUCCESSFULLY.";
   } catch (error) {
@@ -863,85 +857,48 @@ function fallbackCopy() {
   }
 
   field.remove();
-
 }
 
 function openGeneratedLink() {
+  if (!currentGeneratedLink) generateLink();
 
-  if (!currentGeneratedLink) {
-    generateLink();
-  }
-
-  window.open(
-    currentGeneratedLink,
-    "_blank",
-    "noopener,noreferrer"
-  );
-
+  window.open(currentGeneratedLink, "_blank", "noopener,noreferrer");
 }
 
 
 // HANDLE SHARED LINKS
 
 function handleIncomingShare() {
-
   const params = new URLSearchParams(window.location.search);
   const code = params.get("share");
 
   if (code) {
-
     document.getElementById("linkStatus").textContent =
       "SHARED LINK OPENED // " + code;
 
     showPage("lobby");
-
   }
-
 }
 
 
 // SETTINGS
 
 function toggleGlow() {
+  const enabled = document.getElementById("glowToggle").checked;
 
-  const enabled = document.getElementById(
-    "glowToggle"
-  ).checked;
-
-  document.body.classList.toggle(
-    "no-glow",
-    !enabled
-  );
-
+  document.body.classList.toggle("no-glow", !enabled);
   localStorage.setItem("whyaimhereGlow", enabled);
 }
 
-
 function changeTheme() {
-
-  const theme = document.getElementById(
-    "themeSelect"
-  ).value;
+  const theme = document.getElementById("themeSelect").value;
 
   if (theme === "purple") {
-    document.documentElement.style.setProperty(
-      "--bg", "#100817"
-    );
-
-    document.documentElement.style.setProperty(
-      "--panel", "#1a1025"
-    );
-
+    document.documentElement.style.setProperty("--bg", "#100817");
+    document.documentElement.style.setProperty("--panel", "#1a1025");
   } else {
-
-    document.documentElement.style.setProperty(
-      "--bg", "#050509"
-    );
-
-    document.documentElement.style.setProperty(
-      "--panel", "#0d0914"
-    );
-
+    document.documentElement.style.setProperty("--bg", "#050509");
+    document.documentElement.style.setProperty("--panel", "#0d0914");
   }
 
   localStorage.setItem("whyaimhereTheme", theme);
@@ -950,23 +907,15 @@ function changeTheme() {
 
 // LOAD SAVED SETTINGS
 
-const savedGlow = localStorage.getItem("whyaimhereGlow");
+function loadSettings() {
+  const savedGlow = localStorage.getItem("whyaimhereGlow");
+  const savedTheme = localStorage.getItem("whyaimhereTheme");
 
-if (savedGlow === "false") {
-  document.getElementById("glowToggle").checked = false;
-  document.body.classList.add("no-glow");
-}
+  if (savedGlow === "false") {
+    document.getElementById("glowToggle").checked = false;
+    document.body.classList.add("no-glow");
+  }
 
-const savedTheme = localStorage.getItem("whyaimhereTheme");
-
-if (savedTheme) {
-  document.getElementById("themeSelect").value = savedTheme;
-  changeTheme();
-}
-
-handleIncomingShare();
-
-</script>
-
-</body>
-</html>
+  if (savedTheme === "purple" || savedTheme === "dark") {
+    document.getElementById("themeSelect").value = savedTheme;
+  
