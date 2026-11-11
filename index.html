@@ -5,101 +5,93 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#171126">
-<title>whyaimhere</title>
+<title>whyamihere</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
 * { box-sizing: border-box; }
 
 :root {
   --bg: #171126;
-  --panel: #211a35;
-  --accent: #d7b5ff;
+  --panel: #29203d;
+  --accent: #e0c4ff;
   --accent2: #ffbde7;
-  --border: #80629c;
-  --text: #fff2ff;
-  --muted: #c0accd;
-  --blob1: #8e66c8;
-  --blob2: #d77eb8;
-  --blob3: #75a9bd;
+  --border: #9879b5;
+  --muted: #d0bedc;
+  --blob1: #9872d1;
+  --blob2: #e58bc5;
+  --blob3: #7faec8;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  color: var(--text);
+  color: #fff2ff;
   background: var(--bg);
-  font-family: Arial, sans-serif;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  line-height: 1.8;
   overflow-x: hidden;
-  transition: background .5s, color .5s;
+  transition: background .5s;
 }
 
 body::before,
-body::after {
+body::after,
+.background-orb {
   content: "";
   position: fixed;
-  width: 65vw;
-  height: 65vw;
+  width: 60vw;
+  height: 60vw;
   max-width: 750px;
   max-height: 750px;
   border-radius: 50%;
-  filter: blur(90px);
-  opacity: .23;
+  filter: blur(95px);
   pointer-events: none;
   z-index: -2;
-  transition: opacity .5s;
 }
 
 body::before {
   background: var(--blob1);
+  opacity: .25;
   top: -25%;
   left: -20%;
-  animation: dreamFloat 19s ease-in-out infinite alternate;
+  animation: floatOne 19s ease-in-out infinite alternate;
 }
 
 body::after {
   background: var(--blob2);
+  opacity: .23;
   right: -25%;
   bottom: -30%;
-  animation: dreamFloat2 23s ease-in-out infinite alternate;
+  animation: floatTwo 23s ease-in-out infinite alternate;
 }
 
 .background-orb {
-  position: fixed;
-  width: 50vw;
-  height: 50vw;
-  max-width: 550px;
-  max-height: 550px;
-  border-radius: 50%;
   background: var(--blob3);
-  filter: blur(100px);
-  opacity: .13;
-  pointer-events: none;
-  z-index: -2;
+  opacity: .15;
   top: 35%;
   left: 35%;
-  animation: dreamFloat 25s ease-in-out infinite alternate-reverse;
+  animation: floatOne 25s ease-in-out infinite alternate-reverse;
 }
 
-@keyframes dreamFloat {
-  from { transform: translate(0, 0) scale(1); }
-  to { transform: translate(18vw, 12vh) scale(1.3); }
+@keyframes floatOne {
+  from { transform: translate(0,0) scale(1); }
+  to { transform: translate(18vw,12vh) scale(1.3); }
 }
 
-@keyframes dreamFloat2 {
-  from { transform: translate(0, 0) scale(1.1); }
-  to { transform: translate(-15vw, -12vh) scale(.8); }
+@keyframes floatTwo {
+  from { transform: translate(0,0) scale(1.1); }
+  to { transform: translate(-15vw,-12vh) scale(.8); }
 }
 
 body.no-motion::before,
 body.no-motion::after,
 body.no-motion .background-orb {
   animation: none;
-}
-
-body.no-motion::before,
-body.no-motion::after,
-body.no-motion .background-orb {
-  opacity: .10;
+  opacity: .1;
 }
 
 body.no-glow * {
@@ -119,17 +111,16 @@ header {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: #171126d9;
+  background: #171126e8;
   backdrop-filter: blur(18px);
 }
 
 .logo {
   color: var(--accent);
-  font-size: 23px;
-  font-weight: bold;
-  letter-spacing: 3px;
+  font-size: 15px;
   cursor: pointer;
   text-shadow: 0 0 18px var(--accent);
+  letter-spacing: 1px;
 }
 
 nav {
@@ -138,14 +129,34 @@ nav {
   gap: 5px;
 }
 
+button {
+  font-family: inherit;
+  font-size: 9px;
+  line-height: 1.8;
+  background: #ffffff17;
+  color: white;
+  border: 1px solid var(--accent);
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: .2s;
+  touch-action: manipulation;
+}
+
+button:hover {
+  background: #ffffff30;
+  box-shadow: 0 0 18px #ffffff25;
+}
+
+button:active {
+  transform: scale(.97);
+}
+
 nav button {
   background: transparent;
-  border: 1px solid transparent;
+  border-color: transparent;
   color: #e0d0ed;
-  padding: 10px 11px;
-  cursor: pointer;
-  font-size: 11px;
-  letter-spacing: 2px;
+  padding: 10px;
+  font-size: 8px;
 }
 
 nav button:hover,
@@ -167,14 +178,14 @@ main {
 
 .hero {
   min-height: 360px;
-  padding: 65px 35px;
+  padding: 55px 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
   position: relative;
   overflow: hidden;
   border: 1px solid #ffffff55;
-  border-radius: 5px;
   background:
     linear-gradient(110deg, #171126bb, #3d245b66),
     radial-gradient(ellipse at 80% 20%, var(--blob2), transparent 55%),
@@ -187,8 +198,7 @@ main {
   position: absolute;
   right: 5%;
   bottom: -55px;
-  font-size: clamp(100px, 22vw, 260px);
-  font-weight: bold;
+  font-size: clamp(65px, 18vw, 190px);
   color: #ffffff0b;
   pointer-events: none;
 }
@@ -196,67 +206,39 @@ main {
 .hero h1 {
   position: relative;
   z-index: 1;
-  max-width: 750px;
-  margin: 0 0 20px;
-  font-size: clamp(42px, 8vw, 85px);
-  letter-spacing: 5px;
-  line-height: 1.05;
+  max-width: 850px;
+  margin: 0 0 25px;
+  font-size: clamp(20px, 4vw, 42px);
+  line-height: 1.8;
   color: #fff0ff;
   text-shadow: 0 0 25px var(--accent2);
-}
-
-.hero p {
-  position: relative;
-  z-index: 1;
-  color: #f4dff9;
-  font-size: 12px;
-  letter-spacing: 5px;
 }
 
 .hero button {
   position: relative;
   z-index: 2;
-  width: fit-content;
-  margin-top: 15px;
-}
-
-button {
-  background: #ffffff17;
-  color: white;
-  border: 1px solid var(--accent);
-  padding: 12px 17px;
-  cursor: pointer;
-  letter-spacing: 1px;
-  transition: .2s;
-  touch-action: manipulation;
-}
-
-button:hover {
-  background: #ffffff30;
-  box-shadow: 0 0 18px #ffffff25;
 }
 
 .secret-trigger {
-  position: absolute !important;
+  position: absolute;
   right: 14px;
   bottom: 12px;
-  margin: 0 !important;
-  font-size: 10px;
-  letter-spacing: 5px;
+  z-index: 3;
+  font-size: 8px;
   opacity: .7;
 }
 
 .section-title {
   color: var(--accent);
-  letter-spacing: 4px;
   margin-top: 48px;
+  font-size: 13px;
+  line-height: 2;
 }
 
 .muted {
   color: var(--muted);
-  font-size: 11px;
-  letter-spacing: 3px;
-  line-height: 1.7;
+  font-size: 8px;
+  line-height: 2.2;
 }
 
 .game-grid {
@@ -277,13 +259,11 @@ button:hover {
   gap: 12px;
   text-align: center;
   border: 1px solid #ffffff45;
-  border-radius: 5px;
   background:
     linear-gradient(145deg, #ffffff1b, #ffffff06),
     var(--panel);
-  backdrop-filter: blur(8px);
-  transition: transform .25s, background .25s, border-color .25s;
   cursor: pointer;
+  transition: transform .25s, background .25s, border-color .25s;
 }
 
 .game-card:hover {
@@ -298,19 +278,17 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 22px;
+  font-family: Arial, sans-serif;
   font-size: 43px;
   background: linear-gradient(145deg, #ffffff25, #ffffff08);
   border: 1px solid #ffffff30;
-  box-shadow: 0 0 25px #ffffff12;
 }
 
 .game-card h3 {
   margin: 0;
   color: #fff1ff;
-  font-size: 11px;
-  line-height: 1.5;
-  letter-spacing: 1.5px;
+  font-size: 8px;
+  line-height: 2;
 }
 
 .new-label {
@@ -320,19 +298,18 @@ button:hover {
   color: #092513;
   background: #64f59b;
   border: 1px solid #a6ffc5;
-  border-radius: 3px;
-  padding: 5px 7px;
-  font-size: 9px;
+  padding: 4px 6px;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
   font-weight: bold;
-  letter-spacing: 1px;
   box-shadow: 0 0 14px #64f59b88;
 }
 
 .directory-heading {
   margin-bottom: 12px;
-  font-size: clamp(30px, 6vw, 52px);
+  font-size: clamp(17px, 3vw, 27px);
+  line-height: 2;
   color: var(--accent);
-  letter-spacing: 4px;
 }
 
 .game-container {
@@ -341,7 +318,6 @@ button:hover {
   margin-top: 20px;
   border: 1px solid var(--accent);
   background: #050509;
-  box-shadow: 0 0 30px #0005;
 }
 
 .game-container iframe {
@@ -363,14 +339,12 @@ button:hover {
 
 .player-controls p {
   color: var(--muted);
-  font-size: 11px;
-  letter-spacing: 2px;
+  font-size: 8px;
 }
 
 .game-attribution {
   margin-top: 12px;
   text-align: center;
-  font-size: 13px;
 }
 
 .game-attribution a { color: var(--accent); }
@@ -387,15 +361,12 @@ button:hover {
   margin-top: 14px;
   border: 1px solid #ffffff35;
   background: #ffffff0d;
-  backdrop-filter: blur(10px);
 }
-
-.setting strong { color: #fff0ff; }
 
 .setting p {
   color: var(--muted);
-  font-size: 12px;
-  line-height: 1.5;
+  font-size: 8px;
+  line-height: 2;
 }
 
 select {
@@ -404,12 +375,14 @@ select {
   background: #211a35;
   color: white;
   border: 1px solid var(--accent);
+  font-family: inherit;
+  font-size: 8px;
 }
 
 input[type="checkbox"] {
   width: 21px;
   height: 21px;
-  accent-color: #b5ffcb;
+  accent-color: #64f59b;
 }
 
 .link-panel {
@@ -417,7 +390,6 @@ input[type="checkbox"] {
   margin-top: 22px;
   border: 1px solid #ffffff45;
   background: #ffffff0d;
-  backdrop-filter: blur(10px);
 }
 
 .link-display {
@@ -428,8 +400,8 @@ input[type="checkbox"] {
   color: var(--accent);
   background: #080611aa;
   border: 1px solid #ffffff35;
-  font-size: 12px;
-  line-height: 1.8;
+  font-size: 8px;
+  line-height: 2;
 }
 
 .link-actions {
@@ -441,16 +413,15 @@ input[type="checkbox"] {
 .link-status {
   margin-top: 15px;
   color: #b7ffc9;
-  font-size: 11px;
-  letter-spacing: 2px;
+  font-size: 8px;
+  line-height: 2;
 }
 
 footer {
   text-align: center;
   padding: 40px 15px;
   color: #d3bfdc88;
-  font-size: 10px;
-  letter-spacing: 3px;
+  font-size: 8px;
 }
 
 .secret-page {
@@ -470,7 +441,7 @@ footer {
 
 .secret-page h1 {
   color: white;
-  font-size: clamp(40px, 10vw, 85px);
+  font-size: clamp(25px, 7vw, 60px);
   text-shadow: 0 0 18px black;
 }
 
@@ -482,14 +453,14 @@ footer {
 
 @media(max-width: 700px) {
   header { padding: 12px 3%; }
-  .logo { font-size: 17px; }
-  nav button { padding: 9px 7px; font-size: 9px; }
+  .logo { font-size: 12px; }
+  nav button { padding: 8px 6px; font-size: 7px; }
   main { width: 92%; margin: 25px auto; }
-  .hero { min-height: 310px; padding: 38px 20px; }
-  .hero p { letter-spacing: 3px; }
+  .hero { min-height: 300px; padding: 30px 18px; }
   .game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .game-card { min-height: 150px; }
   .game-container { height: 420px; }
+  button { font-size: 8px; }
 }
 </style>
 </head>
@@ -499,114 +470,76 @@ footer {
 <div class="background-orb"></div>
 
 <header>
-  <div class="logo" onclick="showPage('lobby')">whyaimhere</div>
+  <div class="logo" data-page="lobby">whyamihere</div>
 
   <nav>
-    <button id="navLobby" class="active" onclick="showPage('lobby')">LOBBY</button>
-    <button id="navGames" onclick="showPage('games')">GAMES</button>
-    <button id="navLinks" onclick="showPage('links')">LINKS</button>
-    <button id="navSettings" onclick="showPage('settings')">SETTINGS</button>
+    <button class="active" data-page="lobby">LOBBY</button>
+    <button data-page="games">GAMES</button>
+    <button data-page="links">LINKS</button>
+    <button data-page="settings">SETTINGS</button>
   </nav>
 </header>
 
 <main>
 
-<!-- LOBBY -->
-
 <section id="lobby" class="page active">
-
   <div class="hero">
     <h1>YOU WERE NEVER HERE.</h1>
-
-    <button onclick="showPage('games')">
-      ENTER THE GAME ROOM →
-    </button>
-
-    <button class="secret-trigger" onclick="showPage('secret')">
-      ◉ 1999 ◉
-    </button>
+    <button data-page="games">ENTER THE GAME ROOM →</button>
+    <button class="secret-trigger" data-page="secret">◉ 1999 ◉</button>
   </div>
 
   <h2 class="section-title">SOMEWHERE TO PLAY</h2>
   <p class="muted">SCROLL DOWN. FIND SOMETHING.</p>
-
   <div class="game-grid" id="lobbyGames"></div>
-
 </section>
-
-
-<!-- GAME DIRECTORY -->
 
 <section id="games" class="page">
-
   <h1 class="directory-heading">CHOOSE YOUR DREAM.</h1>
   <p class="muted">FIVE PLACES. WHICH ONE WILL YOU ENTER?</p>
-
   <div class="game-grid" id="directoryGames"></div>
-
 </section>
 
-
-<!-- LINKS -->
-
 <section id="links" class="page">
-
   <h1 class="directory-heading">LINK GENERATOR</h1>
   <p class="muted">A NEW RANDOM SHARE ADDRESS.</p>
 
   <div class="link-panel">
-
     <h2 class="section-title">SOMEWHERE ELSE.</h2>
-
-    <p class="muted">
-      GENERATE A LONG RANDOM SHARE CODE FOR THIS WEBSITE.
-    </p>
+    <p class="muted">GENERATE A LONG RANDOM SHARE CODE.</p>
 
     <div class="link-display" id="generatedLink">
       NO LINK GENERATED YET.
     </div>
 
     <div class="link-actions">
-      <button onclick="generateLink()">GENERATE LINK →</button>
-      <button onclick="copyLink()">COPY LINK</button>
-      <button onclick="openGeneratedLink()">OPEN LINK ↗</button>
+      <button data-action="generate">GENERATE LINK →</button>
+      <button data-action="copy">COPY LINK</button>
+      <button data-action="open-link">OPEN LINK ↗</button>
     </div>
 
-    <p class="link-status" id="linkStatus">
-      SYSTEM READY // WAITING FOR INPUT
-    </p>
-
+    <p class="link-status" id="linkStatus">SYSTEM READY</p>
   </div>
 
   <div class="link-panel">
-    <h3>ABOUT THESE LINKS</h3>
     <p class="muted">
-      EACH LINK USES A RANDOM 32-CHARACTER CODE.
-      IT STILL LEADS TO THIS WEBSITE.
-    </p>
-    <p class="muted">
-      A RANDOM CODE DOES NOT CHANGE THE WEBSITE'S DOMAIN
-      OR OVERRIDE NETWORK RESTRICTIONS.
+      THESE ARE SHARE LINKS FOR THIS WEBSITE.
+      THEY DO NOT CHANGE ITS DOMAIN OR OVERRIDE NETWORK RESTRICTIONS.
     </p>
   </div>
-
 </section>
 
-
-<!-- SETTINGS -->
-
 <section id="settings" class="page">
-
   <h1 class="directory-heading">SETTINGS</h1>
   <p class="muted">CHANGE THE FEELING OF THIS PLACE.</p>
 
   <div class="setting">
     <div>
-      <strong>Dreamcore color</strong>
-      <p>Choose the colors of the entire background.</p>
+      <strong>DREAMCORE COLOR</strong>
+      <p>Choose your background colors.</p>
     </div>
 
-    <select id="themeSelect" onchange="changeTheme()">
+    <select id="themeSelect">
       <option value="lavender">Lavender dream</option>
       <option value="pink">Pink daydream</option>
       <option value="blue">Empty sky</option>
@@ -620,84 +553,48 @@ footer {
 
   <div class="setting">
     <div>
-      <strong>Moving background</strong>
-      <p>Turn the floating dreamcore colors on or off.</p>
+      <strong>MOVING BACKGROUND</strong>
+      <p>Turn floating colors on or off.</p>
     </div>
-
-    <input
-      type="checkbox"
-      id="motionToggle"
-      checked
-      onchange="toggleMotion()">
+    <input type="checkbox" id="motionToggle" checked>
   </div>
 
   <div class="setting">
     <div>
-      <strong>Glow effects</strong>
-      <p>Enable or disable glowing text and effects.</p>
+      <strong>GLOW EFFECTS</strong>
+      <p>Enable or disable glowing effects.</p>
     </div>
-
-    <input
-      type="checkbox"
-      id="glowToggle"
-      checked
-      onchange="toggleGlow()">
+    <input type="checkbox" id="glowToggle" checked>
   </div>
 
   <div class="setting">
-    <div>
-      <strong>About whyaimhere</strong>
-      <p>YOU WERE NEVER HERE.</p>
-    </div>
-    <span class="muted">VERSION 1.4</span>
+    <strong>ABOUT WHYAMIHERE</strong>
+    <span>VERSION 1.5</span>
   </div>
-
 </section>
-
-
-<!-- GAME PLAYER -->
 
 <section id="player" class="page">
-
-  <button class="back-button" onclick="showPage('games')">
-    ← BACK TO GAME DIRECTORY
-  </button>
-
+  <button class="back-button" data-page="games">← BACK TO GAME DIRECTORY</button>
   <h1 id="playerTitle">GAME</h1>
   <p class="muted" id="playerInfo">GAME PLAYER</p>
-
   <div id="playerArea"></div>
-
 </section>
 
-
-<!-- SECRET EASTER EGG -->
-
 <section id="secret" class="page secret-page">
-
-  <button class="secret-back" onclick="showPage('lobby')">
-    ← BACK
-  </button>
-
+  <button class="secret-back" data-page="lobby">← BACK</button>
   <h1>ight bru</h1>
-
 </section>
 
 </main>
 
-<footer>
-  whyaimhere // YOU WERE NEVER HERE
-</footer>
-
+<footer>whyamihere // YOU WERE NEVER HERE</footer>
 
 <script>
+"use strict";
 
-// GAME DIRECTORY
-// Set isNew: true when adding a new game.
-// Remove it later when the game is no longer new.
+// GAME LIST
 
 const games = {
-
   burrito: {
     title: "BURRITO BISON",
     icon: "🐻",
@@ -739,51 +636,71 @@ const games = {
     external: false,
     isNew: true
   }
-
 };
 
 
-// CREATE GAME TILES
+// THEMES
 
-function createGameCards(containerId) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = "";
+const themes = {
+  lavender: {
+    bg:"#171126", panel:"#29203d", accent:"#e0c4ff",
+    accent2:"#ffbde7", border:"#9879b5", muted:"#d0bedc",
+    blob1:"#9872d1", blob2:"#e58bc5", blob3:"#7faec8"
+  },
+  pink: {
+    bg:"#281522", panel:"#40223a", accent:"#ffc5e9",
+    accent2:"#ff9ecf", border:"#bd79a5", muted:"#f0c7df",
+    blob1:"#e879b5", blob2:"#f5a2c9", blob3:"#a98cce"
+  },
+  blue: {
+    bg:"#101e30", panel:"#1c3049", accent:"#b9e5ff",
+    accent2:"#c7c8ff", border:"#6e9ec4", muted:"#c4d9ee",
+    blob1:"#609cc8", blob2:"#8587ce", blob3:"#83c8d0"
+  },
+  mint: {
+    bg:"#12251f", panel:"#203b31", accent:"#c1ffe0",
+    accent2:"#b5f5db", border:"#76ae91", muted:"#c5e9d5",
+    blob1:"#6ac69a", blob2:"#a5d7a0", blob3:"#78c7c5"
+  },
+  peach: {
+    bg:"#2a1b20", panel:"#422b32", accent:"#ffd3b7",
+    accent2:"#ffc2c8", border:"#c28b80", muted:"#f2cfc2",
+    blob1:"#e89a79", blob2:"#e7a3bd", blob3:"#b69bcf"
+  },
+  yellow: {
+    bg:"#292719", panel:"#403b25", accent:"#fff1a9",
+    accent2:"#ffe1b1", border:"#b7a66c", muted:"#eee0b5",
+    blob1:"#d7c36b", blob2:"#e7a77b", blob3:"#a9c38b"
+  },
+  purple: {
+    bg:"#1d102b", panel:"#301a43", accent:"#e0aaff",
+    accent2:"#bb8cff", border:"#965db7", muted:"#d5b7eb",
+    blob1:"#a65ed1", blob2:"#c16bb7", blob3:"#756acb"
+  },
+  dark: {
+    bg:"#050509", panel:"#0d0914", accent:"#d6a3ff",
+    accent2:"#a64dff", border:"#56346d", muted:"#a99bb3",
+    blob1:"#542d86", blob2:"#7b326f", blob3:"#315d78"
+  }
+};
 
-  Object.entries(games).forEach(([id, game]) => {
 
-    const card = document.createElement("div");
-    card.className = "game-card";
-    card.setAttribute("role", "button");
-    card.setAttribute("tabindex", "0");
+// SAFE LOCAL STORAGE HELPERS
 
-    const icon = document.createElement("div");
-    icon.className = "game-icon";
-    icon.textContent = game.icon;
+function saveSetting(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (error) {
+    console.warn("Could not save setting:", error);
+  }
+}
 
-    const title = document.createElement("h3");
-    title.textContent = game.title;
-
-    card.appendChild(icon);
-    card.appendChild(title);
-
-    if (game.isNew) {
-      const badge = document.createElement("span");
-      badge.className = "new-label";
-      badge.textContent = "NEW";
-      card.appendChild(badge);
-    }
-
-    card.addEventListener("click", () => openGame(id));
-
-    card.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openGame(id);
-      }
-    });
-
-    container.appendChild(card);
-  });
+function readSetting(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch (error) {
+    return null;
+  }
 }
 
 
@@ -800,25 +717,50 @@ function showPage(page) {
   target.classList.add("active");
 
   document.querySelectorAll("nav button").forEach(button => {
-    button.classList.remove("active");
+    button.classList.toggle("active", button.dataset.page === page);
   });
 
-  const navIds = {
-    lobby: "navLobby",
-    games: "navGames",
-    links: "navLinks",
-    settings: "navSettings"
-  };
-
-  if (navIds[page]) {
-    document.getElementById(navIds[page]).classList.add("active");
-  }
-
-  window.scrollTo(0, 0);
+  window.scrollTo({ top: 0, behavior: "instant" });
 }
 
 
-// OPEN GAME
+// CREATE GAME TILES
+
+function createGameCards(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  container.replaceChildren();
+
+  Object.entries(games).forEach(([id, game]) => {
+    const card = document.createElement("div");
+    card.className = "game-card";
+    card.dataset.game = id;
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+
+    const icon = document.createElement("div");
+    icon.className = "game-icon";
+    icon.textContent = game.icon;
+
+    const title = document.createElement("h3");
+    title.textContent = game.title;
+
+    card.append(icon, title);
+
+    if (game.isNew) {
+      const badge = document.createElement("span");
+      badge.className = "new-label";
+      badge.textContent = "NEW";
+      card.appendChild(badge);
+    }
+
+    container.appendChild(card);
+  });
+}
+
+
+// GAME PLAYER
 
 function openGame(id) {
   const game = games[id];
@@ -828,62 +770,70 @@ function openGame(id) {
   document.getElementById("playerInfo").textContent = game.info;
 
   const area = document.getElementById("playerArea");
+  area.replaceChildren();
 
   if (game.external) {
+    const panel = document.createElement("div");
+    panel.className = "link-panel";
 
-    area.innerHTML = `
-      <div class="link-panel">
-        <h3>EXTERNAL GAME</h3>
-        <p class="muted">
-          THIS GAME OPENS ON ITS HOST WEBSITE.
-        </p>
-        <button id="externalGameButton">
-          ENTER WORLD →
-        </button>
-      </div>
-    `;
+    const heading = document.createElement("h3");
+    heading.textContent = "EXTERNAL GAME";
 
-    document.getElementById("externalGameButton")
-      .addEventListener("click", () => {
-        window.open(game.url, "_blank", "noopener,noreferrer");
-      });
+    const description = document.createElement("p");
+    description.className = "muted";
+    description.textContent = "THIS GAME OPENS ON ITS HOST WEBSITE.";
+
+    const button = document.createElement("button");
+    button.textContent = "ENTER WORLD →";
+    button.dataset.action = "external-game";
+    button.dataset.url = game.url;
+
+    panel.append(heading, description, button);
+    area.appendChild(panel);
 
   } else {
+    const container = document.createElement("div");
+    container.className = "game-container";
+    container.id = "activeGameContainer";
 
-    let credits = "";
+    const frame = document.createElement("iframe");
+    frame.src = game.url;
+    frame.title = game.title;
+    frame.allow = "fullscreen; autoplay";
+    frame.allowFullscreen = true;
+    frame.loading = "lazy";
+    frame.scrolling = "no";
+    frame.referrerPolicy = "no-referrer-when-downgrade";
 
-    if (game.credits && id === "banana") {
-      credits = `
-        <div class="game-attribution">
-          <a href="https://www.madkidgames.com/game/banana-kong"
-             target="_blank"
-             rel="noopener noreferrer">
-            Play Banana Kong on MadKidGames →
-          </a>
-        </div>
-      `;
+    container.appendChild(frame);
+    area.appendChild(container);
+
+    const controls = document.createElement("div");
+    controls.className = "player-controls";
+
+    const label = document.createElement("p");
+    label.textContent = "GAME PLAYER // " + game.title;
+
+    const fullscreen = document.createElement("button");
+    fullscreen.textContent = "⛶ FULLSCREEN";
+    fullscreen.dataset.action = "fullscreen";
+
+    controls.append(label, fullscreen);
+    area.appendChild(controls);
+
+    if (game.credits) {
+      const credit = document.createElement("div");
+      credit.className = "game-attribution";
+
+      const link = document.createElement("a");
+      link.href = "https://www.madkidgames.com/game/banana-kong";
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "Play Banana Kong on MadKidGames →";
+
+      credit.appendChild(link);
+      area.appendChild(credit);
     }
-
-    area.innerHTML = `
-      <div class="game-container" id="activeGameContainer">
-        <iframe
-          src="${game.url}"
-          title="${game.title}"
-          allow="fullscreen; autoplay"
-          allowfullscreen
-          scrolling="no"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-      </div>
-
-      <div class="player-controls">
-        <p>GAME PLAYER // ${game.title}</p>
-        <button onclick="fullscreenGame()">⛶ FULLSCREEN</button>
-      </div>
-
-      ${credits}
-    `;
   }
 
   showPage("player");
@@ -894,10 +844,13 @@ function openGame(id) {
 
 function fullscreenGame() {
   const game = document.getElementById("activeGameContainer");
+  if (!game) return;
 
-  if (game && game.requestFullscreen) {
-    game.requestFullscreen();
-  } else if (game && game.webkitRequestFullscreen) {
+  if (game.requestFullscreen) {
+    game.requestFullscreen().catch(error => {
+      console.warn("Fullscreen unavailable:", error);
+    });
+  } else if (game.webkitRequestFullscreen) {
     game.webkitRequestFullscreen();
   }
 }
@@ -911,26 +864,21 @@ let currentGeneratedLink = "";
 let previousCode = "";
 
 function randomCode() {
-  const chars =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-  let code = "";
+  const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const values = new Uint32Array(32);
 
   if (window.crypto && window.crypto.getRandomValues) {
-    const values = new Uint32Array(32);
     window.crypto.getRandomValues(values);
 
-    for (let i = 0; i < values.length; i++) {
-      code += chars[values[i] % chars.length];
-    }
-
-  } else {
-
-    for (let i = 0; i < 32; i++) {
-      code += chars[Math.floor(Math.random() * chars.length)];
-    }
+    return Array.from(values, value => {
+      return chars[value % chars.length];
+    }).join("");
   }
 
+  let code = "";
+  for (let i = 0; i < 32; i++) {
+    code += chars[Math.floor(Math.random() * chars.length)];
+  }
   return code;
 }
 
@@ -948,47 +896,12 @@ function generateLink() {
     currentGeneratedLink;
 
   document.getElementById("linkStatus").textContent =
-    "NEW SHARE LINK GENERATED // 32 CHARACTER CODE";
+    "NEW SHARE LINK GENERATED.";
 }
 
-function copyLink() {
+async function copyLink() {
   if (!currentGeneratedLink) generateLink();
 
-  if (navigator.clipboard && window.isSecureContext) {
-
-    navigator.clipboard.writeText(currentGeneratedLink)
-      .then(() => {
-        document.getElementById("linkStatus").textContent =
-          "LINK COPIED SUCCESSFULLY.";
-      })
-      .catch(() => fallbackCopy());
-
-  } else {
-    fallbackCopy();
-  }
-}
-
-function fallbackCopy() {
-  const field = document.createElement("textarea");
-  field.value = currentGeneratedLink;
-
-  document.body.appendChild(field);
-  field.select();
-
   try {
-    document.execCommand("copy");
-
-    document.getElementById("linkStatus").textContent =
-      "LINK COPIED SUCCESSFULLY.";
-
-  } catch (error) {
-
-    document.getElementById("linkStatus").textContent =
-      "COPY FAILED // SELECT THE LINK MANUALLY.";
-  }
-
-  field.remove();
-}
-
-function openGeneratedLink() {
-  if (!cur
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(
