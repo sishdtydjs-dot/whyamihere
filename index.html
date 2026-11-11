@@ -1,27 +1,105 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#171126">
 <title>whyaimhere</title>
 
 <style>
 * { box-sizing: border-box; }
 
 :root {
-  --bg: #050509;
-  --panel: #0d0914;
-  --purple: #d6a3ff;
-  --border: #56346d;
-  --muted: #888;
+  --bg: #171126;
+  --panel: #211a35;
+  --accent: #d7b5ff;
+  --accent2: #ffbde7;
+  --border: #80629c;
+  --text: #fff2ff;
+  --muted: #c0accd;
+  --blob1: #8e66c8;
+  --blob2: #d77eb8;
+  --blob3: #75a9bd;
 }
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: white;
-  font-family: Arial, sans-serif;
   min-height: 100vh;
+  color: var(--text);
+  background: var(--bg);
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  transition: background .5s, color .5s;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 65vw;
+  height: 65vw;
+  max-width: 750px;
+  max-height: 750px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: .23;
+  pointer-events: none;
+  z-index: -2;
+  transition: opacity .5s;
+}
+
+body::before {
+  background: var(--blob1);
+  top: -25%;
+  left: -20%;
+  animation: dreamFloat 19s ease-in-out infinite alternate;
+}
+
+body::after {
+  background: var(--blob2);
+  right: -25%;
+  bottom: -30%;
+  animation: dreamFloat2 23s ease-in-out infinite alternate;
+}
+
+.background-orb {
+  position: fixed;
+  width: 50vw;
+  height: 50vw;
+  max-width: 550px;
+  max-height: 550px;
+  border-radius: 50%;
+  background: var(--blob3);
+  filter: blur(100px);
+  opacity: .13;
+  pointer-events: none;
+  z-index: -2;
+  top: 35%;
+  left: 35%;
+  animation: dreamFloat 25s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes dreamFloat {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(18vw, 12vh) scale(1.3); }
+}
+
+@keyframes dreamFloat2 {
+  from { transform: translate(0, 0) scale(1.1); }
+  to { transform: translate(-15vw, -12vh) scale(.8); }
+}
+
+body.no-motion::before,
+body.no-motion::after,
+body.no-motion .background-orb {
+  animation: none;
+}
+
+body.no-motion::before,
+body.no-motion::after,
+body.no-motion .background-orb {
+  opacity: .10;
 }
 
 body.no-glow * {
@@ -30,181 +108,247 @@ body.no-glow * {
 }
 
 header {
-  min-height: 75px;
-  padding: 0 5%;
-  border-bottom: 1px solid #28202f;
+  min-height: 76px;
+  padding: 12px 5%;
+  border-bottom: 1px solid #ffffff25;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
+  gap: 12px;
   position: sticky;
   top: 0;
-  background: #050509ee;
-  z-index: 10;
-  backdrop-filter: blur(10px);
+  z-index: 20;
+  background: #171126d9;
+  backdrop-filter: blur(18px);
 }
 
 .logo {
-  font-size: 24px;
+  color: var(--accent);
+  font-size: 23px;
   font-weight: bold;
   letter-spacing: 3px;
-  color: var(--purple);
-  text-shadow: 0 0 15px #a64dff;
   cursor: pointer;
+  text-shadow: 0 0 18px var(--accent);
 }
 
 nav {
   display: flex;
-  align-items: center;
-  gap: 5px;
   flex-wrap: wrap;
+  gap: 5px;
 }
 
 nav button {
   background: transparent;
   border: 1px solid transparent;
-  color: #aaa;
-  padding: 10px 9px;
+  color: #e0d0ed;
+  padding: 10px 11px;
   cursor: pointer;
-  letter-spacing: 1px;
+  font-size: 11px;
+  letter-spacing: 2px;
 }
 
 nav button:hover,
 nav button.active {
-  color: var(--purple);
-  border-color: var(--border);
-  background: #21152d;
+  color: white;
+  border-color: var(--accent);
+  background: #ffffff15;
 }
 
 main {
   width: 90%;
-  max-width: 1400px;
-  margin: 45px auto;
-  min-height: 70vh;
+  max-width: 1350px;
+  min-height: 75vh;
+  margin: 42px auto;
 }
 
 .page { display: none; }
 .page.active { display: block; }
 
 .hero {
-  min-height: 330px;
+  min-height: 360px;
   padding: 65px 35px;
-  background:
-    radial-gradient(ellipse at 75% 40%, #50236b55, transparent 55%),
-    linear-gradient(135deg, #100b19, #050509);
-  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: relative;
   overflow: hidden;
+  border: 1px solid #ffffff55;
+  border-radius: 5px;
+  background:
+    linear-gradient(110deg, #171126bb, #3d245b66),
+    radial-gradient(ellipse at 80% 20%, var(--blob2), transparent 55%),
+    radial-gradient(ellipse at 20% 90%, var(--blob3), transparent 55%);
+  box-shadow: 0 0 35px #0003;
+}
+
+.hero::after {
+  content: "1999";
+  position: absolute;
+  right: 5%;
+  bottom: -55px;
+  font-size: clamp(100px, 22vw, 260px);
+  font-weight: bold;
+  color: #ffffff0b;
+  pointer-events: none;
 }
 
 .hero h1 {
-  font-size: clamp(35px, 7vw, 70px);
+  position: relative;
+  z-index: 1;
+  max-width: 750px;
+  margin: 0 0 20px;
+  font-size: clamp(42px, 8vw, 85px);
   letter-spacing: 5px;
-  color: #e4c5ff;
-  text-shadow: 0 0 25px #a64dff;
-  margin: 0 0 15px;
+  line-height: 1.05;
+  color: #fff0ff;
+  text-shadow: 0 0 25px var(--accent2);
 }
 
 .hero p {
-  color: #999;
-  letter-spacing: 3px;
-  font-size: 12px;
-}
-
-.secret-trigger {
-  position: absolute;
-  right: 15px;
-  bottom: 12px;
-  z-index: 2;
-  color: #704b88;
-  background: transparent;
-  border: 1px solid #56346d;
-  padding: 12px;
+  position: relative;
+  z-index: 1;
+  color: #f4dff9;
   font-size: 12px;
   letter-spacing: 5px;
-  opacity: .8;
+}
+
+.hero button {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  margin-top: 15px;
+}
+
+button {
+  background: #ffffff17;
+  color: white;
+  border: 1px solid var(--accent);
+  padding: 12px 17px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: .2s;
   touch-action: manipulation;
 }
 
+button:hover {
+  background: #ffffff30;
+  box-shadow: 0 0 18px #ffffff25;
+}
+
+.secret-trigger {
+  position: absolute !important;
+  right: 14px;
+  bottom: 12px;
+  margin: 0 !important;
+  font-size: 10px;
+  letter-spacing: 5px;
+  opacity: .7;
+}
+
 .section-title {
-  color: #e4c5ff;
-  letter-spacing: 3px;
-  margin-top: 45px;
+  color: var(--accent);
+  letter-spacing: 4px;
+  margin-top: 48px;
 }
 
 .muted {
-  color: #888;
-  font-size: 12px;
-  letter-spacing: 2px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 3px;
+  line-height: 1.7;
 }
 
 .game-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 17px;
   margin-top: 25px;
 }
 
 .game-card {
-  background: var(--panel);
-  border: 1px solid #392747;
-  padding: 22px;
-  min-height: 170px;
-  transition: .2s;
+  position: relative;
+  min-height: 165px;
+  padding: 18px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  border: 1px solid #ffffff45;
+  border-radius: 5px;
+  background:
+    linear-gradient(145deg, #ffffff1b, #ffffff06),
+    var(--panel);
+  backdrop-filter: blur(8px);
+  transition: transform .25s, background .25s, border-color .25s;
+  cursor: pointer;
 }
 
 .game-card:hover {
-  border-color: #b77be7;
-  transform: translateY(-3px);
-  box-shadow: 0 0 20px #8d37bb33;
+  transform: translateY(-5px);
+  border-color: var(--accent);
+  background: #ffffff20;
+}
+
+.game-icon {
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  font-size: 43px;
+  background: linear-gradient(145deg, #ffffff25, #ffffff08);
+  border: 1px solid #ffffff30;
+  box-shadow: 0 0 25px #ffffff12;
 }
 
 .game-card h3 {
-  color: #e4c5ff;
-  letter-spacing: 2px;
+  margin: 0;
+  color: #fff1ff;
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 1.5px;
 }
 
-.game-card p {
-  color: #888;
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-button {
-  background: #21152d;
-  color: #e8caff;
-  border: 1px solid #8852a8;
-  padding: 12px 18px;
-  cursor: pointer;
+.new-label {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  color: #092513;
+  background: #64f59b;
+  border: 1px solid #a6ffc5;
+  border-radius: 3px;
+  padding: 5px 7px;
+  font-size: 9px;
+  font-weight: bold;
   letter-spacing: 1px;
-  touch-action: manipulation;
+  box-shadow: 0 0 14px #64f59b88;
 }
 
-button:hover { background: #48245e; }
-.game-card button { margin-top: 12px; }
-
-.category {
-  display: inline-block;
-  color: #c99aff;
-  border: 1px solid #56346d;
-  padding: 7px 11px;
-  font-size: 10px;
-  letter-spacing: 2px;
+.directory-heading {
+  margin-bottom: 12px;
+  font-size: clamp(30px, 6vw, 52px);
+  color: var(--accent);
+  letter-spacing: 4px;
 }
 
 .game-container {
   width: 100%;
   height: 650px;
-  background: black;
-  border: 2px solid var(--border);
-  box-shadow: 0 0 30px #641b8a55;
   margin-top: 20px;
+  border: 1px solid var(--accent);
+  background: #050509;
+  box-shadow: 0 0 30px #0005;
 }
 
-iframe {
+.game-container iframe {
+  display: block;
   width: 100%;
   height: 100%;
-  border: none;
+  border: 0;
   background: black;
 }
 
@@ -218,8 +362,9 @@ iframe {
 }
 
 .player-controls p {
-  color: #888;
-  font-size: 12px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 2px;
 }
 
 .game-attribution {
@@ -228,84 +373,91 @@ iframe {
   font-size: 13px;
 }
 
-.game-attribution a { color: var(--purple); }
+.game-attribution a { color: var(--accent); }
+
+.back-button { margin-bottom: 22px; }
 
 .setting {
-  background: var(--panel);
-  border: 1px solid #392747;
-  padding: 22px;
-  margin-top: 15px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 15px;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 20px;
+  margin-top: 14px;
+  border: 1px solid #ffffff35;
+  background: #ffffff0d;
+  backdrop-filter: blur(10px);
 }
+
+.setting strong { color: #fff0ff; }
 
 .setting p {
-  color: #888;
+  color: var(--muted);
   font-size: 12px;
-}
-
-input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  accent-color: #a64dff;
+  line-height: 1.5;
 }
 
 select {
-  background: #21152d;
+  max-width: 100%;
+  padding: 12px;
+  background: #211a35;
   color: white;
-  border: 1px solid #8852a8;
-  padding: 10px;
+  border: 1px solid var(--accent);
+}
+
+input[type="checkbox"] {
+  width: 21px;
+  height: 21px;
+  accent-color: #b5ffcb;
 }
 
 .link-panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
   padding: 25px;
-  margin-top: 25px;
+  margin-top: 22px;
+  border: 1px solid #ffffff45;
+  background: #ffffff0d;
+  backdrop-filter: blur(10px);
 }
 
 .link-display {
-  background: #050509;
-  border: 1px solid #56346d;
-  padding: 16px;
+  padding: 17px;
   margin: 20px 0;
+  min-height: 55px;
   overflow-wrap: anywhere;
-  color: #d6a3ff;
-  font-size: 13px;
-  line-height: 1.7;
-  min-height: 50px;
+  color: var(--accent);
+  background: #080611aa;
+  border: 1px solid #ffffff35;
+  font-size: 12px;
+  line-height: 1.8;
 }
 
 .link-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
 .link-status {
-  color: #a77ac5;
-  font-size: 12px;
   margin-top: 15px;
-  letter-spacing: 1px;
+  color: #b7ffc9;
+  font-size: 11px;
+  letter-spacing: 2px;
 }
 
 footer {
   text-align: center;
-  padding: 40px;
-  color: #444;
-  font-size: 11px;
+  padding: 40px 15px;
+  color: #d3bfdc88;
+  font-size: 10px;
   letter-spacing: 3px;
 }
 
-.back-button { margin-bottom: 25px; }
-
 .secret-page {
-  min-height: 70vh;
+  min-height: 75vh;
   position: relative;
   background:
-    linear-gradient(#0005, #0008),
+    linear-gradient(#0004, #0007),
     url("https://media1.tenor.com/m/GYnvtKcQK18AAAAd/blue-eyed-haircut-kid.gif")
     center / cover no-repeat;
   align-items: center;
@@ -318,8 +470,8 @@ footer {
 
 .secret-page h1 {
   color: white;
-  font-size: clamp(40px, 10vw, 80px);
-  text-shadow: 0 0 15px black;
+  font-size: clamp(40px, 10vw, 85px);
+  text-shadow: 0 0 18px black;
 }
 
 .secret-back {
@@ -329,22 +481,25 @@ footer {
 }
 
 @media(max-width: 700px) {
-  header { padding: 12px 3%; gap: 10px; }
+  header { padding: 12px 3%; }
   .logo { font-size: 17px; }
-  nav { gap: 2px; }
-  nav button { padding: 9px 6px; font-size: 9px; }
-  .hero { padding: 45px 20px; }
-  .game-container { height: 400px; }
+  nav button { padding: 9px 7px; font-size: 9px; }
+  main { width: 92%; margin: 25px auto; }
+  .hero { min-height: 310px; padding: 38px 20px; }
+  .hero p { letter-spacing: 3px; }
+  .game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .game-card { min-height: 150px; }
+  .game-container { height: 420px; }
 }
 </style>
 </head>
 
 <body>
 
+<div class="background-orb"></div>
+
 <header>
-  <div class="logo" onclick="showPage('lobby')">
-    whyaimhere
-  </div>
+  <div class="logo" onclick="showPage('lobby')">whyaimhere</div>
 
   <nav>
     <button id="navLobby" class="active" onclick="showPage('lobby')">LOBBY</button>
@@ -356,11 +511,12 @@ footer {
 
 <main>
 
+<!-- LOBBY -->
+
 <section id="lobby" class="page active">
+
   <div class="hero">
-    <h1>WHERE ARE YOU?</h1>
-    <p>WELCOME TO SOMEWHERE IN 1999.</p>
-    <p>YOU WERE NEVER SUPPOSED TO FIND THIS PLACE.</p>
+    <h1>YOU WERE NEVER HERE.</h1>
 
     <button onclick="showPage('games')">
       ENTER THE GAME ROOM →
@@ -371,114 +527,47 @@ footer {
     </button>
   </div>
 
-  <h2 class="section-title">FEATURED GAMES</h2>
-  <p class="muted">SOME PLACES NEVER DISAPPEAR.</p>
+  <h2 class="section-title">SOMEWHERE TO PLAY</h2>
+  <p class="muted">SCROLL DOWN. FIND SOMETHING.</p>
 
-  <div class="game-grid">
+  <div class="game-grid" id="lobbyGames"></div>
 
-    <div class="game-card">
-      <span class="category">ARCADE</span>
-      <h3>BURRITO BISON</h3>
-      <p>GAME 001 // LAUNCHA LIBRE</p>
-      <button onclick="openGame('burrito')">PLAY →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">ADVENTURE</span>
-      <h3>UNDERTALE / DELTARUNE</h3>
-      <p>GAME 002 // CHOOSE YOUR WORLD</p>
-      <button onclick="openGame('toby')">ENTER →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">PLATFORMER</span>
-      <h3>WEB DASHERS</h3>
-      <p>GAME 003 // THE RHYTHM NEVER ENDS</p>
-      <button onclick="openGame('dashers')">PLAY →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">ARCADE</span>
-      <h3>BANANA KONG</h3>
-      <p>GAME 004 // RUN, JUMP, COLLECT BANANAS</p>
-      <button onclick="openGame('banana')">PLAY →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">RHYTHM</span>
-      <h3>FRIDAY NIGHT FUNKIN'</h3>
-      <p>GAME 005 // HIT THE BEAT.</p>
-      <button onclick="openGame('fnf')">PLAY →</button>
-    </div>
-
-  </div>
-
-  <h2 class="section-title">SYSTEM STATUS</h2>
-  <p class="muted">ONLINE // SOMEWHERE IN 1999</p>
 </section>
+
+
+<!-- GAME DIRECTORY -->
 
 <section id="games" class="page">
-  <h1>GAME DIRECTORY</h1>
-  <p class="muted">CHOOSE YOUR DESTINATION.</p>
 
-  <div class="category">BROWSER GAMES</div>
+  <h1 class="directory-heading">CHOOSE YOUR DREAM.</h1>
+  <p class="muted">FIVE PLACES. WHICH ONE WILL YOU ENTER?</p>
 
-  <div class="game-grid">
+  <div class="game-grid" id="directoryGames"></div>
 
-    <div class="game-card">
-      <span class="category">GAME 001</span>
-      <h3>BURRITO BISON</h3>
-      <p>LAUNCHA LIBRE</p>
-      <button onclick="openGame('burrito')">PLAY GAME →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">GAME 002</span>
-      <h3>UNDERTALE / DELTARUNE</h3>
-      <p>CHOOSE YOUR WORLD.</p>
-      <button onclick="openGame('toby')">ENTER WORLD →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">GAME 003</span>
-      <h3>WEB DASHERS</h3>
-      <p>JUMP. DODGE. SURVIVE.</p>
-      <button onclick="openGame('dashers')">PLAY GAME →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">GAME 004</span>
-      <h3>BANANA KONG</h3>
-      <p>RUN, JUMP, COLLECT BANANAS.</p>
-      <button onclick="openGame('banana')">PLAY GAME →</button>
-    </div>
-
-    <div class="game-card">
-      <span class="category">GAME 005</span>
-      <h3>FRIDAY NIGHT FUNKIN'</h3>
-      <p>RHYTHM BATTLE // ORIGINAL FNF</p>
-      <button onclick="openGame('fnf')">PLAY GAME →</button>
-    </div>
-
-  </div>
 </section>
 
+
+<!-- LINKS -->
+
 <section id="links" class="page">
-  <h1>LINK GENERATOR</h1>
-  <p class="muted">A DIFFERENT RANDOM SHARE LINK EACH TIME.</p>
+
+  <h1 class="directory-heading">LINK GENERATOR</h1>
+  <p class="muted">A NEW RANDOM SHARE ADDRESS.</p>
 
   <div class="link-panel">
-    <span class="category">RANDOM SHARE SYSTEM</span>
 
     <h2 class="section-title">SOMEWHERE ELSE.</h2>
-    <p class="muted">GENERATE A RANDOM SHARE ADDRESS FOR THIS WEBSITE.</p>
+
+    <p class="muted">
+      GENERATE A LONG RANDOM SHARE CODE FOR THIS WEBSITE.
+    </p>
 
     <div class="link-display" id="generatedLink">
       NO LINK GENERATED YET.
     </div>
 
     <div class="link-actions">
-      <button onclick="generateLink()">GENERATE RANDOM LINK →</button>
+      <button onclick="generateLink()">GENERATE LINK →</button>
       <button onclick="copyLink()">COPY LINK</button>
       <button onclick="openGeneratedLink()">OPEN LINK ↗</button>
     </div>
@@ -486,42 +575,73 @@ footer {
     <p class="link-status" id="linkStatus">
       SYSTEM READY // WAITING FOR INPUT
     </p>
+
   </div>
 
   <div class="link-panel">
-    <h3>HOW IT WORKS</h3>
+    <h3>ABOUT THESE LINKS</h3>
     <p class="muted">
-      EACH GENERATED LINK HAS A NEW RANDOM CODE.
-      OPENING IT RETURNS TO THIS WEBSITE.
+      EACH LINK USES A RANDOM 32-CHARACTER CODE.
+      IT STILL LEADS TO THIS WEBSITE.
     </p>
     <p class="muted">
-      THESE ARE SHARE LINKS ON THE SAME WEBSITE,
-      NOT SEPARATE DOMAINS.
+      A RANDOM CODE DOES NOT CHANGE THE WEBSITE'S DOMAIN
+      OR OVERRIDE NETWORK RESTRICTIONS.
     </p>
   </div>
+
 </section>
 
+
+<!-- SETTINGS -->
+
 <section id="settings" class="page">
-  <h1>SETTINGS</h1>
-  <p class="muted">CHANGE YOUR LITTLE CORNER OF THE INTERNET.</p>
+
+  <h1 class="directory-heading">SETTINGS</h1>
+  <p class="muted">CHANGE THE FEELING OF THIS PLACE.</p>
+
+  <div class="setting">
+    <div>
+      <strong>Dreamcore color</strong>
+      <p>Choose the colors of the entire background.</p>
+    </div>
+
+    <select id="themeSelect" onchange="changeTheme()">
+      <option value="lavender">Lavender dream</option>
+      <option value="pink">Pink daydream</option>
+      <option value="blue">Empty sky</option>
+      <option value="mint">Forgotten garden</option>
+      <option value="peach">Peach sunset</option>
+      <option value="yellow">Sleepy sunshine</option>
+      <option value="purple">Purple haze</option>
+      <option value="dark">Dark void</option>
+    </select>
+  </div>
+
+  <div class="setting">
+    <div>
+      <strong>Moving background</strong>
+      <p>Turn the floating dreamcore colors on or off.</p>
+    </div>
+
+    <input
+      type="checkbox"
+      id="motionToggle"
+      checked
+      onchange="toggleMotion()">
+  </div>
 
   <div class="setting">
     <div>
       <strong>Glow effects</strong>
-      <p>Enable or disable the purple glowing effects.</p>
+      <p>Enable or disable glowing text and effects.</p>
     </div>
-    <input type="checkbox" id="glowToggle" checked onchange="toggleGlow()">
-  </div>
 
-  <div class="setting">
-    <div>
-      <strong>Website theme</strong>
-      <p>Choose your background appearance.</p>
-    </div>
-    <select id="themeSelect" onchange="changeTheme()">
-      <option value="dark">Dark void</option>
-      <option value="purple">Purple dream</option>
-    </select>
+    <input
+      type="checkbox"
+      id="glowToggle"
+      checked
+      onchange="toggleGlow()">
   </div>
 
   <div class="setting">
@@ -529,11 +649,16 @@ footer {
       <strong>About whyaimhere</strong>
       <p>YOU WERE NEVER HERE.</p>
     </div>
-    <span class="category">VERSION 1.3</span>
+    <span class="muted">VERSION 1.4</span>
   </div>
+
 </section>
 
+
+<!-- GAME PLAYER -->
+
 <section id="player" class="page">
+
   <button class="back-button" onclick="showPage('games')">
     ← BACK TO GAME DIRECTORY
   </button>
@@ -542,13 +667,20 @@ footer {
   <p class="muted" id="playerInfo">GAME PLAYER</p>
 
   <div id="playerArea"></div>
+
 </section>
 
+
+<!-- SECRET EASTER EGG -->
+
 <section id="secret" class="page secret-page">
+
   <button class="secret-back" onclick="showPage('lobby')">
     ← BACK
   </button>
+
   <h1>ight bru</h1>
+
 </section>
 
 </main>
@@ -557,42 +689,18 @@ footer {
   whyaimhere // YOU WERE NEVER HERE
 </footer>
 
+
 <script>
 
-// PAGE NAVIGATION
-
-function showPage(page) {
-  const target = document.getElementById(page);
-  if (!target) return;
-
-  document.querySelectorAll('.page').forEach(section => {
-    section.classList.remove('active');
-  });
-
-  target.classList.add('active');
-
-  document.querySelectorAll('nav button').forEach(button => {
-    button.classList.remove('active');
-  });
-
-  const nav = document.getElementById(
-    page === 'lobby' ? 'navLobby' :
-    page === 'games' ? 'navGames' :
-    page === 'links' ? 'navLinks' :
-    page === 'settings' ? 'navSettings' : ''
-  );
-
-  if (nav) nav.classList.add('active');
-  window.scrollTo(0, 0);
-}
-
-
-// GAME INFORMATION
+// GAME DIRECTORY
+// Set isNew: true when adding a new game.
+// Remove it later when the game is no longer new.
 
 const games = {
 
   burrito: {
     title: "BURRITO BISON",
+    icon: "🐻",
     info: "GAME 001 // LAUNCHA LIBRE",
     url: "https://www.madkidgames.com/full/burrito-bison-launcha-libre",
     external: false
@@ -600,6 +708,7 @@ const games = {
 
   toby: {
     title: "UNDERTALE / DELTARUNE",
+    icon: "❤️",
     info: "GAME 002 // CHOOSE YOUR WORLD",
     url: "https://toby.booksforschool.online/",
     external: true
@@ -607,6 +716,7 @@ const games = {
 
   dashers: {
     title: "WEB DASHERS",
+    icon: "🕸️",
     info: "GAME 003 // THE RHYTHM NEVER ENDS",
     url: "https://web-dashers.github.io/",
     external: false
@@ -614,6 +724,7 @@ const games = {
 
   banana: {
     title: "BANANA KONG",
+    icon: "🍌",
     info: "GAME 004 // RUN, JUMP, COLLECT BANANAS",
     url: "https://www.madkidgames.com/full/banana-kong",
     external: false,
@@ -622,12 +733,89 @@ const games = {
 
   fnf: {
     title: "FRIDAY NIGHT FUNKIN'",
+    icon: "🎤",
     info: "GAME 005 // HIT THE BEAT",
     url: "https://w8.snokido.com/games/html5/friday-night-funkin/0281/index.html",
-    external: false
+    external: false,
+    isNew: true
   }
 
 };
+
+
+// CREATE GAME TILES
+
+function createGameCards(containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = "";
+
+  Object.entries(games).forEach(([id, game]) => {
+
+    const card = document.createElement("div");
+    card.className = "game-card";
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+
+    const icon = document.createElement("div");
+    icon.className = "game-icon";
+    icon.textContent = game.icon;
+
+    const title = document.createElement("h3");
+    title.textContent = game.title;
+
+    card.appendChild(icon);
+    card.appendChild(title);
+
+    if (game.isNew) {
+      const badge = document.createElement("span");
+      badge.className = "new-label";
+      badge.textContent = "NEW";
+      card.appendChild(badge);
+    }
+
+    card.addEventListener("click", () => openGame(id));
+
+    card.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openGame(id);
+      }
+    });
+
+    container.appendChild(card);
+  });
+}
+
+
+// PAGE NAVIGATION
+
+function showPage(page) {
+  const target = document.getElementById(page);
+  if (!target) return;
+
+  document.querySelectorAll(".page").forEach(section => {
+    section.classList.remove("active");
+  });
+
+  target.classList.add("active");
+
+  document.querySelectorAll("nav button").forEach(button => {
+    button.classList.remove("active");
+  });
+
+  const navIds = {
+    lobby: "navLobby",
+    games: "navGames",
+    links: "navLinks",
+    settings: "navSettings"
+  };
+
+  if (navIds[page]) {
+    document.getElementById(navIds[page]).classList.add("active");
+  }
+
+  window.scrollTo(0, 0);
+}
 
 
 // OPEN GAME
@@ -642,15 +830,20 @@ function openGame(id) {
   const area = document.getElementById("playerArea");
 
   if (game.external) {
+
     area.innerHTML = `
-      <div class="game-card">
-        <h3>CHOOSE YOUR WORLD</h3>
-        <p>This game is hosted on another website.</p>
-        <button id="enterWorldButton">ENTER WORLD →</button>
+      <div class="link-panel">
+        <h3>EXTERNAL GAME</h3>
+        <p class="muted">
+          THIS GAME OPENS ON ITS HOST WEBSITE.
+        </p>
+        <button id="externalGameButton">
+          ENTER WORLD →
+        </button>
       </div>
     `;
 
-    document.getElementById("enterWorldButton")
+    document.getElementById("externalGameButton")
       .addEventListener("click", () => {
         window.open(game.url, "_blank", "noopener,noreferrer");
       });
@@ -685,7 +878,7 @@ function openGame(id) {
       </div>
 
       <div class="player-controls">
-        <p>GAME PLAYER // EMBED TEST</p>
+        <p>GAME PLAYER // ${game.title}</p>
         <button onclick="fullscreenGame()">⛶ FULLSCREEN</button>
       </div>
 
@@ -693,7 +886,7 @@ function openGame(id) {
     `;
   }
 
-  showPage('player');
+  showPage("player");
 }
 
 
@@ -710,7 +903,7 @@ function fullscreenGame() {
 }
 
 
-// RANDOM SHARE LINK GENERATOR
+// RANDOM SHARE LINKS
 
 const SITE_URL = "https://sishdtydjs-dot.github.io/whyamihere/";
 
@@ -718,21 +911,23 @@ let currentGeneratedLink = "";
 let previousCode = "";
 
 function randomCode() {
-  const characters =
+  const chars =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
   let code = "";
 
   if (window.crypto && window.crypto.getRandomValues) {
-    const randomValues = new Uint32Array(12);
-    window.crypto.getRandomValues(randomValues);
+    const values = new Uint32Array(32);
+    window.crypto.getRandomValues(values);
 
-    for (let i = 0; i < randomValues.length; i++) {
-      code += characters[randomValues[i] % characters.length];
+    for (let i = 0; i < values.length; i++) {
+      code += chars[values[i] % chars.length];
     }
+
   } else {
-    for (let i = 0; i < 12; i++) {
-      code += characters[Math.floor(Math.random() * characters.length)];
+
+    for (let i = 0; i < 32; i++) {
+      code += chars[Math.floor(Math.random() * chars.length)];
     }
   }
 
@@ -747,26 +942,27 @@ function generateLink() {
   } while (code === previousCode);
 
   previousCode = code;
-
   currentGeneratedLink = SITE_URL + "?share=" + code;
 
   document.getElementById("generatedLink").textContent =
     currentGeneratedLink;
 
   document.getElementById("linkStatus").textContent =
-    "NEW SHARE LINK GENERATED // " + code;
+    "NEW SHARE LINK GENERATED // 32 CHARACTER CODE";
 }
 
 function copyLink() {
   if (!currentGeneratedLink) generateLink();
 
   if (navigator.clipboard && window.isSecureContext) {
+
     navigator.clipboard.writeText(currentGeneratedLink)
       .then(() => {
         document.getElementById("linkStatus").textContent =
           "LINK COPIED SUCCESSFULLY.";
       })
       .catch(() => fallbackCopy());
+
   } else {
     fallbackCopy();
   }
@@ -781,9 +977,12 @@ function fallbackCopy() {
 
   try {
     document.execCommand("copy");
+
     document.getElementById("linkStatus").textContent =
       "LINK COPIED SUCCESSFULLY.";
+
   } catch (error) {
+
     document.getElementById("linkStatus").textContent =
       "COPY FAILED // SELECT THE LINK MANUALLY.";
   }
@@ -792,82 +991,4 @@ function fallbackCopy() {
 }
 
 function openGeneratedLink() {
-  if (!currentGeneratedLink) generateLink();
-
-  window.open(
-    currentGeneratedLink,
-    "_blank",
-    "noopener,noreferrer"
-  );
-}
-
-
-// HANDLE SHARED LINKS
-
-function handleIncomingShare() {
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get("share");
-
-  if (code) {
-    document.getElementById("linkStatus").textContent =
-      "SHARED LINK OPENED // " + code;
-
-    showPage("lobby");
-  }
-}
-
-
-// SETTINGS
-
-function toggleGlow() {
-  const enabled = document.getElementById("glowToggle").checked;
-
-  document.body.classList.toggle("no-glow", !enabled);
-  localStorage.setItem("whyaimhereGlow", enabled);
-}
-
-function changeTheme() {
-  const theme = document.getElementById("themeSelect").value;
-
-  if (theme === "purple") {
-    document.documentElement.style.setProperty("--bg", "#100817");
-    document.documentElement.style.setProperty("--panel", "#1a1025");
-  } else {
-    document.documentElement.style.setProperty("--bg", "#050509");
-    document.documentElement.style.setProperty("--panel", "#0d0914");
-  }
-
-  localStorage.setItem("whyaimhereTheme", theme);
-}
-
-
-// LOAD SAVED SETTINGS
-
-function loadSettings() {
-  const savedGlow = localStorage.getItem("whyaimhereGlow");
-
-  if (savedGlow === "false") {
-    document.getElementById("glowToggle").checked = false;
-    document.body.classList.add("no-glow");
-  } else {
-    document.getElementById("glowToggle").checked = true;
-    document.body.classList.remove("no-glow");
-  }
-
-  const savedTheme = localStorage.getItem("whyaimhereTheme");
-
-  if (savedTheme === "purple" || savedTheme === "dark") {
-    document.getElementById("themeSelect").value = savedTheme;
-    changeTheme();
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  loadSettings();
-  handleIncomingShare();
-});
-
-</script>
-
-</body>
-</html>
+  if (!cur
