@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>whyamihere</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,25 +11,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg: #100b19;
-  --panel: rgba(30, 20, 43, .88);
-  --text: #f6eaff;
-  --muted: #b9a5c9;
-  --accent: #d6a3ff;
-  --border: rgba(214,163,255,.35);
-  --glow: 0 0 18px rgba(214,163,255,.35);
-  --blob1: #a66cff;
-  --blob2: #ff9edb;
-  --blob3: #79d9ff;
-}
-
 * {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
+:root {
+  --bg: #100b19;
+  --panel: rgba(30,20,43,.92);
+  --text: #f6eaff;
+  --muted: #b9a5c9;
+  --accent: #d6a3ff;
+  --border: rgba(214,163,255,.4);
+  --blob1: #a66cff;
+  --blob2: #ff9edb;
+  --blob3: #79d9ff;
 }
 
 body {
@@ -37,10 +32,9 @@ body {
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
-  font-family: 'Press Start 2P', monospace;
+  font-family: "Press Start 2P", monospace;
   font-size: 10px;
   overflow-x: hidden;
-  transition: background .3s ease;
 }
 
 body.no-glow * {
@@ -58,11 +52,11 @@ body.no-glow * {
 
 .blob {
   position: absolute;
-  width: 360px;
-  height: 360px;
+  width: 350px;
+  height: 350px;
   border-radius: 50%;
   filter: blur(85px);
-  opacity: .24;
+  opacity: .25;
   animation: float 16s ease-in-out infinite alternate;
 }
 
@@ -99,7 +93,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(12, 8, 19, .92);
+  background: rgba(12,8,19,.94);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
 }
@@ -119,8 +113,7 @@ header {
   color: var(--accent);
   font-size: 15px;
   cursor: pointer;
-  text-shadow: var(--glow);
-  user-select: none;
+  text-shadow: 0 0 15px var(--accent);
 }
 
 nav {
@@ -129,32 +122,27 @@ nav {
   flex-wrap: wrap;
 }
 
-button, .nav-button {
+button {
   font-family: inherit;
   font-size: 9px;
   color: var(--text);
-  background: rgba(255,255,255,.045);
+  background: rgba(255,255,255,.05);
   border: 1px solid var(--border);
   padding: 12px 13px;
   cursor: pointer;
-  transition: .2s ease;
   border-radius: 5px;
+  transition: .2s;
+  touch-action: manipulation;
 }
 
-button:hover, .nav-button:hover {
+button:hover {
   background: var(--accent);
   color: #170d20;
-  box-shadow: var(--glow);
   transform: translateY(-2px);
 }
 
 button:active {
   transform: scale(.97);
-}
-
-button:focus-visible {
-  outline: 2px solid white;
-  outline-offset: 3px;
 }
 
 main {
@@ -165,11 +153,11 @@ main {
 
 .page {
   display: none;
-  animation: appear .3s ease;
 }
 
 .page.active {
   display: block;
+  animation: appear .3s ease;
 }
 
 @keyframes appear {
@@ -182,19 +170,19 @@ main {
   border: 1px solid var(--border);
   border-radius: 12px;
   background:
-    radial-gradient(circle at 20% 20%, rgba(255,158,219,.22), transparent 35%),
-    radial-gradient(circle at 80% 80%, rgba(121,217,255,.2), transparent 35%),
+    radial-gradient(circle at 20% 20%, rgba(255,158,219,.25), transparent 35%),
+    radial-gradient(circle at 80% 80%, rgba(121,217,255,.22), transparent 35%),
     var(--panel);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 35px;
-  box-shadow: var(--glow);
+  box-shadow: 0 0 18px rgba(214,163,255,.2);
 }
 
 .hero h1 {
-  font-size: clamp(18px, 4vw, 34px);
+  font-size: clamp(18px,4vw,34px);
   line-height: 1.8;
   color: white;
   text-shadow: 0 0 22px var(--accent);
@@ -205,12 +193,12 @@ main {
   font-size: 17px;
   line-height: 1.8;
   color: var(--accent);
-  text-shadow: var(--glow);
+  text-shadow: 0 0 15px var(--accent);
 }
 
 .game-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
   gap: 14px;
 }
 
@@ -225,13 +213,13 @@ main {
   align-items: center;
   gap: 14px;
   position: relative;
-  transition: .2s ease;
+  transition: .2s;
 }
 
 .game-card:hover {
   transform: translateY(-4px);
   border-color: var(--accent);
-  box-shadow: var(--glow);
+  box-shadow: 0 0 18px rgba(214,163,255,.3);
 }
 
 .game-icon {
@@ -270,18 +258,6 @@ main {
   line-height: 2;
 }
 
-.status {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  line-height: 2;
-}
-
-.green {
-  color: #62f5a2;
-}
-
 .setting-row {
   display: flex;
   align-items: center;
@@ -297,7 +273,7 @@ main {
   border-bottom: 0;
 }
 
-select, input {
+select {
   background: #21172e;
   color: white;
   border: 1px solid var(--border);
@@ -325,18 +301,18 @@ select option {
 
 .player {
   width: 100%;
-  height: min(68vh, 650px);
+  height: min(68vh,650px);
   min-height: 350px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: #050308;
+  overflow: hidden;
 }
 
 .player iframe {
   width: 100%;
   height: 100%;
   border: 0;
-  border-radius: 8px;
   background: #050308;
 }
 
@@ -361,9 +337,9 @@ select option {
   text-align: center;
   padding: 25px;
   background:
-    radial-gradient(circle at 20% 20%, #e8a3ff 0, transparent 35%),
-    radial-gradient(circle at 80% 70%, #ff9edb 0, transparent 35%),
-    linear-gradient(135deg, #140d22, #352047, #100b19);
+    radial-gradient(circle at 20% 20%, #e8a3ff, transparent 40%),
+    radial-gradient(circle at 80% 70%, #ff9edb, transparent 40%),
+    linear-gradient(135deg,#140d22,#352047,#100b19);
 }
 
 .secret-screen.show {
@@ -371,7 +347,7 @@ select option {
 }
 
 .secret-message {
-  font-size: clamp(20px, 5vw, 38px);
+  font-size: clamp(20px,5vw,38px);
   line-height: 2;
   color: white;
   text-shadow: 0 0 25px #ffb6f2;
@@ -383,17 +359,12 @@ select option {
   left: 20px;
 }
 
-.secret-code {
-  display: flex;
-  gap: 9px;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
-
-.secret-code button {
-  min-width: 48px;
-  min-height: 44px;
+.secret-button {
+  display: block;
+  margin: 35px auto 0;
+  color: var(--accent);
+  border-color: var(--accent);
+  padding: 16px 20px;
 }
 
 footer {
@@ -404,11 +375,7 @@ footer {
   line-height: 2.2;
 }
 
-.hidden {
-  display: none !important;
-}
-
-@media(max-width: 600px) {
+@media(max-width:600px) {
   .header-inner {
     justify-content: center;
   }
@@ -448,21 +415,21 @@ footer {
 
 <header>
   <div class="header-inner">
-    <div class="logo" data-page="lobby">whyamihere</div>
+    <div class="logo" id="logo-button">whyamihere</div>
 
     <nav>
-      <button data-page="lobby">LOBBY</button>
-      <button data-page="games">GAMES</button>
-      <button data-page="links">LINKS</button>
-      <button data-page="settings">SETTINGS</button>
+      <button id="nav-lobby">LOBBY</button>
+      <button id="nav-games">GAMES</button>
+      <button id="nav-links">LINKS</button>
+      <button id="nav-settings">SETTINGS</button>
     </nav>
   </div>
 </header>
 
 <main>
 
-  <!-- LOBBY -->
   <section class="page active" id="lobby">
+
     <div class="hero">
       <h1>YOU WERE<br>NEVER HERE.</h1>
     </div>
@@ -470,75 +437,56 @@ footer {
     <h2 class="section-title">RECENT DREAMS</h2>
     <div class="game-list" id="lobby-games"></div>
 
-    <h2 class="section-title">SYSTEM STATUS</h2>
-    <div class="panel">
-      <div class="status">
-        <span>WEBSITE STATUS</span>
-        <span class="green">ONLINE</span>
-      </div>
-      <div class="status">
-        <span>REALITY STATUS</span>
-        <span>UNKNOWN</span>
-      </div>
-      <div class="status">
-        <span>VISITOR</span>
-        <span>YOU?</span>
-      </div>
-    </div>
+    <button class="secret-button" id="secret-open">◉ 1999 ◉</button>
 
-    <div class="panel">
-      <div class="muted">A strange signal has appeared...</div>
-      <div class="secret-code">
-        <span>SIGNAL:</span>
-        <button data-secret-digit="1">1</button>
-        <button data-secret-digit="9">9</button>
-        <button data-secret-digit="9">9</button>
-        <span id="secret-progress" class="muted">_ _ _</span>
-      </div>
-      <p class="muted">Click the numbers in the correct order.</p>
-    </div>
   </section>
 
-  <!-- GAMES -->
   <section class="page" id="games">
     <h1 class="section-title">CHOOSE YOUR DREAM.</h1>
     <div class="game-list" id="all-games"></div>
   </section>
 
-  <!-- GAME PLAYER -->
   <section class="page" id="game-player">
-    <button class="back-button" data-page="games">← BACK TO GAMES</button>
+    <button class="back-button" id="back-games">← BACK TO GAMES</button>
+
     <h2 class="section-title" id="player-title">GAME</h2>
+
     <div class="player" id="player-container"></div>
+
     <div class="player-actions">
       <button id="fullscreen-button">FULLSCREEN</button>
       <button id="open-game-button">OPEN GAME IN NEW TAB</button>
     </div>
+
     <p class="muted" id="player-note"></p>
   </section>
 
-  <!-- LINKS -->
   <section class="page" id="links">
     <h1 class="section-title">LOST CONNECTIONS</h1>
+
     <div class="panel">
       <p class="muted">
-        Generate a random share link to this website.
-        These links use the same website address and do not bypass
-        school or network restrictions.
+        Generate a random share link for this website.
       </p>
+
       <button id="generate-link">GENERATE RANDOM LINK</button>
-      <div class="link-box" id="generated-link">No link generated yet.</div>
+
+      <div class="link-box" id="generated-link">
+        No link generated yet.
+      </div>
+
       <button id="copy-link">COPY LINK</button>
     </div>
   </section>
 
-  <!-- SETTINGS -->
   <section class="page" id="settings">
     <h1 class="section-title">CHANGE REALITY</h1>
 
     <div class="panel">
+
       <div class="setting-row">
         <span>BACKGROUND COLOR</span>
+
         <select id="theme-select">
           <option value="lavender">Dream Lavender</option>
           <option value="pink">Cotton Candy</option>
@@ -560,13 +508,15 @@ footer {
         <span>MOVING BACKGROUND</span>
         <button id="motion-toggle">ON</button>
       </div>
+
     </div>
 
     <h2 class="section-title">ABOUT</h2>
+
     <div class="panel">
       <p class="muted">whyamihere</p>
       <p class="muted">You were never supposed to find this place.</p>
-      <p class="muted">Version 2.0</p>
+      <p class="muted">Version 2.1</p>
     </div>
   </section>
 
@@ -577,7 +527,6 @@ footer {
   YOU WERE NEVER HERE.
 </footer>
 
-<!-- SECRET PAGE -->
 <div class="secret-screen" id="secret-screen">
   <button class="secret-back" id="secret-back">← BACK</button>
   <div class="secret-message">ight bru</div>
@@ -586,9 +535,7 @@ footer {
 <script>
 "use strict";
 
-/* ------------------------------
-   GAME LIST
------------------------------- */
+/* GAME DATA */
 
 const games = [
   {
@@ -633,15 +580,13 @@ const games = [
   }
 ];
 
-/* ------------------------------
-   SAFE STORAGE
------------------------------- */
+/* STORAGE */
 
 function saveSetting(key, value) {
   try {
     localStorage.setItem(key, value);
   } catch (error) {
-    console.warn("Settings could not be saved.", error);
+    console.warn("Could not save setting:", error);
   }
 }
 
@@ -653,42 +598,62 @@ function readSetting(key, fallback) {
   }
 }
 
-/* ------------------------------
-   PAGE NAVIGATION
------------------------------- */
+/* NAVIGATION */
 
-function showPage(pageName) {
-  const pages = document.querySelectorAll(".page");
-
-  pages.forEach(page => {
-    page.classList.toggle("active", page.id === pageName);
+function showPage(pageId) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
   });
+
+  const target = document.getElementById(pageId);
+
+  if (target) {
+    target.classList.add("active");
+  }
 
   document.getElementById("secret-screen").classList.remove("show");
 
   window.scrollTo(0, 0);
-
-  if (pageName !== "game-player") {
-    document.getElementById("player-container").innerHTML = "";
-  }
 }
 
-/* ------------------------------
-   GAME CARDS
------------------------------- */
+/* CONNECT NAV BUTTONS DIRECTLY */
 
-function makeGameCard(game) {
-  const card = document.createElement("div");
+document.getElementById("logo-button").addEventListener("click", () => {
+  showPage("lobby");
+});
+
+document.getElementById("nav-lobby").addEventListener("click", () => {
+  showPage("lobby");
+});
+
+document.getElementById("nav-games").addEventListener("click", () => {
+  showPage("games");
+});
+
+document.getElementById("nav-links").addEventListener("click", () => {
+  showPage("links");
+});
+
+document.getElementById("nav-settings").addEventListener("click", () => {
+  showPage("settings");
+});
+
+document.getElementById("back-games").addEventListener("click", () => {
+  showPage("games");
+});
+
+/* GAME CARDS */
+
+function createGameCard(game) {
+  const card = document.createElement("button");
+  card.type = "button";
   card.className = "game-card";
-  card.tabIndex = 0;
-  card.setAttribute("role", "button");
-  card.dataset.game = game.id;
 
-  const icon = document.createElement("div");
+  const icon = document.createElement("span");
   icon.className = "game-icon";
   icon.textContent = game.icon;
 
-  const name = document.createElement("div");
+  const name = document.createElement("span");
   name.className = "game-name";
   name.textContent = game.name;
 
@@ -702,57 +667,68 @@ function makeGameCard(game) {
     card.appendChild(badge);
   }
 
+  card.addEventListener("click", () => {
+    openGame(game.id);
+  });
+
   return card;
 }
 
 function renderGames() {
-  const lobbyGames = document.getElementById("lobby-games");
-  const allGames = document.getElementById("all-games");
+  const lobby = document.getElementById("lobby-games");
+  const directory = document.getElementById("all-games");
 
-  lobbyGames.innerHTML = "";
-  allGames.innerHTML = "";
+  lobby.replaceChildren();
+  directory.replaceChildren();
 
   games.forEach(game => {
-    lobbyGames.appendChild(makeGameCard(game));
-    allGames.appendChild(makeGameCard(game));
+    lobby.appendChild(createGameCard(game));
+    directory.appendChild(createGameCard(game));
   });
 }
 
-/* ------------------------------
-   GAME PLAYER
------------------------------- */
+/* GAME PLAYER */
 
 let currentGame = null;
 
 function openGame(gameId) {
   const game = games.find(item => item.id === gameId);
+
   if (!game) return;
 
   currentGame = game;
 
   document.getElementById("player-title").textContent = game.name;
-  document.getElementById("player-note").textContent =
-    game.type === "iframe"
-      ? "If the game does not load, its hosting website may block embedded playback."
-      : "This game opens on its original website.";
 
   const container = document.getElementById("player-container");
-  container.innerHTML = "";
+  container.replaceChildren();
 
   if (game.type === "iframe") {
     const iframe = document.createElement("iframe");
+
     iframe.src = game.url;
     iframe.title = game.name;
     iframe.allowFullscreen = true;
     iframe.setAttribute("allow", "fullscreen; autoplay; gamepad");
     iframe.setAttribute("loading", "lazy");
+
     container.appendChild(iframe);
+
+    document.getElementById("player-note").textContent =
+      "If this game does not load, its hosting website may block embedded playback.";
   } else {
     const message = document.createElement("div");
+
     message.style.cssText =
       "height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px;line-height:2;";
-    message.textContent = "This game opens in a new tab. Use the button below.";
+
+    message.textContent =
+      "This game opens on its original website. Use the button below.";
+
     container.appendChild(message);
+
+    document.getElementById("player-note").textContent =
+      "Some games must be opened on their original website.";
   }
 
   showPage("game-player");
@@ -773,7 +749,7 @@ document.getElementById("fullscreen-button").addEventListener("click", async () 
       await document.exitFullscreen();
     } else if (iframe && iframe.requestFullscreen) {
       await iframe.requestFullscreen();
-    } else if (container.requestFullscreen) {
+    } else {
       await container.requestFullscreen();
     }
   } catch (error) {
@@ -781,115 +757,47 @@ document.getElementById("fullscreen-button").addEventListener("click", async () 
   }
 });
 
-/* ------------------------------
-   THEME SETTINGS
------------------------------- */
+/* THEMES */
 
 const themes = {
-  lavender: {
-    bg: "#171020",
-    panel: "rgba(42, 27, 57, .9)",
-    accent: "#d6a3ff",
-    border: "rgba(214,163,255,.4)",
-    blob1: "#a66cff",
-    blob2: "#ff9edb",
-    blob3: "#79d9ff"
-  },
-  pink: {
-    bg: "#200e20",
-    panel: "rgba(64, 28, 57, .9)",
-    accent: "#ffaddd",
-    border: "rgba(255,173,221,.4)",
-    blob1: "#ff70c5",
-    blob2: "#ffb4d9",
-    blob3: "#c79bff"
-  },
-  blue: {
-    bg: "#091827",
-    panel: "rgba(17, 39, 60, .9)",
-    accent: "#91dfff",
-    border: "rgba(145,223,255,.4)",
-    blob1: "#3d9dff",
-    blob2: "#8ceaff",
-    blob3: "#8f9bff"
-  },
-  mint: {
-    bg: "#0c1c1a",
-    panel: "rgba(22, 52, 44, .9)",
-    accent: "#a8ffd7",
-    border: "rgba(168,255,215,.4)",
-    blob1: "#5de0ad",
-    blob2: "#b7ffcc",
-    blob3: "#7edfff"
-  },
-  peach: {
-    bg: "#211511",
-    panel: "rgba(65, 39, 29, .9)",
-    accent: "#ffc49d",
-    border: "rgba(255,196,157,.4)",
-    blob1: "#ffae82",
-    blob2: "#ffdb9c",
-    blob3: "#ff9ecb"
-  },
-  yellow: {
-    bg: "#201d0d",
-    panel: "rgba(62, 55, 23, .9)",
-    accent: "#fff0a3",
-    border: "rgba(255,240,163,.4)",
-    blob1: "#ffe66d",
-    blob2: "#ffc477",
-    blob3: "#fff5b8"
-  },
-  purple: {
-    bg: "#12091f",
-    panel: "rgba(43, 20, 68, .9)",
-    accent: "#c59aff",
-    border: "rgba(197,154,255,.4)",
-    blob1: "#823bff",
-    blob2: "#d76bff",
-    blob3: "#6f8dff"
-  },
-  dark: {
-    bg: "#08080d",
-    panel: "rgba(22, 22, 29, .94)",
-    accent: "#c3c3d6",
-    border: "rgba(195,195,214,.3)",
-    blob1: "#55516b",
-    blob2: "#45445e",
-    blob3: "#686080"
-  }
+  lavender: ["#171020","rgba(42,27,57,.92)","#d6a3ff","rgba(214,163,255,.4)","#a66cff","#ff9edb","#79d9ff"],
+  pink: ["#200e20","rgba(64,28,57,.92)","#ffaddd","rgba(255,173,221,.4)","#ff70c5","#ffb4d9","#c79bff"],
+  blue: ["#091827","rgba(17,39,60,.92)","#91dfff","rgba(145,223,255,.4)","#3d9dff","#8ceaff","#8f9bff"],
+  mint: ["#0c1c1a","rgba(22,52,44,.92)","#a8ffd7","rgba(168,255,215,.4)","#5de0ad","#b7ffcc","#7edfff"],
+  peach: ["#211511","rgba(65,39,29,.92)","#ffc49d","rgba(255,196,157,.4)","#ffae82","#ffdb9c","#ff9ecb"],
+  yellow: ["#201d0d","rgba(62,55,23,.92)","#fff0a3","rgba(255,240,163,.4)","#ffe66d","#ffc477","#fff5b8"],
+  purple: ["#12091f","rgba(43,20,68,.92)","#c59aff","rgba(197,154,255,.4)","#823bff","#d76bff","#6f8dff"],
+  dark: ["#08080d","rgba(22,22,29,.94)","#c3c3d6","rgba(195,195,214,.3)","#55516b","#45445e","#686080"]
 };
 
-function applyTheme(themeName) {
-  const theme = themes[themeName] || themes.lavender;
+function applyTheme(name) {
+  const t = themes[name] || themes.lavender;
   const root = document.documentElement;
 
-  root.style.setProperty("--bg", theme.bg);
-  root.style.setProperty("--panel", theme.panel);
-  root.style.setProperty("--accent", theme.accent);
-  root.style.setProperty("--border", theme.border);
-  root.style.setProperty("--blob1", theme.blob1);
-  root.style.setProperty("--blob2", theme.blob2);
-  root.style.setProperty("--blob3", theme.blob3);
+  root.style.setProperty("--bg", t[0]);
+  root.style.setProperty("--panel", t[1]);
+  root.style.setProperty("--accent", t[2]);
+  root.style.setProperty("--border", t[3]);
+  root.style.setProperty("--blob1", t[4]);
+  root.style.setProperty("--blob2", t[5]);
+  root.style.setProperty("--blob3", t[6]);
 
   document.getElementById("theme-select").value =
-    themes[themeName] ? themeName : "lavender";
+    themes[name] ? name : "lavender";
 
-  saveSetting("why-theme", themeName);
+  saveSetting("why-theme", name);
 }
 
 document.getElementById("theme-select").addEventListener("change", event => {
   applyTheme(event.target.value);
 });
 
-/* ------------------------------
-   GLOW AND MOTION
------------------------------- */
+/* GLOW */
 
 let glowEnabled = readSetting("why-glow", "on") === "on";
 let motionEnabled = readSetting("why-motion", "on") === "on";
 
-function updateEffectButtons() {
+function updateEffects() {
   document.body.classList.toggle("no-glow", !glowEnabled);
   document.body.classList.toggle("still-background", !motionEnabled);
 
@@ -903,18 +811,98 @@ function updateEffectButtons() {
 document.getElementById("glow-toggle").addEventListener("click", () => {
   glowEnabled = !glowEnabled;
   saveSetting("why-glow", glowEnabled ? "on" : "off");
-  updateEffectButtons();
+  updateEffects();
 });
 
 document.getElementById("motion-toggle").addEventListener("click", () => {
   motionEnabled = !motionEnabled;
   saveSetting("why-motion", motionEnabled ? "on" : "off");
-  updateEffectButtons();
+  updateEffects();
 });
 
-/* ------------------------------
-   RANDOM SHARE LINKS
------------------------------- */
+/* RANDOM SHARE LINKS */
 
-function randomCode(length) {
-  const chars = "abcdefghijklmnopqrstuv
+function makeRandomCode(length) {
+  const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+
+  try {
+    const values = new Uint32Array(length);
+    crypto.getRandomValues(values);
+
+    for (let i = 0; i < length; i++) {
+      result += chars[values[i] % chars.length];
+    }
+  } catch (error) {
+    for (let i = 0; i < length; i++) {
+      result += chars[Math.floor(Math.random() * chars.length)];
+    }
+  }
+
+  return result;
+}
+
+let latestLink = "";
+
+document.getElementById("generate-link").addEventListener("click", () => {
+  latestLink =
+    window.location.origin +
+    window.location.pathname +
+    "?signal=" +
+    makeRandomCode(32);
+
+  document.getElementById("generated-link").textContent = latestLink;
+});
+
+document.getElementById("copy-link").addEventListener("click", async () => {
+  if (!latestLink) {
+    alert("Generate a link first.");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(latestLink);
+    alert("Link copied!");
+  } catch (error) {
+    const field = document.createElement("textarea");
+    field.value = latestLink;
+    document.body.appendChild(field);
+    field.select();
+
+    try {
+      document.execCommand("copy");
+      alert("Link copied!");
+    } catch (copyError) {
+      alert("Please select and copy the link manually.");
+    }
+
+    field.remove();
+  }
+});
+
+/* THE ACTUAL 1999 EASTER EGG */
+
+document.getElementById("secret-open").addEventListener("click", () => {
+  document.getElementById("secret-screen").classList.add("show");
+});
+
+document.getElementById("secret-back").addEventListener("click", () => {
+  document.getElementById("secret-screen").classList.remove("show");
+});
+
+/* START WEBSITE */
+
+function startWebsite() {
+  renderGames();
+
+  applyTheme(readSetting("why-theme", "lavender"));
+
+  updateEffects();
+}
+
+startWebsite();
+
+</script>
+
+</body>
+</html>
