@@ -11,13 +11,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 :root {
-  --bg: #100b19;
-  --panel: rgba(30,20,43,.92);
+  --bg: #171020;
+  --panel: rgba(42,27,57,.92);
   --text: #f6eaff;
   --muted: #b9a5c9;
   --accent: #d6a3ff;
@@ -99,7 +97,7 @@ header {
 }
 
 .header-inner {
-  max-width: 1150px;
+  max-width: 1200px;
   margin: auto;
   padding: 17px 20px;
   display: flex;
@@ -145,15 +143,19 @@ button:active {
   transform: scale(.97);
 }
 
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 3px;
+}
+
 main {
   max-width: 1100px;
   margin: auto;
   padding: 35px 20px 80px;
 }
 
-.page {
-  display: none;
-}
+.page { display: none; }
 
 .page.active {
   display: block;
@@ -214,6 +216,7 @@ main {
   gap: 14px;
   position: relative;
   transition: .2s;
+  text-align: left;
 }
 
 .game-card:hover {
@@ -269,11 +272,9 @@ main {
   line-height: 2;
 }
 
-.setting-row:last-child {
-  border-bottom: 0;
-}
+.setting-row:last-child { border-bottom: 0; }
 
-select {
+select, input {
   background: #21172e;
   color: white;
   border: 1px solid var(--border);
@@ -284,9 +285,7 @@ select {
   max-width: 100%;
 }
 
-select option {
-  background: #21172e;
-}
+select option { background: #21172e; }
 
 .link-box {
   overflow-wrap: anywhere;
@@ -323,8 +322,66 @@ select option {
   margin: 15px 0;
 }
 
-.back-button {
-  margin-bottom: 20px;
+.back-button { margin-bottom: 20px; }
+
+/* BROWSER */
+
+.browser-panel {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+  box-shadow: 0 0 18px rgba(214,163,255,.15);
+}
+
+.browser-heading {
+  color: var(--accent);
+  font-size: 13px;
+  line-height: 2;
+  margin-bottom: 18px;
+}
+
+.browser-search {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.browser-search input {
+  flex: 1;
+  min-width: 180px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  padding: 14px;
+}
+
+.browser-search button {
+  min-height: 45px;
+}
+
+.browser-frame-wrap {
+  width: 100%;
+  height: 65vh;
+  min-height: 400px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  overflow: hidden;
+  background: white;
+}
+
+#browser-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: white;
+}
+
+.browser-note {
+  font-size: 8px;
+  line-height: 2.2;
+  color: var(--muted);
+  margin-top: 15px;
 }
 
 .secret-screen {
@@ -375,32 +432,14 @@ footer {
   line-height: 2.2;
 }
 
-@media(max-width:600px) {
-  .header-inner {
-    justify-content: center;
-  }
-
-  nav {
-    justify-content: center;
-  }
-
-  nav button {
-    padding: 10px 8px;
-    font-size: 8px;
-  }
-
-  .hero {
-    min-height: 260px;
-  }
-
-  main {
-    padding-left: 13px;
-    padding-right: 13px;
-  }
-
-  .game-list {
-    grid-template-columns: 1fr;
-  }
+@media(max-width:700px) {
+  .header-inner { justify-content: center; }
+  nav { justify-content: center; }
+  nav button { padding: 10px 8px; font-size: 8px; }
+  .hero { min-height: 260px; }
+  main { padding-left: 13px; padding-right: 13px; }
+  .game-list { grid-template-columns: 1fr; }
+  .browser-frame-wrap { height: 60vh; min-height: 350px; }
 }
 </style>
 </head>
@@ -422,14 +461,15 @@ footer {
       <button id="nav-games">GAMES</button>
       <button id="nav-links">LINKS</button>
       <button id="nav-settings">SETTINGS</button>
+      <button id="nav-browser">BROWSER</button>
     </nav>
   </div>
 </header>
 
 <main>
 
+  <!-- LOBBY -->
   <section class="page active" id="lobby">
-
     <div class="hero">
       <h1>YOU WERE<br>NEVER HERE.</h1>
     </div>
@@ -438,55 +478,45 @@ footer {
     <div class="game-list" id="lobby-games"></div>
 
     <button class="secret-button" id="secret-open">◉ 1999 ◉</button>
-
   </section>
 
+  <!-- GAMES -->
   <section class="page" id="games">
     <h1 class="section-title">CHOOSE YOUR DREAM.</h1>
     <div class="game-list" id="all-games"></div>
   </section>
 
+  <!-- GAME PLAYER -->
   <section class="page" id="game-player">
     <button class="back-button" id="back-games">← BACK TO GAMES</button>
-
     <h2 class="section-title" id="player-title">GAME</h2>
-
     <div class="player" id="player-container"></div>
-
     <div class="player-actions">
       <button id="fullscreen-button">FULLSCREEN</button>
       <button id="open-game-button">OPEN GAME IN NEW TAB</button>
     </div>
-
     <p class="muted" id="player-note"></p>
   </section>
 
+  <!-- LINKS -->
   <section class="page" id="links">
     <h1 class="section-title">LOST CONNECTIONS</h1>
 
     <div class="panel">
-      <p class="muted">
-        Generate a random share link for this website.
-      </p>
-
+      <p class="muted">Generate a random share link for this website.</p>
       <button id="generate-link">GENERATE RANDOM LINK</button>
-
-      <div class="link-box" id="generated-link">
-        No link generated yet.
-      </div>
-
+      <div class="link-box" id="generated-link">No link generated yet.</div>
       <button id="copy-link">COPY LINK</button>
     </div>
   </section>
 
+  <!-- SETTINGS -->
   <section class="page" id="settings">
     <h1 class="section-title">CHANGE REALITY</h1>
 
     <div class="panel">
-
       <div class="setting-row">
         <span>BACKGROUND COLOR</span>
-
         <select id="theme-select">
           <option value="lavender">Dream Lavender</option>
           <option value="pink">Cotton Candy</option>
@@ -508,15 +538,54 @@ footer {
         <span>MOVING BACKGROUND</span>
         <button id="motion-toggle">ON</button>
       </div>
-
     </div>
 
     <h2 class="section-title">ABOUT</h2>
-
     <div class="panel">
       <p class="muted">whyamihere</p>
       <p class="muted">You were never supposed to find this place.</p>
-      <p class="muted">Version 2.1</p>
+      <p class="muted">Version 2.2</p>
+    </div>
+  </section>
+
+  <!-- BROWSER -->
+  <section class="page" id="browser">
+    <h1 class="section-title">THE BROWSER.</h1>
+
+    <div class="browser-panel">
+      <div class="browser-heading">◉ DUCKDUCKGO SEARCH</div>
+
+      <form class="browser-search" id="browser-form">
+        <input
+          id="browser-query"
+          type="search"
+          placeholder="Search the internet..."
+          autocomplete="off"
+          required
+        >
+        <button type="submit">SEARCH</button>
+      </form>
+
+      <div class="player-actions">
+        <button type="button" id="browser-home">BROWSER HOME</button>
+        <button type="button" id="browser-open-tab">OPEN IN NEW TAB</button>
+      </div>
+
+      <div class="browser-frame-wrap">
+        <iframe
+          id="browser-frame"
+          title="DuckDuckGo search"
+          referrerpolicy="strict-origin-when-cross-origin"
+          loading="lazy"
+        ></iframe>
+      </div>
+
+      <p class="browser-note">
+        STRICT SAFE SEARCH IS ENABLED. DuckDuckGo filters adult search
+        results, but no search filter catches everything. Some websites
+        may refuse to display inside this panel. Use OPEN IN NEW TAB
+        if the search page does not appear.
+      </p>
     </div>
   </section>
 
@@ -527,6 +596,7 @@ footer {
   YOU WERE NEVER HERE.
 </footer>
 
+<!-- 1999 SECRET -->
 <div class="secret-screen" id="secret-screen">
   <button class="secret-back" id="secret-back">← BACK</button>
   <div class="secret-message">ight bru</div>
@@ -612,35 +682,16 @@ function showPage(pageId) {
   }
 
   document.getElementById("secret-screen").classList.remove("show");
-
   window.scrollTo(0, 0);
 }
 
-/* CONNECT NAV BUTTONS DIRECTLY */
-
-document.getElementById("logo-button").addEventListener("click", () => {
-  showPage("lobby");
-});
-
-document.getElementById("nav-lobby").addEventListener("click", () => {
-  showPage("lobby");
-});
-
-document.getElementById("nav-games").addEventListener("click", () => {
-  showPage("games");
-});
-
-document.getElementById("nav-links").addEventListener("click", () => {
-  showPage("links");
-});
-
-document.getElementById("nav-settings").addEventListener("click", () => {
-  showPage("settings");
-});
-
-document.getElementById("back-games").addEventListener("click", () => {
-  showPage("games");
-});
+document.getElementById("logo-button").addEventListener("click", () => showPage("lobby"));
+document.getElementById("nav-lobby").addEventListener("click", () => showPage("lobby"));
+document.getElementById("nav-games").addEventListener("click", () => showPage("games"));
+document.getElementById("nav-links").addEventListener("click", () => showPage("links"));
+document.getElementById("nav-settings").addEventListener("click", () => showPage("settings"));
+document.getElementById("nav-browser").addEventListener("click", () => showPage("browser"));
+document.getElementById("back-games").addEventListener("click", () => showPage("games"));
 
 /* GAME CARDS */
 
@@ -667,10 +718,7 @@ function createGameCard(game) {
     card.appendChild(badge);
   }
 
-  card.addEventListener("click", () => {
-    openGame(game.id);
-  });
-
+  card.addEventListener("click", () => openGame(game.id));
   return card;
 }
 
@@ -693,7 +741,6 @@ let currentGame = null;
 
 function openGame(gameId) {
   const game = games.find(item => item.id === gameId);
-
   if (!game) return;
 
   currentGame = game;
@@ -705,26 +752,21 @@ function openGame(gameId) {
 
   if (game.type === "iframe") {
     const iframe = document.createElement("iframe");
-
     iframe.src = game.url;
     iframe.title = game.name;
     iframe.allowFullscreen = true;
     iframe.setAttribute("allow", "fullscreen; autoplay; gamepad");
     iframe.setAttribute("loading", "lazy");
-
     container.appendChild(iframe);
 
     document.getElementById("player-note").textContent =
       "If this game does not load, its hosting website may block embedded playback.";
   } else {
     const message = document.createElement("div");
-
     message.style.cssText =
       "height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px;line-height:2;";
-
     message.textContent =
       "This game opens on its original website. Use the button below.";
-
     container.appendChild(message);
 
     document.getElementById("player-note").textContent =
@@ -792,7 +834,7 @@ document.getElementById("theme-select").addEventListener("change", event => {
   applyTheme(event.target.value);
 });
 
-/* GLOW */
+/* GLOW AND MOTION */
 
 let glowEnabled = readSetting("why-glow", "on") === "on";
 let motionEnabled = readSetting("why-motion", "on") === "on";
@@ -814,95 +856,4 @@ document.getElementById("glow-toggle").addEventListener("click", () => {
   updateEffects();
 });
 
-document.getElementById("motion-toggle").addEventListener("click", () => {
-  motionEnabled = !motionEnabled;
-  saveSetting("why-motion", motionEnabled ? "on" : "off");
-  updateEffects();
-});
-
-/* RANDOM SHARE LINKS */
-
-function makeRandomCode(length) {
-  const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
-
-  try {
-    const values = new Uint32Array(length);
-    crypto.getRandomValues(values);
-
-    for (let i = 0; i < length; i++) {
-      result += chars[values[i] % chars.length];
-    }
-  } catch (error) {
-    for (let i = 0; i < length; i++) {
-      result += chars[Math.floor(Math.random() * chars.length)];
-    }
-  }
-
-  return result;
-}
-
-let latestLink = "";
-
-document.getElementById("generate-link").addEventListener("click", () => {
-  latestLink =
-    window.location.origin +
-    window.location.pathname +
-    "?signal=" +
-    makeRandomCode(32);
-
-  document.getElementById("generated-link").textContent = latestLink;
-});
-
-document.getElementById("copy-link").addEventListener("click", async () => {
-  if (!latestLink) {
-    alert("Generate a link first.");
-    return;
-  }
-
-  try {
-    await navigator.clipboard.writeText(latestLink);
-    alert("Link copied!");
-  } catch (error) {
-    const field = document.createElement("textarea");
-    field.value = latestLink;
-    document.body.appendChild(field);
-    field.select();
-
-    try {
-      document.execCommand("copy");
-      alert("Link copied!");
-    } catch (copyError) {
-      alert("Please select and copy the link manually.");
-    }
-
-    field.remove();
-  }
-});
-
-/* THE ACTUAL 1999 EASTER EGG */
-
-document.getElementById("secret-open").addEventListener("click", () => {
-  document.getElementById("secret-screen").classList.add("show");
-});
-
-document.getElementById("secret-back").addEventListener("click", () => {
-  document.getElementById("secret-screen").classList.remove("show");
-});
-
-/* START WEBSITE */
-
-function startWebsite() {
-  renderGames();
-
-  applyTheme(readSetting("why-theme", "lavender"));
-
-  updateEffects();
-}
-
-startWebsite();
-
-</script>
-
-</body>
-</html>
+document.getElementById("motion-toggle").
