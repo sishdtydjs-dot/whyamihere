@@ -45,7 +45,7 @@ body.no-glow * {
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  z-index: -1;
+  z-index: 0;
 }
 
 .blob {
@@ -87,13 +87,18 @@ body.still-background .blob {
   animation: none;
 }
 
+header, main, footer {
+  position: relative;
+  z-index: 1;
+}
+
 header {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(12,8,19,.94);
-  backdrop-filter: blur(14px);
+  background: rgba(12,8,19,.96);
   border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(14px);
 }
 
 .header-inner {
@@ -143,8 +148,7 @@ button:active {
   transform: scale(.97);
 }
 
-button:focus-visible,
-input:focus-visible {
+button:focus-visible, input:focus-visible {
   outline: 2px solid white;
   outline-offset: 3px;
 }
@@ -155,7 +159,9 @@ main {
   padding: 35px 20px 80px;
 }
 
-.page { display: none; }
+.page {
+  display: none;
+}
 
 .page.active {
   display: block;
@@ -248,6 +254,14 @@ main {
   font-size: 7px;
 }
 
+.directory-button {
+  display: block;
+  margin: 24px auto 0;
+  padding: 16px 20px;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 .panel {
   border: 1px solid var(--border);
   border-radius: 9px;
@@ -331,7 +345,6 @@ select option { background: #21172e; }
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--panel);
-  box-shadow: 0 0 18px rgba(214,163,255,.15);
 }
 
 .browser-heading {
@@ -457,11 +470,11 @@ footer {
     <div class="logo" id="logo-button">whyamihere</div>
 
     <nav>
-      <button id="nav-lobby">LOBBY</button>
-      <button id="nav-games">GAMES</button>
-      <button id="nav-links">LINKS</button>
-      <button id="nav-settings">SETTINGS</button>
-      <button id="nav-browser">BROWSER</button>
+      <button type="button" id="nav-lobby">LOBBY</button>
+      <button type="button" id="nav-games">GAMES</button>
+      <button type="button" id="nav-links">LINKS</button>
+      <button type="button" id="nav-settings">SETTINGS</button>
+      <button type="button" id="nav-browser">BROWSER</button>
     </nav>
   </div>
 </header>
@@ -475,26 +488,37 @@ footer {
     </div>
 
     <h2 class="section-title">RECENT DREAMS</h2>
-    <div class="game-list" id="lobby-games"></div>
 
-    <button class="secret-button" id="secret-open">◉ 1999 ◉</button>
+    <!-- Only two recent games -->
+    <div class="game-list" id="recent-games"></div>
+
+    <button type="button" class="directory-button" id="view-directory">
+      VIEW GAME DIRECTORY →
+    </button>
+
+    <button type="button" class="secret-button" id="secret-open">
+      ◉ 1999 ◉
+    </button>
   </section>
 
-  <!-- GAMES -->
+  <!-- FULL GAME DIRECTORY -->
   <section class="page" id="games">
+    <button type="button" class="back-button" id="back-lobby">← BACK TO LOBBY</button>
     <h1 class="section-title">CHOOSE YOUR DREAM.</h1>
     <div class="game-list" id="all-games"></div>
   </section>
 
   <!-- GAME PLAYER -->
   <section class="page" id="game-player">
-    <button class="back-button" id="back-games">← BACK TO GAMES</button>
+    <button type="button" class="back-button" id="back-games">← BACK TO GAMES</button>
     <h2 class="section-title" id="player-title">GAME</h2>
     <div class="player" id="player-container"></div>
+
     <div class="player-actions">
-      <button id="fullscreen-button">FULLSCREEN</button>
-      <button id="open-game-button">OPEN GAME IN NEW TAB</button>
+      <button type="button" id="fullscreen-button">FULLSCREEN</button>
+      <button type="button" id="open-game-button">OPEN GAME IN NEW TAB</button>
     </div>
+
     <p class="muted" id="player-note"></p>
   </section>
 
@@ -504,9 +528,9 @@ footer {
 
     <div class="panel">
       <p class="muted">Generate a random share link for this website.</p>
-      <button id="generate-link">GENERATE RANDOM LINK</button>
+      <button type="button" id="generate-link">GENERATE RANDOM LINK</button>
       <div class="link-box" id="generated-link">No link generated yet.</div>
-      <button id="copy-link">COPY LINK</button>
+      <button type="button" id="copy-link">COPY LINK</button>
     </div>
   </section>
 
@@ -531,12 +555,12 @@ footer {
 
       <div class="setting-row">
         <span>GLOW EFFECTS</span>
-        <button id="glow-toggle">ON</button>
+        <button type="button" id="glow-toggle">ON</button>
       </div>
 
       <div class="setting-row">
         <span>MOVING BACKGROUND</span>
-        <button id="motion-toggle">ON</button>
+        <button type="button" id="motion-toggle">ON</button>
       </div>
     </div>
 
@@ -544,7 +568,7 @@ footer {
     <div class="panel">
       <p class="muted">whyamihere</p>
       <p class="muted">You were never supposed to find this place.</p>
-      <p class="muted">Version 2.2</p>
+      <p class="muted">Version 2.3</p>
     </div>
   </section>
 
@@ -576,14 +600,13 @@ footer {
           id="browser-frame"
           title="DuckDuckGo search"
           referrerpolicy="strict-origin-when-cross-origin"
-          loading="lazy"
         ></iframe>
       </div>
 
       <p class="browser-note">
-        STRICT SAFE SEARCH IS ENABLED. DuckDuckGo filters adult search
-        results, but no search filter catches everything. Some websites
-        may refuse to display inside this panel. Use OPEN IN NEW TAB
+        STRICT SAFE SEARCH IS ENABLED. Search filters help reduce
+        inappropriate results but cannot guarantee every website is safe.
+        Some search pages may block iframe display. Use OPEN IN NEW TAB
         if the search page does not appear.
       </p>
     </div>
@@ -598,7 +621,7 @@ footer {
 
 <!-- 1999 SECRET -->
 <div class="secret-screen" id="secret-screen">
-  <button class="secret-back" id="secret-back">← BACK</button>
+  <button type="button" class="secret-back" id="secret-back">← BACK</button>
   <div class="secret-message">ight bru</div>
 </div>
 
@@ -682,6 +705,7 @@ function showPage(pageId) {
   }
 
   document.getElementById("secret-screen").classList.remove("show");
+
   window.scrollTo(0, 0);
 }
 
@@ -691,6 +715,9 @@ document.getElementById("nav-games").addEventListener("click", () => showPage("g
 document.getElementById("nav-links").addEventListener("click", () => showPage("links"));
 document.getElementById("nav-settings").addEventListener("click", () => showPage("settings"));
 document.getElementById("nav-browser").addEventListener("click", () => showPage("browser"));
+
+document.getElementById("view-directory").addEventListener("click", () => showPage("games"));
+document.getElementById("back-lobby").addEventListener("click", () => showPage("lobby"));
 document.getElementById("back-games").addEventListener("click", () => showPage("games"));
 
 /* GAME CARDS */
@@ -719,18 +746,26 @@ function createGameCard(game) {
   }
 
   card.addEventListener("click", () => openGame(game.id));
+
   return card;
 }
 
 function renderGames() {
-  const lobby = document.getElementById("lobby-games");
+  const recent = document.getElementById("recent-games");
   const directory = document.getElementById("all-games");
 
-  lobby.replaceChildren();
+  recent.replaceChildren();
   directory.replaceChildren();
 
+  // Two most recently added games only.
+  const recentGames = games.slice(-2).reverse();
+
+  recentGames.forEach(game => {
+    recent.appendChild(createGameCard(game));
+  });
+
+  // All games appear in the directory.
   games.forEach(game => {
-    lobby.appendChild(createGameCard(game));
     directory.appendChild(createGameCard(game));
   });
 }
@@ -763,10 +798,13 @@ function openGame(gameId) {
       "If this game does not load, its hosting website may block embedded playback.";
   } else {
     const message = document.createElement("div");
+
     message.style.cssText =
       "height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px;line-height:2;";
+
     message.textContent =
       "This game opens on its original website. Use the button below.";
+
     container.appendChild(message);
 
     document.getElementById("player-note").textContent =
@@ -813,47 +851,13 @@ const themes = {
 };
 
 function applyTheme(name) {
-  const t = themes[name] || themes.lavender;
+  const theme = themes[name] || themes.lavender;
   const root = document.documentElement;
 
-  root.style.setProperty("--bg", t[0]);
-  root.style.setProperty("--panel", t[1]);
-  root.style.setProperty("--accent", t[2]);
-  root.style.setProperty("--border", t[3]);
-  root.style.setProperty("--blob1", t[4]);
-  root.style.setProperty("--blob2", t[5]);
-  root.style.setProperty("--blob3", t[6]);
-
-  document.getElementById("theme-select").value =
-    themes[name] ? name : "lavender";
-
-  saveSetting("why-theme", name);
-}
-
-document.getElementById("theme-select").addEventListener("change", event => {
-  applyTheme(event.target.value);
-});
-
-/* GLOW AND MOTION */
-
-let glowEnabled = readSetting("why-glow", "on") === "on";
-let motionEnabled = readSetting("why-motion", "on") === "on";
-
-function updateEffects() {
-  document.body.classList.toggle("no-glow", !glowEnabled);
-  document.body.classList.toggle("still-background", !motionEnabled);
-
-  document.getElementById("glow-toggle").textContent =
-    glowEnabled ? "ON" : "OFF";
-
-  document.getElementById("motion-toggle").textContent =
-    motionEnabled ? "ON" : "OFF";
-}
-
-document.getElementById("glow-toggle").addEventListener("click", () => {
-  glowEnabled = !glowEnabled;
-  saveSetting("why-glow", glowEnabled ? "on" : "off");
-  updateEffects();
-});
-
-document.getElementById("motion-toggle").
+  root.style.setProperty("--bg", theme[0]);
+  root.style.setProperty("--panel", theme[1]);
+  root.style.setProperty("--accent", theme[2]);
+  root.style.setProperty("--border", theme[3]);
+  root.style.setProperty("--blob1", theme[4]);
+  root.style.setProperty("--blob2", theme[5]);
+  roo
